@@ -1,6 +1,9 @@
 (in-package :cl-user)
 (defpackage cl-oclapi
-  (:use :cl))
+  (:use :cl :cffi))
 (in-package :cl-oclapi)
 
-;; blah blah blah.
+(define-foreign-library libopencl
+  (t (:default "libOpenCL")))
+
+(use-foreign-library libopencl)
