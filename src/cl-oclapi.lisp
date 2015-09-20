@@ -1,6 +1,8 @@
 (in-package :cl-user)
 (defpackage cl-oclapi
-  (:use :cl :cffi))
+  (:use :cl :cffi)
+  (:export :cl-get-platform-ids
+           :cl-get-platform-info))
 (in-package :cl-oclapi)
 
 (define-foreign-library libopencl
@@ -98,3 +100,19 @@
 (defcstruct cl-buffer-region
   (origin size-t)
   (size size-t))
+
+#| cl.h - platform API. |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clGetPlatformIDs" cl-get-platform-ids) cl-int
+  (num-entries cl-uint)
+  (platforms (:pointer cl-platform-id))
+  (num-platforms (:pointer cl-uint)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clGetPlatformInfo" cl-get-platform-info) cl-int
+  (platform cl-platform-id)
+  (param-name cl-platform-info)
+  (param-value-size size-t)
+  (param-value :pointer)
+  (param-value-size-ret (:pointer size-t)))
