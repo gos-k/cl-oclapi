@@ -329,6 +329,12 @@
 (export (defconstant +cl-device-affinity-domain-l1-cache+           #.(ash 1 4)))
 (export (defconstant +cl-device-affinity-domain-next-partitionable+ #.(ash 1 5)))
 
+#| cl.h - cl_command_queue_info |#
+(export (defconstant +cl-queue-context+         #x1090))
+(export (defconstant +cl-queue-device+          #x1091))
+(export (defconstant +cl-queue-reference-count+ #x1092))
+(export (defconstant +cl-queue-properties+      #x1093))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
