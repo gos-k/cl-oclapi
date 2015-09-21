@@ -321,6 +321,14 @@
 (export (defconstant +cl-device-partition-by-counts-list-end+ #x0))
 (export (defconstant +cl-device-partition-by-affinity-domain+ #x1088))
 
+#| cl.h - cl_device_affinity_domain |#
+(export (defconstant +cl-device-affinity-domain-numa+               #.(ash 1 0)))
+(export (defconstant +cl-device-affinity-domain-l4-cache+           #.(ash 1 1)))
+(export (defconstant +cl-device-affinity-domain-l3-cache+           #.(ash 1 2)))
+(export (defconstant +cl-device-affinity-domain-l2-cache+           #.(ash 1 3)))
+(export (defconstant +cl-device-affinity-domain-l1-cache+           #.(ash 1 4)))
+(export (defconstant +cl-device-affinity-domain-next-partitionable+ #.(ash 1 5)))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
