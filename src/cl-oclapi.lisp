@@ -305,6 +305,12 @@
 (export (defconstant +cl-queue-out-of-order-exec-mode-enable+ #.(ash 1 0)))
 (export (defconstant +cl-queue-profiling-enable+              #.(ash 1 1)))
 
+#| cl.h - cl_context_info |#
+(export (defconstant +cl-context-reference-count+ #x1080))
+(export (defconstant +cl-context-devices+         #x1081))
+(export (defconstant +cl-context-properties+      #x1082))
+(export (defconstant +cl-context-num-devices+     #x1083))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
