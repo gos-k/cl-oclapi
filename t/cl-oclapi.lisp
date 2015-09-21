@@ -8,7 +8,7 @@
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-oclapi)' in your Lisp.
 
-(plan 1)
+(plan 2)
 
 (subtest "platform API"
   (with-foreign-objects ((platforms 'cl-platform-id)
@@ -59,5 +59,29 @@
                                                  param-value
                                                  param-value-size-ret))
           (is "cl_khr_icd" (foreign-string-to-lisp param-value)))))))
+
+(subtest "Device API"
+  (subtest "clGetDeviceIDs"
+    (is +cl-invalid-value+ (cl-get-device-ids (null-pointer)
+                                              0
+                                              0
+                                              (null-pointer)
+                                              (null-pointer))))
+  (subtest "clGetDeviceInfo"
+    (is +cl-invalid-device+ (cl-get-device-info (null-pointer)
+                                                0
+                                                0
+                                                (null-pointer)
+                                                (null-pointer))))
+  (subtest "clCreateSubDevices"
+    (is +cl-invalid-device+ (cl-create-sub-devices (null-pointer)
+                                                   (null-pointer)
+                                                   0
+                                                   (null-pointer)
+                                                   (null-pointer))))
+  (subtest "clRetainDevice"
+    (is +cl-invalid-device+ (cl-retain-device (null-pointer))))
+  (subtest "clReleaseDevice"
+    (is +cl-invalid-device+ (cl-release-device (null-pointer)))))
 
 (finalize)

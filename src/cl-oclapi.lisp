@@ -5,6 +5,7 @@
            :cl-uint
            :size-t
            :cl-platform-id
+           :cl-device-id
            :cl-get-platform-ids
            :cl-get-platform-info
            :cl-get-device-ids
