@@ -315,6 +315,12 @@
 (export (defconstant +cl-context-platform+          #x1084))
 (export (defconstant +cl-context-interop-user-sync+ #x1085))
 
+#| cl.h - cl_device_partition_property |#
+(export (defconstant +cl-device-partition-equally+            #x1086))
+(export (defconstant +cl-device-partition-by-counts+          #x1087))
+(export (defconstant +cl-device-partition-by-counts-list-end+ #x0))
+(export (defconstant +cl-device-partition-by-affinity-domain+ #x1088))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
