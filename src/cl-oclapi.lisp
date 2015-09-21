@@ -192,6 +192,14 @@
 (export (defconstant +cl-platform-vendor+ #x0903))
 (export (defconstant +cl-platform-extensions+ #x0904))
 
+#| cl.h - cl_device_type |#
+(export (defconstant +cl-device-type-default+     #b00001))
+(export (defconstant +cl-device-type-cpu+         #b00010))
+(export (defconstant +cl-device-type-gpu+         #b00100))
+(export (defconstant +cl-device-type-accelerator+ #b01000))
+(export (defconstant +cl-device-type-custom+      #b10000))
+(export (defconstant +cl-device-type-all+ #xffffffff))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
