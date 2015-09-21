@@ -1,7 +1,9 @@
 (in-package :cl-user)
 (defpackage cl-oclapi
   (:use :cl :cffi)
-  (:export :cl-uint
+  (:export :cl-uchar
+           :cl-uint
+           :size-t
            :cl-platform-id
            :cl-get-platform-ids
            :cl-get-platform-info))

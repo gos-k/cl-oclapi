@@ -24,6 +24,40 @@
                                                    0
                                                    0
                                                    (null-pointer)
-                                                   (null-pointer))))))
+                                                   (null-pointer)))
+      (cl-get-platform-ids 1 platforms num-platforms)
+      (let ((platform (mem-aref platforms 'cl-platform-id)))
+        (with-foreign-objects ((param-value 'cl-uchar 256)
+                               (param-value-size-ret 'size-t))
+          (is +cl-success+ (cl-get-platform-info platform
+                                                 +cl-platform-profile+
+                                                 256
+                                                 param-value
+                                                 param-value-size-ret))
+          (is "FULL_PROFILE" (foreign-string-to-lisp param-value))
+          (is +cl-success+ (cl-get-platform-info platform
+                                                 +cl-platform-version+
+                                                 256
+                                                 param-value
+                                                 param-value-size-ret))
+          (is "OpenCL 1.2 pocl 0.10" (foreign-string-to-lisp param-value))
+          (is +cl-success+ (cl-get-platform-info platform
+                                                 +cl-platform-name+
+                                                 256
+                                                 param-value
+                                                 param-value-size-ret))
+          (is "Portable Computing Language" (foreign-string-to-lisp param-value))
+          (is +cl-success+ (cl-get-platform-info platform
+                                                 +cl-platform-vendor+
+                                                 256
+                                                 param-value
+                                                 param-value-size-ret))
+          (is "The pocl project" (foreign-string-to-lisp param-value))
+          (is +cl-success+ (cl-get-platform-info platform
+                                                 +cl-platform-extensions+
+                                                 256
+                                                 param-value
+                                                 param-value-size-ret))
+          (is "cl_khr_icd" (foreign-string-to-lisp param-value)))))))
 
 (finalize)
