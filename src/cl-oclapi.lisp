@@ -293,6 +293,10 @@
 (export (defconstant +cl-read-only-cache+  #x1))
 (export (defconstant +cl-read-write-cache+ #x2))
 
+#| cl.h - cl_device_local_mem_type |#
+(export (defconstant +cl-local+ #x1))
+(export (defconstant +cl-global+ #x2))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
