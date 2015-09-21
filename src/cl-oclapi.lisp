@@ -297,6 +297,10 @@
 (export (defconstant +cl-local+ #x1))
 (export (defconstant +cl-global+ #x2))
 
+#| cl.h - cl_device_exec_capabilities - bitfield |#
+(export (defconstant +cl-exec-kernel+ #.(ash 1 0)))
+(export (defconstant +cl-exec-native-kernel+ #.(ash 1 1)))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
