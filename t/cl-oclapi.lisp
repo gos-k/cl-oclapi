@@ -11,15 +11,19 @@
 (plan 1)
 
 (subtest "platform API"
-  (subtest "clGetPlatformIDs"
-    (is +cl-invalid-value+ (cl-get-platform-ids 0
-                                                (null-pointer)
-                                                (null-pointer))))
-  (subtest "clGetPlatformInfo"
-    (is +cl-invalid-value+ (cl-get-platform-info (null-pointer)
-                                                 0
-                                                 0
-                                                 (null-pointer)
-                                                 (null-pointer)))))
+  (with-foreign-objects ((platforms 'cl-platform-id)
+                         (num-platforms 'cl-uint))
+    (subtest "clGetPlatformIDs"
+      (is +cl-invalid-value+ (cl-get-platform-ids 0
+                                                  (null-pointer)
+                                                  (null-pointer)))
+      (is +cl-success+ (cl-get-platform-ids 1 platforms num-platforms))
+      (ok (> (mem-aref num-platforms 'cl-uint) 0)))
+    (subtest "clGetPlatformInfo"
+      (is +cl-invalid-value+ (cl-get-platform-info (null-pointer)
+                                                   0
+                                                   0
+                                                   (null-pointer)
+                                                   (null-pointer))))))
 
 (finalize)
