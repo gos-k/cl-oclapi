@@ -301,6 +301,10 @@
 (export (defconstant +cl-exec-kernel+ #.(ash 1 0)))
 (export (defconstant +cl-exec-native-kernel+ #.(ash 1 1)))
 
+#| cl.h - cl_command_queue_properties - bitfield |#
+(export (defconstant +cl-queue-out-of-order-exec-mode-enable+ #.(ash 1 0)))
+(export (defconstant +cl-queue-profiling-enable+              #.(ash 1 1)))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
