@@ -79,21 +79,31 @@
                                             devices
                                             num-devices))
         (ok (> (mem-aref num-devices 'cl-uint) 0)))
-      (subtest "clGetDeviceInfo"
-        (is +cl-invalid-device+ (cl-get-device-info (null-pointer)
-                                                    0
-                                                    0
-                                                    (null-pointer)
-                                                    (null-pointer))))
-      (subtest "clCreateSubDevices"
-        (is +cl-invalid-device+ (cl-create-sub-devices (null-pointer)
-                                                       (null-pointer)
-                                                       0
-                                                       (null-pointer)
-                                                       (null-pointer))))
-      (subtest "clRetainDevice"
-        (is +cl-invalid-device+ (cl-retain-device (null-pointer))))
-      (subtest "clReleaseDevice"
-        (is +cl-invalid-device+ (cl-release-device (null-pointer)))))))
+      (cl-get-device-ids platform +cl-device-type-cpu+ 1 devices num-devices)
+      (let ((device (mem-aref devices 'cl-device-id)))
+        (subtest "clGetDeviceInfo"
+          (is +cl-invalid-device+ (cl-get-device-info (null-pointer)
+                                                      0
+                                                      0
+                                                      (null-pointer)
+                                                      (null-pointer)))
+          (with-foreign-objects ((param-value 'cl-uchar 256)
+                                 (param-value-size-ret 'size-t))
+            (is +cl-success+ (cl-get-device-info device
+                                                 +cl-device-version+
+                                                 256
+                                                 param-value
+                                                 param-value-size-ret))
+            (is "OpenCL 1.2 pocl" (foreign-string-to-lisp param-value))))
+        (subtest "clCreateSubDevices"
+          (is +cl-invalid-device+ (cl-create-sub-devices (null-pointer)
+                                                         (null-pointer)
+                                                         0
+                                                         (null-pointer)
+                                                         (null-pointer))))
+        (subtest "clRetainDevice"
+          (is +cl-invalid-device+ (cl-retain-device (null-pointer))))
+        (subtest "clReleaseDevice"
+          (is +cl-invalid-device+ (cl-release-device (null-pointer))))))))
 
 (finalize)
