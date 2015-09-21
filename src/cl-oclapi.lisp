@@ -171,6 +171,12 @@
 (export (defconstant +cl-version-1-1+ t))
 (export (defconstant +cl-version-1-2+ t))
 
+#| cl.h - cl_bool |#
+(export (defconstant +cl-false+ nil))
+(export (defconstant +cl-true+ t))
+(export (defconstant +cl-blocking+ +cl-true+))
+(export (defconstant +cl-non-blocking+ +cl-false+))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
