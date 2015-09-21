@@ -61,27 +61,39 @@
           (is "cl_khr_icd" (foreign-string-to-lisp param-value)))))))
 
 (subtest "Device API"
-  (subtest "clGetDeviceIDs"
-    (is +cl-invalid-value+ (cl-get-device-ids (null-pointer)
-                                              0
-                                              0
-                                              (null-pointer)
-                                              (null-pointer))))
-  (subtest "clGetDeviceInfo"
-    (is +cl-invalid-device+ (cl-get-device-info (null-pointer)
-                                                0
-                                                0
-                                                (null-pointer)
-                                                (null-pointer))))
-  (subtest "clCreateSubDevices"
-    (is +cl-invalid-device+ (cl-create-sub-devices (null-pointer)
-                                                   (null-pointer)
-                                                   0
-                                                   (null-pointer)
-                                                   (null-pointer))))
-  (subtest "clRetainDevice"
-    (is +cl-invalid-device+ (cl-retain-device (null-pointer))))
-  (subtest "clReleaseDevice"
-    (is +cl-invalid-device+ (cl-release-device (null-pointer)))))
+  (with-foreign-objects ((platforms 'cl-platform-id)
+                         (num-platforms 'cl-uint)
+                         (devices 'cl-device-id)
+                         (num-devices 'cl-uint))
+    (cl-get-platform-ids 1 platforms num-platforms)
+    (let ((platform (mem-aref platforms 'cl-platform-id)))
+      (subtest "clGetDeviceIDs"
+        (is +cl-invalid-value+ (cl-get-device-ids (null-pointer)
+                                                  0
+                                                  0
+                                                  (null-pointer)
+                                                  (null-pointer)))
+        (is +cl-success+ (cl-get-device-ids platform
+                                            +cl-device-type-cpu+
+                                            1
+                                            devices
+                                            num-devices))
+        (ok (> (mem-aref num-devices 'cl-uint) 0)))
+      (subtest "clGetDeviceInfo"
+        (is +cl-invalid-device+ (cl-get-device-info (null-pointer)
+                                                    0
+                                                    0
+                                                    (null-pointer)
+                                                    (null-pointer))))
+      (subtest "clCreateSubDevices"
+        (is +cl-invalid-device+ (cl-create-sub-devices (null-pointer)
+                                                       (null-pointer)
+                                                       0
+                                                       (null-pointer)
+                                                       (null-pointer))))
+      (subtest "clRetainDevice"
+        (is +cl-invalid-device+ (cl-retain-device (null-pointer))))
+      (subtest "clReleaseDevice"
+        (is +cl-invalid-device+ (cl-release-device (null-pointer)))))))
 
 (finalize)
