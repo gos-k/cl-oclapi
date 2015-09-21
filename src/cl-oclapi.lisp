@@ -177,6 +177,13 @@
 (export (defconstant +cl-blocking+ +cl-true+))
 (export (defconstant +cl-non-blocking+ +cl-false+))
 
+#| cl.h - cl_platform_info |#
+(export (defconstant +cl-platform-profile+ #x0900))
+(export (defconstant +cl-platform-version+ #x0901))
+(export (defconstant +cl-platform-name+ #x0902))
+(export (defconstant +cl-platform-vendor+ #x0903))
+(export (defconstant +cl-platform-extensions+ #x0904))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
