@@ -12,8 +12,14 @@
 
 (subtest "platform API"
   (subtest "clGetPlatformIDs"
-    (is -30 (cl-get-platform-ids 0 (null-pointer) (null-pointer))))
+    (is +cl-invalid-value+ (cl-get-platform-ids 0
+                                                (null-pointer)
+                                                (null-pointer))))
   (subtest "clGetPlatformInfo"
-    (is -30 (cl-get-platform-info (null-pointer) 0 0 (null-pointer) (null-pointer)))))
+    (is +cl-invalid-value+ (cl-get-platform-info (null-pointer)
+                                                 0
+                                                 0
+                                                 (null-pointer)
+                                                 (null-pointer)))))
 
 (finalize)
