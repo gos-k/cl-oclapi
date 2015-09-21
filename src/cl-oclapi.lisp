@@ -6,7 +6,12 @@
            :size-t
            :cl-platform-id
            :cl-get-platform-ids
-           :cl-get-platform-info))
+           :cl-get-platform-info
+           :cl-get-device-ids
+           :cl-get-device-info
+           :cl-create-sub-devices
+           :cl-retain-device
+           :cl-release-device))
 (in-package :cl-oclapi)
 
 (define-foreign-library libopencl
@@ -201,3 +206,37 @@
   (param-value-size size-t)
   (param-value :pointer)
   (param-value-size-ret (:pointer size-t)))
+
+#| cl.h - Device APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clGetDeviceIDs" cl-get-device-ids) cl-int
+  (platform cl-platform-id)
+  (device-type cl-device-type)
+  (num-entries cl-uint)
+  (devices (:pointer cl-device-id))
+  (num-devices (:pointer cl-uint)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clGetDeviceInfo" cl-get-device-info) cl-int
+  (device cl-device-id)
+  (param-name cl-device-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+(defcfun ("clCreateSubDevices" cl-create-sub-devices) cl-int
+  (in-device cl-device-id)
+  (properties (:pointer cl-device-partition-property))
+  (num-devices cl-uint)
+  (out-devices (:pointer cl-device-id))
+  (num-devices-ret (:pointer cl-uint)))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+(defcfun ("clRetainDevice" cl-retain-device) cl-int
+  (device cl-device-id))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+(defcfun ("clReleaseDevice" cl-release-device) cl-int
+  (device cl-device-id))
