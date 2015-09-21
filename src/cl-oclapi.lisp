@@ -311,6 +311,10 @@
 (export (defconstant +cl-context-properties+      #x1082))
 (export (defconstant +cl-context-num-devices+     #x1083))
 
+#| cl.h - cl_context_properties |#
+(export (defconstant +cl-context-platform+          #x1084))
+(export (defconstant +cl-context-interop-user-sync+ #x1085))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
