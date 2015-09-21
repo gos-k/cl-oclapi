@@ -288,6 +288,11 @@
 (export (defconstant +cl-fp-soft-float+                    #b01000000))
 (export (defconstant +cl-fp-correctly-rounded-divide-sqrt+ #b10000000))
 
+#| cl.h - cl_device_mem_cache_type |#
+(export (defconstant +cl-none+             #x0))
+(export (defconstant +cl-read-only-cache+  #x1))
+(export (defconstant +cl-read-write-cache+ #x2))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
