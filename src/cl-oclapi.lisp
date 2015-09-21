@@ -166,6 +166,11 @@
 (export (defconstant +cl-invalid-linker-options+ -67))
 (export (defconstant +cl-invalid-device-partition-count+ -68))
 
+#| cl.h - OpenCL version |#
+(export (defconstant +cl-version-1-0+ t))
+(export (defconstant +cl-version-1-1+ t))
+(export (defconstant +cl-version-1-2+ t))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
