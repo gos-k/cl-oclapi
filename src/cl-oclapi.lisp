@@ -12,7 +12,12 @@
            :cl-get-device-info
            :cl-create-sub-devices
            :cl-retain-device
-           :cl-release-device))
+           :cl-release-device
+           :cl-create-context
+           :cl-create-context-from-type
+           :cl-retain-context
+           :cl-release-context
+           :cl-get-context-info))
 (in-package :cl-oclapi)
 
 (define-foreign-library libopencl
@@ -384,3 +389,37 @@
 ;; CL_API_SUFFIX__VERSION_1_2;
 (defcfun ("clReleaseDevice" cl-release-device) cl-int
   (device cl-device-id))
+
+#| cl.h - Context APIs |#
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clCreateContext" cl-create-context) cl-context
+  (properties (:pointer cl-context-properties))
+  (num-devices cl-uint)
+  (devices (:pointer cl-device-id))
+  (pfn-notify :pointer) ; void (CL_CALLBACK *)(const char *, const void *, size_t, void *),
+  (user-data (:pointer :void))
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clCreateContextFromType" cl-create-context-from-type) cl-context
+  (properties (:pointer cl-context-properties))
+  (device-type cl-device-type)
+  (pfn-notify :pointer) ; void (CL_CALLBACK *)(const char *, const void *, size_t, void *),
+  (user-data (:pointer :void))
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clRetainContext" cl-retain-context) cl-int
+  (context cl-context))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clReleaseContext" cl-release-context) cl-int
+  (context cl-context))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clGetContextInfo" cl-get-context-info) cl-int
+  (context cl-context)
+  (param-name cl-context-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))

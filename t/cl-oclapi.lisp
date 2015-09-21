@@ -8,7 +8,7 @@
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-oclapi)' in your Lisp.
 
-(plan 2)
+(plan 3)
 
 (subtest "platform API"
   (with-foreign-objects ((platforms 'cl-platform-id)
@@ -105,5 +105,31 @@
           (is +cl-invalid-device+ (cl-retain-device (null-pointer))))
         (subtest "clReleaseDevice"
           (is +cl-invalid-device+ (cl-release-device (null-pointer))))))))
+
+(subtest "Context API"
+  (subtest "clCreateContext"
+    (ok (cl-create-context (null-pointer)
+                           0
+                           (null-pointer)
+                           (null-pointer)
+                           (null-pointer)
+                           (null-pointer))))
+  (subtest "clCreateContextFromType"
+    (ok (cl-create-context-from-type (null-pointer)
+                                     0
+                                     (null-pointer)
+                                     (null-pointer)
+                                     (null-pointer))))
+  (subtest "clRetainContext"
+    (is +cl-invalid-context+ (cl-retain-context (null-pointer))))
+  (subtest "clReleaseContext"
+    (is +cl-invalid-context+ (cl-release-context (null-pointer))))
+  (subtest "clGetContextInfo"
+    (is +cl-invalid-context+ (cl-get-context-info (null-pointer)
+                                                  0
+                                                  0
+                                                  (null-pointer)
+                                                  (null-pointer)))))
+
 
 (finalize)
