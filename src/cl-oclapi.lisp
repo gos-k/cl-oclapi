@@ -278,6 +278,16 @@
 (export (defconstant +cl-device-image-pitch-alignment+         #x104a))
 (export (defconstant +cl-device-image-base-address-alignment+  #x104b))
 
+#| cl.h - cl_device_fp_config - bitfield |#
+(export (defconstant +cl-fp-denorm+                        #b00000001))
+(export (defconstant +cl-fp-inf-nan+                       #b00000010))
+(export (defconstant +cl-fp-round-to-nearest+              #b00000100))
+(export (defconstant +cl-fp-round-to-zero+                 #b00001000))
+(export (defconstant +cl-fp-round-to-inf+                  #b00010000))
+(export (defconstant +cl-fp-fma+                           #b00100000))
+(export (defconstant +cl-fp-soft-float+                    #b01000000))
+(export (defconstant +cl-fp-correctly-rounded-divide-sqrt+ #b10000000))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
