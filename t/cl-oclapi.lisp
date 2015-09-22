@@ -162,7 +162,13 @@
                                                     errcode-ret)))
           (is +cl-success+ (cl-retain-context context))))
       (subtest "clReleaseContext"
-        (is +cl-invalid-context+ (cl-release-context (null-pointer))))
+        (is +cl-invalid-context+ (cl-release-context (null-pointer)))
+        (let ((context (cl-create-context-from-type properties
+                                                    +cl-device-type-default+
+                                                    (null-pointer)
+                                                    (null-pointer)
+                                                    errcode-ret)))
+          (is +cl-success+ (cl-release-context context))))
       (subtest "clGetContextInfo"
         (is +cl-invalid-context+ (cl-get-context-info (null-pointer)
                                                       0
