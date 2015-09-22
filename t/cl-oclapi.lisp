@@ -111,6 +111,7 @@
                          (num-platforms 'cl-uint)
                          (devices 'cl-device-id)
                          (num-devices 'cl-uint)
+                         (properties 'cl-context-properties 3)
                          (errcode-ret 'cl-int))
     (is +cl-success+ (cl-get-platform-ids 1 platforms num-platforms))
     (let ((platform (mem-aref platforms 'cl-platform-id)))
@@ -126,6 +127,7 @@
                                (null-pointer)
                                (null-pointer)
                                (null-pointer)))
+        (setf (mem-aref errcode-ret 'cl-int) +cl-success+)
         (let ((context (cl-create-context (null-pointer)
                                           1
                                           devices
@@ -139,7 +141,18 @@
                                          0
                                          (null-pointer)
                                          (null-pointer)
-                                         (null-pointer))))
+                                         (null-pointer)))
+        (setf (mem-aref errcode-ret 'cl-int) +cl-success+)
+        (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
+        (setf (mem-aref properties 'cl-platform-id 1) platform)
+        (setf (mem-aref properties 'cl-context-properties 2) 0)
+        (let ((context (cl-create-context-from-type properties
+                                                    +cl-device-type-default+
+                                                    (null-pointer)
+                                                    (null-pointer)
+                                                    errcode-ret)))
+          (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+          (ok context)))
       (subtest "clRetainContext"
         (is +cl-invalid-context+ (cl-retain-context (null-pointer))))
       (subtest "clReleaseContext"
