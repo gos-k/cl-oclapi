@@ -174,6 +174,21 @@
                                                       0
                                                       0
                                                       (null-pointer)
-                                                      (null-pointer)))))))
+                                                      (null-pointer)))
+        (let ((context (cl-create-context-from-type properties
+                                                    +cl-device-type-default+
+                                                    (null-pointer)
+                                                    (null-pointer)
+                                                    errcode-ret)))
+          (with-foreign-objects ((param-value 'cl-int)
+                                 (param-value-size-ret 'cl-int))
+            (is +cl-success+ (cl-get-context-info context
+                                                  +cl-context-num-devices+
+                                                  4
+                                                  param-value
+                                                  param-value-size-ret))
+            (ok (> (mem-aref param-value 'cl-int) 0))
+            (ok (> (mem-aref param-value-size-ret 'cl-int) 0)))
+          (cl-release-context context))))))
 
 (finalize)
