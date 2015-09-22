@@ -42,9 +42,9 @@
 (defctype cl-float :float)
 (defctype cl-double :double)
 
-(defctype size-t :uint64)
-(defctype intptr-t :int64)
-(defctype uintptr-t :uint64)
+(defctype size-t :ulong)
+(defctype intptr-t :long)
+(defctype uintptr-t :ulong)
 
 #| cl.h |#
 (defctype cl-platform-id :pointer)
