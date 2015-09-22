@@ -2,10 +2,13 @@
 (defpackage cl-oclapi
   (:use :cl :cffi)
   (:export :cl-uchar
+           :cl-int
            :cl-uint
            :size-t
+           :intptr-t
            :cl-platform-id
            :cl-device-id
+           :cl-context-properties
            :cl-get-platform-ids
            :cl-get-platform-info
            :cl-get-device-ids

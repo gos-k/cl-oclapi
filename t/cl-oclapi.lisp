@@ -107,29 +107,48 @@
           (is +cl-invalid-device+ (cl-release-device (null-pointer))))))))
 
 (subtest "Context API"
-  (subtest "clCreateContext"
-    (ok (cl-create-context (null-pointer)
-                           0
-                           (null-pointer)
-                           (null-pointer)
-                           (null-pointer)
-                           (null-pointer))))
-  (subtest "clCreateContextFromType"
-    (ok (cl-create-context-from-type (null-pointer)
-                                     0
-                                     (null-pointer)
-                                     (null-pointer)
-                                     (null-pointer))))
-  (subtest "clRetainContext"
-    (is +cl-invalid-context+ (cl-retain-context (null-pointer))))
-  (subtest "clReleaseContext"
-    (is +cl-invalid-context+ (cl-release-context (null-pointer))))
-  (subtest "clGetContextInfo"
-    (is +cl-invalid-context+ (cl-get-context-info (null-pointer)
-                                                  0
-                                                  0
-                                                  (null-pointer)
-                                                  (null-pointer)))))
-
+  (with-foreign-objects ((platforms 'cl-platform-id)
+                         (num-platforms 'cl-uint)
+                         (devices 'cl-device-id)
+                         (num-devices 'cl-uint)
+                         (errcode-ret 'cl-int))
+    (is +cl-success+ (cl-get-platform-ids 1 platforms num-platforms))
+    (let ((platform (mem-aref platforms 'cl-platform-id)))
+      (is +cl-success+ (cl-get-device-ids platform
+                                          +cl-device-type-default+
+                                          1
+                                          devices
+                                          num-devices))
+      (subtest "clCreateContext"
+        (ok (cl-create-context (null-pointer)
+                               0
+                               (null-pointer)
+                               (null-pointer)
+                               (null-pointer)
+                               (null-pointer)))
+        (let ((context (cl-create-context (null-pointer)
+                                          1
+                                          devices
+                                          (null-pointer)
+                                          (null-pointer)
+                                          errcode-ret)))
+          (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+          (ok context)))
+      (subtest "clCreateContextFromType"
+        (ok (cl-create-context-from-type (null-pointer)
+                                         0
+                                         (null-pointer)
+                                         (null-pointer)
+                                         (null-pointer))))
+      (subtest "clRetainContext"
+        (is +cl-invalid-context+ (cl-retain-context (null-pointer))))
+      (subtest "clReleaseContext"
+        (is +cl-invalid-context+ (cl-release-context (null-pointer))))
+      (subtest "clGetContextInfo"
+        (is +cl-invalid-context+ (cl-get-context-info (null-pointer)
+                                                      0
+                                                      0
+                                                      (null-pointer)
+                                                      (null-pointer)))))))
 
 (finalize)
