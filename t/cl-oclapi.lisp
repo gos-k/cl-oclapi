@@ -193,7 +193,7 @@
           (cl-release-context context))))))
 
 (subtest "Command Queue API"
-  (subtest "can call command queue api functions."
+  (subtest "invalid params."
     (ok (cl-create-command-queue (null-pointer)
                                  (null-pointer)
                                  0
@@ -204,6 +204,45 @@
                                                               0
                                                               0
                                                               (null-pointer)
-                                                              (null-pointer)))))
+                                                              (null-pointer))))
+  (subtest "valid params."
+    (with-foreign-objects ((platforms 'cl-platform-id)
+                           (num-platforms 'cl-uint)
+                           (devices 'cl-device-id)
+                           (num-devices 'cl-uint)
+                           (properties 'cl-context-properties 3)
+                           (errcode-ret 'cl-int))
+      (is +cl-success+ (cl-get-platform-ids 1 platforms num-platforms))
+      (let ((platform (mem-aref platforms 'cl-platform-id)))
+        (is +cl-success+ (cl-get-device-ids platform
+                                            +cl-device-type-default+
+                                            1
+                                            devices
+                                            num-devices))
+        (let ((device (mem-aref devices 'cl-device-id)))
+          (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
+          (setf (mem-aref properties 'cl-platform-id 1) platform)
+          (setf (mem-aref properties 'cl-context-properties 2) 0)
+          (let ((context (cl-create-context-from-type properties
+                                                      +cl-device-type-default+
+                                                      (null-pointer)
+                                                      (null-pointer)
+                                                      errcode-ret)))
+            (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+            (let ((command-queue (cl-create-command-queue context
+                                                          device
+                                                          0
+                                                          errcode-ret)))
+              (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+              (with-foreign-objects ((param-value 'cl-uchar 256)
+                                     (param-value-size-ret 'size-t))
+                (is +cl-success+ (cl-get-command-queue-info command-queue
+                                                            +cl-queue-device+
+                                                            256
+                                                            param-value
+                                                            param-value-size-ret))
+                (ok (> (mem-aref param-value-size-ret 'size-t) 0))
+                (is +cl-success+ (cl-retain-command-queue command-queue))
+                (is +cl-success+ (cl-release-command-queue command-queue))))))))))
 
 (finalize)
