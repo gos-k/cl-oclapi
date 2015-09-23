@@ -12,7 +12,11 @@
            :cl-create-context-from-type
            :cl-retain-context
            :cl-release-context
-           :cl-get-context-info))
+           :cl-get-context-info
+           :cl-create-command-queue
+           :cl-retain-command-queue
+           :cl-release-command-queue
+           :cl-get-command-queue-info))
 (in-package :cl-oclapi)
 
 (define-foreign-library libopencl
@@ -450,6 +454,31 @@
 (defcfun ("clGetContextInfo" cl-get-context-info) cl-int
   (context cl-context)
   (param-name cl-context-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
+
+#| cl.h - Command Queue APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clCreateCommandQueue" cl-create-command-queue) cl-command-queue
+  (context cl-context)
+  (device cl-device-id)
+  (properties cl-command-queue-properties)
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clRetainCommandQueue" cl-retain-command-queue) cl-int
+  (command-queue cl-command-queue))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clReleaseCommandQueue" cl-release-command-queue) cl-int
+  (command-queue cl-command-queue))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clGetCommandQueueInfo" cl-get-command-queue-info) cl-int
+  (command-queue cl-command-queue)
+  (param-name cl-command-queue-info)
   (param-value-size size-t)
   (param-value (:pointer :void))
   (param-value-size-ret (:pointer size-t)))

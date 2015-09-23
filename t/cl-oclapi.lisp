@@ -191,4 +191,18 @@
             (ok (> (mem-aref param-value-size-ret 'cl-int) 0)))
           (cl-release-context context))))))
 
+(subtest "Command Queue API"
+  (subtest "can call command queue api functions."
+    (ok (cl-create-command-queue (null-pointer)
+                                 (null-pointer)
+                                 0
+                                 (null-pointer)))
+    (is +cl-invalid-command-queue+ (cl-retain-command-queue (null-pointer)))
+    (is +cl-invalid-command-queue+ (cl-release-command-queue (null-pointer)))
+    (is +cl-invalid-command-queue+ (cl-get-command-queue-info (null-pointer)
+                                                              0
+                                                              0
+                                                              (null-pointer)
+                                                              (null-pointer)))))
+
 (finalize)
