@@ -31,6 +31,7 @@
 (defmacro defctypes (&body types)
   `(progn
      ,@(loop for type in types
+             collect `(export ',(car type))
              collect `(defctype ,@type))))
 
 (defmacro defconstants (&body constants)
