@@ -1,9 +1,31 @@
 # cl-oclapi
-Yet another OpenCL API bindings for Common Lisp.
+
+Yet another [OpenCL](https://www.khronos.org/opencl/) API bindings for Common Lisp.
 
 ## Usage
 
 ## Installation
+
+### Ubuntu
+
+Install POCL.
+
+```
+apt-get install libpocl-dev libpocl-dbg libpoclu1
+```
+
+If you use Roswell then
+
+```
+git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
+```
+
+## Specifications and platforms
+
+* Specifications
+  * OpenCL 1.2
+* Platforms
+  * Pocl 0.10
 
 ## Author
 
