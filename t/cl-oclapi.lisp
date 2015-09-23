@@ -8,7 +8,7 @@
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-oclapi)' in your Lisp.
 
-(plan 3)
+(plan 5)
 
 (subtest "platform API"
   (with-foreign-objects ((platforms 'cl-platform-id)
@@ -244,5 +244,42 @@
                 (ok (> (mem-aref param-value-size-ret 'size-t) 0))
                 (is +cl-success+ (cl-retain-command-queue command-queue))
                 (is +cl-success+ (cl-release-command-queue command-queue))))))))))
+
+(subtest "Memmory Object API"
+  (subtest "invalid params."
+    (ok (cl-create-buffer (null-pointer)
+                          0
+                          0
+                          (null-pointer)
+                          (null-pointer)))
+    (ok (cl-create-sub-buffer (null-pointer)
+                              0
+                              0
+                              (null-pointer)
+                              (null-pointer)))
+    (ok (cl-create-image (null-pointer)
+                         0
+                         (null-pointer)
+                         (null-pointer)
+                         (null-pointer)
+                         (null-pointer)))
+    (is +cl-invalid-mem-object+ (cl-retain-mem-object (null-pointer)))
+    (is +cl-invalid-mem-object+ (cl-release-mem-object (null-pointer)))
+    (is +cl-invalid-context+ (cl-get-supported-image-formats (null-pointer)
+                                                             0
+                                                             0
+                                                             0
+                                                             (null-pointer)
+                                                             (null-pointer)))
+    (is +cl-invalid-mem-object+ (cl-get-mem-object-info (null-pointer)
+                                                        0
+                                                        0
+                                                        (null-pointer)
+                                                        (null-pointer)))
+    (is +cl-invalid-mem-object+ (cl-get-image-info (null-pointer)
+                                                   0
+                                                   0
+                                                   (null-pointer)
+                                                   (null-pointer)))))
 
 (finalize)

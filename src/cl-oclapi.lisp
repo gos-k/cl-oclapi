@@ -16,7 +16,15 @@
            :cl-create-command-queue
            :cl-retain-command-queue
            :cl-release-command-queue
-           :cl-get-command-queue-info))
+           :cl-get-command-queue-info
+           :cl-create-buffer
+           :cl-create-sub-buffer
+           :cl-create-image
+           :cl-retain-mem-object
+           :cl-release-mem-object
+           :cl-get-supported-image-formats
+           :cl-get-mem-object-info
+           :cl-get-image-info))
 (in-package :cl-oclapi)
 
 (define-foreign-library libopencl
@@ -482,3 +490,66 @@
   (param-value-size size-t)
   (param-value (:pointer :void))
   (param-value-size-ret (:pointer size-t)))
+
+#| Memory Object APIs |#
+
+;; CL-API-SUFFIX--VERSION-1-0;
+(defcfun ("clCreateBuffer" cl-create-buffer) cl-mem
+  (context cl-context)
+  (flags cl-mem-flags)
+  (size size-t)
+  (host-ptr :pointer)
+  (errcode-ret (:pointer cl-int)))
+
+;; CL-API-SUFFIX--VERSION-1-1;
+(defcfun ("clCreateSubBuffer" cl-create-sub-buffer) cl-mem
+  (buffer cl-mem)
+  (flags cl-mem-flags)
+  (buffer-create-type cl-buffer-create-type)
+  (buffer-create-info :pointer)
+  (errcode-ret (:pointer cl-int)))
+
+;; CL-API-SUFFIX--VERSION-1-2;
+(defcfun ("clCreateImage" cl-create-image) cl-mem
+  (context cl-context)
+  (flags cl-mem-flags)
+  (image-format (:pointer cl-image-format))
+  (image-desc (:pointer cl-image-desc))
+  (host-ptr :pointer)
+  (errcode-ret (:pointer cl-int)))
+
+;; CL-API-SUFFIX--VERSION-1-0;
+(defcfun ("clRetainMemObject" cl-retain-mem-object) cl-int
+  (memobj cl-mem))
+
+;; CL-API-SUFFIX--VERSION-1-0;
+(defcfun ("clReleaseMemObject" cl-release-mem-object) cl-int
+  (memobj cl-mem))
+
+;; CL-API-SUFFIX--VERSION-1-0;
+(defcfun ("clGetSupportedImageFormats" cl-get-supported-image-formats) cl-int
+  (context cl-context)
+  (flags cl-mem-flags)
+  (image-type cl-mem-object-type)
+  (num-entries cl-uint)
+  (image-formats (:pointer cl-image-format))
+  (num-image-formats (:pointer cl-uint)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clGetMemObjectInfo" cl-get-mem-object-info) cl-int
+  (memobj cl-mem)
+  (param-name cl-mem-info)
+  (param-value-size size-t)
+  (param-value :pointer)
+  (param-value-size-ret (:pointer size-t)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+(defcfun ("clGetImageInfo" cl-get-image-info) cl-int
+  (image cl-mem)
+  (param-name cl-image-info)
+  (param-value-size size-t)
+  (param-value :pointer)
+  (param-value-size-ret (:pointer size-t)))
+
+;; TODO: clSetMemObjectDestructorCallback
+
