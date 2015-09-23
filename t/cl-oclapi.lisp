@@ -107,6 +107,25 @@
           (is +cl-invalid-device+ (cl-release-device (null-pointer))))))))
 
 (subtest "Context API"
+  (subtest "can call context api functions."
+    (ok (cl-create-context (null-pointer)
+                           0
+                           (null-pointer)
+                           (null-pointer)
+                           (null-pointer)
+                           (null-pointer)))
+    (ok (cl-create-context-from-type (null-pointer)
+                                     0
+                                     (null-pointer)
+                                     (null-pointer)
+                                     (null-pointer)))
+    (is +cl-invalid-context+ (cl-retain-context (null-pointer)))
+    (is +cl-invalid-context+ (cl-release-context (null-pointer)))
+    (is +cl-invalid-context+ (cl-get-context-info (null-pointer)
+                                                  0
+                                                  0
+                                                  (null-pointer)
+                                                  (null-pointer))))
   (with-foreign-objects ((platforms 'cl-platform-id)
                          (num-platforms 'cl-uint)
                          (devices 'cl-device-id)
@@ -121,12 +140,6 @@
                                           devices
                                           num-devices))
       (subtest "clCreateContext"
-        (ok (cl-create-context (null-pointer)
-                               0
-                               (null-pointer)
-                               (null-pointer)
-                               (null-pointer)
-                               (null-pointer)))
         (setf (mem-aref errcode-ret 'cl-int) +cl-success+)
         (let ((context (cl-create-context (null-pointer)
                                           1
@@ -137,11 +150,6 @@
           (is +cl-success+ (mem-aref errcode-ret 'cl-int))
           (ok context)))
       (subtest "clCreateContextFromType"
-        (ok (cl-create-context-from-type (null-pointer)
-                                         0
-                                         (null-pointer)
-                                         (null-pointer)
-                                         (null-pointer)))
         (setf (mem-aref errcode-ret 'cl-int) +cl-success+)
         (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
         (setf (mem-aref properties 'cl-platform-id 1) platform)
@@ -154,7 +162,6 @@
           (is +cl-success+ (mem-aref errcode-ret 'cl-int))
           (ok context)))
       (subtest "clRetainContext"
-        (is +cl-invalid-context+ (cl-retain-context (null-pointer)))
         (let ((context (cl-create-context-from-type properties
                                                     +cl-device-type-default+
                                                     (null-pointer)
@@ -162,7 +169,6 @@
                                                     errcode-ret)))
           (is +cl-success+ (cl-retain-context context))))
       (subtest "clReleaseContext"
-        (is +cl-invalid-context+ (cl-release-context (null-pointer)))
         (let ((context (cl-create-context-from-type properties
                                                     +cl-device-type-default+
                                                     (null-pointer)
@@ -170,11 +176,6 @@
                                                     errcode-ret)))
           (is +cl-success+ (cl-release-context context))))
       (subtest "clGetContextInfo"
-        (is +cl-invalid-context+ (cl-get-context-info (null-pointer)
-                                                      0
-                                                      0
-                                                      (null-pointer)
-                                                      (null-pointer)))
         (let ((context (cl-create-context-from-type properties
                                                     +cl-device-type-default+
                                                     (null-pointer)
