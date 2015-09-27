@@ -382,6 +382,19 @@
   (+cl-queue-reference-count+ #x1092)
   (+cl-queue-properties+      #x1093))
 
+#| cl.h - cl_mem_flags - bitfield |#
+(defconstants
+  (+cl-mem-read-write+      #.(ash 1 0))
+  (+cl-mem-write-only+      #.(ash 1 1))
+  (+cl-mem-read-only+       #.(ash 1 2))
+  (+cl-mem-use-host-ptr+    #.(ash 1 3))
+  (+cl-mem-alloc-host-ptr+  #.(ash 1 4))
+  (+cl-mem-copy-host-ptr+   #.(ash 1 5))
+  ;; reserved (1 << 6)
+  (+cl-mem-host-write-only+ #.(ash 1 7))
+  (+cl-mem-host-read-only+  #.(ash 1 8))
+  (+cl-mem-host-no-access+  #.(ash 1 9)))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
