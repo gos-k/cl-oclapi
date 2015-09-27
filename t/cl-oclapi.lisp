@@ -10,6 +10,11 @@
 
 (plan 5)
 
+(defun set-platform-id (properties platform-id)
+  (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
+  (setf (mem-aref properties 'cl-platform-id 1) platform-id)
+  (setf (mem-aref properties 'cl-context-properties 2) 0))
+
 (subtest "platform API"
   (with-foreign-objects ((platforms 'cl-platform-id)
                          (num-platforms 'cl-uint))
@@ -193,7 +198,7 @@
           (cl-release-context context))))))
 
 (subtest "Command Queue API"
-  (subtest "invalid params."
+  (subtest "can call functions."
     (ok (cl-create-command-queue (null-pointer)
                                  (null-pointer)
                                  0
@@ -246,7 +251,7 @@
                 (is +cl-success+ (cl-release-command-queue command-queue))))))))))
 
 (subtest "Memmory Object API"
-  (subtest "invalid params."
+  (subtest "can call functions."
     (ok (cl-create-buffer (null-pointer)
                           0
                           0
@@ -280,6 +285,35 @@
                                                    0
                                                    0
                                                    (null-pointer)
-                                                   (null-pointer)))))
+                                                   (null-pointer))))
+  (subtest "valid params."
+    (with-foreign-objects ((platforms 'cl-platform-id)
+                           (num-platforms 'cl-uint)
+                           (devices 'cl-device-id)
+                           (num-devices 'cl-uint)
+                           (properties 'cl-context-properties 3)
+                           (errcode-ret 'cl-int))
+      (is +cl-success+ (cl-get-platform-ids 1 platforms num-platforms))
+      (let ((platform (mem-aref platforms 'cl-platform-id)))
+        (is +cl-success+ (cl-get-device-ids platform
+                                            +cl-device-type-default+
+                                            1
+                                            devices
+                                            num-devices))
+        (set-platform-id properties platform)
+        (let ((context (cl-create-context-from-type properties
+                                                    +cl-device-type-default+
+                                                    (null-pointer)
+                                                    (null-pointer)
+                                                    errcode-ret)))
+          (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+          (let ((buffer (cl-create-buffer context
+                                          +cl-mem-read-write+
+                                          1
+                                          (null-pointer)
+                                          errcode-ret)))
+            (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+            (is +cl-success+ (cl-retain-mem-object buffer))
+            (is +cl-success+ (cl-release-mem-object buffer))))))))
 
 (finalize)
