@@ -418,6 +418,25 @@
   (+cl-depth+         #x10bd)
   (+cl-depth-stencil+ #x10be))
 
+#| cl.h - cl_channel_type |#
+(defconstants
+  (+cl-snorm-int8+       #x10d0)
+  (+cl-snorm-int16+      #x10d1)
+  (+cl-unorm-int8+       #x10d2)
+  (+cl-unorm-int16+      #x10d3)
+  (+cl-unorm-short-565+  #x10d4)
+  (+cl-unorm-short-555+  #x10d5)
+  (+cl-unorm-int-101010+ #x10d6)
+  (+cl-signed-int8+      #x10d7)
+  (+cl-signed-int16+     #x10d8)
+  (+cl-signed-int32+     #x10d9)
+  (+cl-unsigned-int8+    #x10da)
+  (+cl-unsigned-int16+   #x10db)
+  (+cl-unsigned-int32+   #x10dc)
+  (+cl-half-float+       #x10dd)
+  (+cl-float+            #x10de)
+  (+cl-unorm-int24+      #x10df))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
