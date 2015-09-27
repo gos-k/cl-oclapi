@@ -156,9 +156,7 @@
           (ok context)))
       (subtest "clCreateContextFromType"
         (setf (mem-aref errcode-ret 'cl-int) +cl-success+)
-        (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
-        (setf (mem-aref properties 'cl-platform-id 1) platform)
-        (setf (mem-aref properties 'cl-context-properties 2) 0)
+        (set-platform-id properties platform)
         (let ((context (cl-create-context-from-type properties
                                                     +cl-device-type-default+
                                                     (null-pointer)
@@ -225,9 +223,7 @@
                                             devices
                                             num-devices))
         (let ((device (mem-aref devices 'cl-device-id)))
-          (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
-          (setf (mem-aref properties 'cl-platform-id 1) platform)
-          (setf (mem-aref properties 'cl-context-properties 2) 0)
+          (set-platform-id properties platform)
           (let ((context (cl-create-context-from-type properties
                                                       +cl-device-type-default+
                                                       (null-pointer)
