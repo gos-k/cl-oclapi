@@ -395,6 +395,11 @@
   (+cl-mem-host-read-only+  #.(ash 1 8))
   (+cl-mem-host-no-access+  #.(ash 1 9)))
 
+#| cl.h - cl_mem_migration_flags - bitfield |#
+(defconstants
+  (+cl-migrate-mem-object-host+              #.(ash 1 0))
+  (+cl-migrate-mem-object-content-undefined+ #.(ash 1 1)))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
