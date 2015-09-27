@@ -400,6 +400,24 @@
   (+cl-migrate-mem-object-host+              #.(ash 1 0))
   (+cl-migrate-mem-object-content-undefined+ #.(ash 1 1)))
 
+#| cl.h - cl_channel_order |#
+(defconstants
+  (+cl-r+             #x10b0)
+  (+cl-a+             #x10b1)
+  (+cl-rg+            #x10b2)
+  (+cl-ra+            #x10b3)
+  (+cl-rgb+           #x10b4)
+  (+cl-rgba+          #x10b5)
+  (+cl-bgra+          #x10b6)
+  (+cl-argb+          #x10b7)
+  (+cl-intensity+     #x10b8)
+  (+cl-luminance+     #x10b9)
+  (+cl-rx+            #x10ba)
+  (+cl-rgx+           #x10bb)
+  (+cl-rgbx+          #x10bc)
+  (+cl-depth+         #x10bd)
+  (+cl-depth-stencil+ #x10be))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
