@@ -437,6 +437,16 @@
   (+cl-float+            #x10de)
   (+cl-unorm-int24+      #x10df))
 
+#| cl.h - cl_mem_object_type |#
+(defconstants
+  (+cl-mem-object-buffer+         #x10f0)
+  (+cl-mem-object-image2d+        #x10f1)
+  (+cl-mem-object-image3d+        #x10f2)
+  (+cl-mem-object-image2d-array+  #x10f3)
+  (+cl-mem-object-image1d+        #x10f4)
+  (+cl-mem-object-image1d-array+  #x10f5)
+  (+cl-mem-object-image1d-buffer+ #x10f6))
+
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
