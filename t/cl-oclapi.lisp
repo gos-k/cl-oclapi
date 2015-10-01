@@ -303,13 +303,41 @@
                                                     (null-pointer)
                                                     errcode-ret)))
           (is +cl-success+ (mem-aref errcode-ret 'cl-int))
-          (let ((buffer (cl-create-buffer context
-                                          +cl-mem-read-write+
-                                          1
-                                          (null-pointer)
-                                          errcode-ret)))
-            (is +cl-success+ (mem-aref errcode-ret 'cl-int))
-            (is +cl-success+ (cl-retain-mem-object buffer))
-            (is +cl-success+ (cl-release-mem-object buffer))))))))
+          (subtest "buffer"
+            (let ((buffer (cl-create-buffer context
+                                            +cl-mem-read-write+
+                                            1
+                                            (null-pointer)
+                                            errcode-ret)))
+              (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+              (is +cl-success+ (cl-retain-mem-object buffer))
+              (is +cl-success+ (cl-release-mem-object buffer))))
+          (subtest "image"
+            (with-foreign-objects ((format '(:struct cl-image-format))
+                                   (desc '(:struct cl-image-desc)))
+              (setf (foreign-slot-value format '(:struct cl-image-format) 'image-channel-order)
+                    +cl-rgba+
+                    (foreign-slot-value format '(:struct cl-image-format) 'image-channel-data-type)
+                    +cl-unsigned-int8+)
+
+              (setf (foreign-slot-value desc '(:struct cl-image-desc) 'image-type) +cl-mem-object-image2d+
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-width) 1
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-height) 1
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-depth) 1
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-array-size) 1
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-row-pitch) 1
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-slice-pitch) 1
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'num-mip-levels) 0
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'num-samples) 0
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'buffer) (null-pointer))
+              (let ((image (cl-create-image context
+                                            +cl-mem-read-write+
+                                            format
+                                            desc
+                                            (null-pointer)
+                                            errcode-ret)))
+                (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+                (is +cl-success+ (cl-retain-mem-object image))
+                (is +cl-success+ (cl-release-mem-object image))))))))))
 
 (finalize)
