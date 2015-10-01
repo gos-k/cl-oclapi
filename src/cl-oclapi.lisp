@@ -44,6 +44,14 @@
              collect `(export ',(car constant))
              collect `(defconstant ,@constant))))
 
+(defmacro defcstruct-export (name &body slots)
+  `(progn
+     (defcstruct ,name
+       ,@slots)
+     (export ',name)
+     ,@(loop for slot in slots
+             collect `(export ',(car slot)))))
+
 #| cl-platform.h |#
 (defctypes
   (cl-char :int8)
@@ -121,11 +129,11 @@
   (cl-command-type cl-uint)
   (cl-profiling-info cl-uint))
 
-(defcstruct cl-image-format
+(defcstruct-export cl-image-format
   (image-channel-order cl-channel-order)
   (image-channel-data-type cl-channel-type))
 
-(defcstruct cl-image-desc
+(defcstruct-export cl-image-desc
   (image-type cl-mem-object-type)
   (image-width size-t)
   (image-height size-t)
@@ -137,7 +145,7 @@
   (num-samples cl-uint)
   (buffer cl-mem))
 
-(defcstruct cl-buffer-region
+(defcstruct-export cl-buffer-region
   (origin size-t)
   (size size-t))
 
