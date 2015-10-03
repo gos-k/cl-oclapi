@@ -8,7 +8,7 @@
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-oclapi)' in your Lisp.
 
-(plan 7)
+(plan 8)
 
 (defun set-platform-id (properties platform-id)
   (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
@@ -464,5 +464,10 @@
                                                            0
                                                            (null-pointer)
                                                            (null-pointer)))))
+
+(subtest "Flush and Finish API"
+  (subtest "can call functions."
+    (is +cl-invalid-command-queue+ (cl-flush (null-pointer)))
+    (is +cl-invalid-command-queue+ (cl-finish (null-pointer)))))
 
 (finalize)
