@@ -11,7 +11,7 @@ Yet another [OpenCL](https://www.khronos.org/opencl/) API bindings for Common Li
 Install POCL.
 
 ```
-apt-get install libpocl-dev libpocl-dbg libpoclu1 ocl-icd-opencl-dev
+sudo apt-get install libpocl-dev libpocl-dbg libpoclu-dev
 ```
 
 If you use Roswell then
