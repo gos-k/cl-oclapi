@@ -8,7 +8,7 @@
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-oclapi)' in your Lisp.
 
-(plan 6)
+(plan 7)
 
 (defun set-platform-id (properties platform-id)
   (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
@@ -431,5 +431,38 @@
                 (is +cl-success+ (mem-aref errcode-ret 'cl-int))
                 (is +cl-success+ (cl-retain-program program))
                 (is +cl-success+ (cl-release-program program))))))))))
+
+(subtest "Kernel Object API"
+  (subtest "can call functions."
+    (ok (cl-create-kernel (null-pointer)
+                          (null-pointer)
+                          (null-pointer)))
+    (is +cl-invalid-program+ (cl-create-kernels-in-program (null-pointer)
+                                                           0
+                                                           (null-pointer)
+                                                           (null-pointer)))
+    (is +cl-invalid-kernel+ (cl-retain-kernel (null-pointer)))
+    (is +cl-invalid-kernel+ (cl-release-kernel (null-pointer)))
+    (is +cl-invalid-kernel+ (cl-set-kernel-arg (null-pointer)
+                                               0
+                                               0
+                                               (null-pointer)))
+    (is +cl-invalid-kernel+ (cl-get-kernel-info (null-pointer)
+                                                0
+                                                0
+                                                (null-pointer)
+                                                (null-pointer)))
+    (is +cl-invalid-kernel+ (cl-get-kernel-arg-info (null-pointer)
+                                                    0
+                                                    0
+                                                    0
+                                                    (null-pointer)
+                                                    (null-pointer)))
+    (is +cl-invalid-kernel+ (cl-get-kernel-work-group-info (null-pointer)
+                                                           (null-pointer)
+                                                           0
+                                                           0
+                                                           (null-pointer)
+                                                           (null-pointer)))))
 
 (finalize)
