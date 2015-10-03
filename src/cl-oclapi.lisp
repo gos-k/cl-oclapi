@@ -809,3 +809,295 @@
 @export
 (defcfun ("clFinish" cl-finish) cl-int
   (command-queue cl-command-queue))
+
+#| Enqueued Commands APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueReadBuffer" cl-enqueue-read-buffer) cl-int
+  (command-queue cl-command-queue)
+  (buffer cl-mem)
+  (blocking-read cl-bool)
+  (offset size-t)
+  (size size-t)
+  (ptr (:pointer :void))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clEnqueueReadBufferRect" cl-enqueue-read-buffer-rect) cl-int
+  (command-queue cl-command-queue)
+  (buffer cl-mem)
+  (blocking-read cl-bool)
+  (buffer-offset (:pointer size-t))
+  (host-offset (:pointer size-t))
+  (region (:pointer size-t))
+  (buffer-row-pitch size-t)
+  (buffer-slice-pitch size-t)
+  (host-row-pitch size-t)
+  (host-slice-pitch size-t)
+  (ptr :pointer :void)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueWriteBuffer" cl-enqueue-write-buffer) cl-int
+  (command-queue cl-command-queue)
+  (buffer cl-mem)
+  (blocking-write cl-bool)
+  (offset size-t)
+  (size size-t)
+  (ptr (:pointer :void))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clEnqueueWriteBufferRect" cl-enqueue-write-buffer-rect) cl-int
+  (command-queue cl-command-queue)
+  (buffer cl-mem)
+  (blocking-write cl-bool)
+  (buffer-offset (:pointer size-t))
+  (host-offset (:pointer size-t))
+  (region (:pointer size-t))
+  (buffer-row-pitch size-t)
+  (buffer-slice-pitch size-t)
+  (host-row-pitch size-t)
+  (host-slice-pitch size-t)
+  (ptr (:pointer :void))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clEnqueueFillBuffer" cl-enqueue-fill-buffer) cl-int
+  (command-queue cl-command-queue)
+  (buffer cl-mem)
+  (pattern (:pointer :void))
+  (pattern-size size-t)
+  (offset size-t)
+  (size size-t)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueCopyBuffer" cl-enqueue-copy-buffer) cl-int
+  (command-queue cl-command-queue)
+  (src-buffer cl-mem)
+  (dst-buffer cl-mem)
+  (src-offset size-t)
+  (dst-offset size-t)
+  (size size-t)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clEnqueueCopyBufferRect" cl-enqueue-copy-buffer-rect) cl-int
+  (command-queue cl-command-queue)
+  (src-buffer cl-mem)
+  (dst-buffer cl-mem)
+  (src-origin (:pointer size-t))
+  (dst-origin (:pointer size-t))
+  (region (:pointer size-t))
+  (src-row-pitch size-t)
+  (src-slice-pitch size-t)
+  (dst-row-pitch size-t)
+  (dst-slice-pitch size-t)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueReadImage" cl-enqueue-read-image) cl-int
+  (command-queue cl-command-queue)
+  (image cl-mem)
+  (blocking-read cl-bool)
+  (origin (:pointer size-t))
+  (region (:pointer size-t))
+  (row-pitch size-t)
+  (slice-pitch size-t)
+  (ptr (:pointer :void))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueWriteImage" cl-enqueue-write-image) cl-int
+  (command-queue cl-command-queue)
+  (image cl-mem)
+  (blocking-write cl-bool)
+  (origin (:pointer size-t))
+  (region (:pointer size-t))
+  (input-row-pitch size-t)
+  (input-slice-pitch size-t)
+  (ptr (:pointer :void))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clEnqueueFillImage" cl-enqueue-fill-image) cl-int
+  (command-queue cl-command-queue)
+  (image cl-mem)
+  (fill-color (:pointer :void))
+  (origin (:pointer size-t))
+  (region (:pointer size-t))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueCopyImage" cl-enqueue-copy-image) cl-int
+  (command-queue cl-command-queue)
+  (src-image cl-mem)
+  (dst-image cl-mem)
+  (src-origin (:pointer size-t))
+  (dst-origin (:pointer size-t))
+  (region (:pointer size-t))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueCopyImageToBuffer" cl-enqueue-copy-image-to-buffer) cl-int
+  (command-queue cl-command-queue)
+  (src-image cl-mem)
+  (dst-buffer cl-mem)
+  (src-origin (:pointer size-t))
+  (region (:pointer size-t))
+  (dst-offset size-t)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueCopyBufferToImage" cl-enqueue-copy-buffer-to-image) cl-int
+  (command-queue cl-command-queue)
+  (src-buffer cl-mem)
+  (dst-image cl-mem)
+  (src-offset size-t)
+  (dst-origin (:pointer size-t))
+  (region (:pointer size-t))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueMapBuffer" cl-enqueue-map-buffer) (:pointer :void)
+  (command-queue cl-command-queue)
+  (buffer cl-mem)
+  (blocking-map cl-bool)
+  (map-flags cl-map-flags)
+  (offset size-t)
+  (size size-t)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event)
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueMapImage" cl-enqueue-map-image) (:pointer :void)
+  (command-queue cl-command-queue)
+  (image cl-mem)
+  (blocking-map cl-bool)
+  (map-flags cl-map-flags)
+  (origin (:pointer size-t))
+  (region (:pointer size-t))
+  (image-row-pitch (:pointer size-t))
+  (image-slice-pitch (:pointer size-t))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event)
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueUnmapMemObject" cl-enqueue-unmap-mem-object) cl-int
+  (command-queue cl-command-queue)
+  (memobj cl-mem)
+  (mapped-ptr (:pointer :void))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clEnqueueMigrateMemObjects" cl-enqueue-migrate-mem-objects) cl-int
+  (command-queue cl-command-queue)
+  (num-mem-objects cl-uint)
+  (mem-objects (:pointer cl-mem))
+  (flags cl-mem-migration-flags)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueNDRangeKernel" cl-enqueue-ndrange-kernel) cl-int
+  (command-queue cl-command-queue)
+  (kernel cl-kernel)
+  (work-dim cl-uint)
+  (global-work-offset (:pointer size-t))
+  (global-work-size (:pointer size-t))
+  (local-work-size (:pointer size-t))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueTask" cl-enqueue-task) cl-int
+  (command-queue cl-command-queue)
+  (kernel cl-kernel)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clEnqueueNativeKernel" cl-enqueue-native-kernel) cl-int
+  (command-queue cl-command-queue)
+  (user-func :pointer) ;; void (CL_CALLBACK * /*user_func*/)(void *),
+  (args (:pointer :void))
+  (cb-args size-t)
+  (num-mem-objects cl-uint)
+  (mem-list (:pointer cl-mem))
+  (args-mem-loc (:pointer (:pointer :void)))
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clEnqueueMarkerWithWaitList" cl-enqueue-markerwith-wait-list) cl-int
+  (command-queue cl-command-queue)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clEnqueueBarrierWithWaitList" cl-enqueue-barrier-with-wait-list) cl-int
+  (command-queue cl-command-queue)
+  (num-events-in-wait-list cl-uint)
+  (event-wait-list cl-event)
+  (event cl-event))
+
