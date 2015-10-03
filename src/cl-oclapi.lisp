@@ -793,3 +793,19 @@
   (param-value-size size-t)
   (param-value (:pointer :void))
   (param-value-size-ret (:pointer size-t)))
+
+#| TODO: Event Object APIs |#
+
+#| TODO: Profiling APIs |#
+
+#| Flush and Finish APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clFlush" cl-flush) cl-int
+  (command-queue cl-command-queue))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clFinish" cl-finish) cl-int
+  (command-queue cl-command-queue))
