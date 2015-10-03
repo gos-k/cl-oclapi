@@ -729,3 +729,67 @@
   (param-value-size size-t)
   (param-value (:pointer :void))
   (param-value-size-ret (:pointer size-t)))
+
+#| Kernel Object APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clCreateKernel" cl-create-kernel) cl-kernel
+  (program cl-program)
+  (kernel-name (:pointer :char))
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clCreateKernelsInProgram" cl-create-kernels-in-program) cl-int
+  (program cl-program)
+  (num-kernels cl-uint)
+  (kernels (:pointer cl-kernel))
+  (num-kernels-ret (:pointer cl-uint)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clRetainKernel" cl-retain-kernel) cl-int
+  (kernel cl-kernel))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clReleaseKernel" cl-release-kernel) cl-int
+  (kernel cl-kernel))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clSetKernelArg" cl-set-kernel-arg) cl-int
+  (kernel cl-kernel)
+  (arg-index cl-uint)
+  (arg-size size-t)
+  (arg-value (:pointer :void)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clGetKernelInfo" cl-get-kernel-info) cl-int
+  (kernel cl-kernel)
+  (param-name cl-kernel-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clGetKernelArgInfo" cl-get-kernel-arg-info) cl-int
+  (kernel cl-kernel)
+  (arg-indx cl-uint)
+  (param-name cl-kernel-arg-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clGetKernelWorkGroupInfo" cl-get-kernel-work-group-info) cl-int
+  (kernel cl-kernel)
+  (device cl-device-id)
+  (param-name cl-kernel-work-group-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
