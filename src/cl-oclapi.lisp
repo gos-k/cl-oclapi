@@ -628,3 +628,104 @@
 
 ;; TODO: clSetMemObjectDestructorCallback
 
+;; TODO: Sampler APIs
+
+#| Program Object APIs  |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clCreateProgramWithSource" cl-create-program-with-source) cl-program
+  (context cl-context)
+  (count cl-uint)
+  (strings (:pointer (:pointer cl-char)))
+  (lengths (:pointer size-t))
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clCreateProgramWithBinary" cl-create-program-with-binary) cl-program
+  (context cl-context)
+  (num-devices cl-uint)
+  (device-list (:pointer cl-device-id))
+  (lengths (:pointer size-t))
+  (binaries (:pointer (:pointer cl-char)))
+  (binary-status (:pointer cl-int))
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clCreateProgramWithBuiltInKernels" cl-create-program-with-built-in-kernels) cl-program
+  (context cl-context)
+  (num-devices cl-uint)
+  (device-list (:pointer cl-device-id))
+  (kernel-names (:pointer cl-char))
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clRetainProgram" cl-retain-program) cl-int
+  (program cl-program))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clReleaseProgram" cl-release-program) cl-int
+  (program cl-program))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clBuildProgram" cl-build-program) cl-int
+  (program cl-program)
+  (num-deviceis cl-uint)
+  (device-list (:pointer cl-device-id))
+  (options (:pointer cl-char))
+  (cl-callback :pointer) ;; void (CL_CALLBACK *  /* pfn_notify */)(cl_program /* program */, void * /* user_data */),
+  (user-data (:pointer :void)))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clCompileProgram" cl-compile-program) cl-int
+  (program cl-program)
+  (num-deviceis cl-uint)
+  (device-list (:pointer cl-device-id))
+  (options (:pointer cl-char))
+  (num-input-headers cl-uint)
+  (input-headers (:pointer cl-program))
+  (header-include-names (:pointer (:pointer cl-char)))
+  (cl-callback :pointer) ;; void (CL_CALLBACK *  /* pfn_notify */)(cl_program /* program */, void * /* user_data */),
+  (user-data (:pointer :void)))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clLinkProgram" cl-link-program) cl-program
+  (context cl-context)
+  (num-devices cl-uint)
+  (device-list (:pointer cl-device-id))
+  (options (:pointer cl-char))
+  (num-input-programs cl-uint)
+  (input-programs (:pointer cl-program))
+  (cl-callback :pointer) ;; void (CL_CALLBACK *  pfn_notify */)(cl_program /* program */, void * /* user_data */),
+  (user-data (:pointer :void)))
+
+;; CL_API_SUFFIX__VERSION_1_2;
+@export
+(defcfun ("clUnloadPlatformCompiler" cl-unload-platform-compiler) cl-int
+  (platform cl-platform-id))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clGetProgramInfo" cl-get-program-info) cl-int
+  (program cl-program)
+  (param-name cl-program-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clGetProgramBuildInfo" cl-get-program-build-info) cl-int
+  (program cl-program)
+  (device cl-device-id)
+  (param-name cl-program-build-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
