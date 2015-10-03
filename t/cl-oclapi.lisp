@@ -395,6 +395,41 @@
                                                         0
                                                         0
                                                         (null-pointer)
-                                                        (null-pointer)))))
+                                                        (null-pointer))))
+  (subtest "valid params."
+    (with-foreign-objects ((platforms 'cl-platform-id)
+                           (num-platforms 'cl-uint)
+                           (devices 'cl-device-id)
+                           (num-devices 'cl-uint)
+                           (properties 'cl-context-properties 3)
+                           (errcode-ret 'cl-int))
+      (is +cl-success+ (cl-get-platform-ids 1 platforms num-platforms))
+      (let ((platform (mem-aref platforms 'cl-platform-id)))
+        (is +cl-success+ (cl-get-device-ids platform
+                                            +cl-device-type-default+
+                                            1
+                                            devices
+                                            num-devices))
+        (set-platform-id properties platform)
+        (let ((context (cl-create-context-from-type properties
+                                                    +cl-device-type-default+
+                                                    (null-pointer)
+                                                    (null-pointer)
+                                                    errcode-ret)))
+          (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+          (with-foreign-string (s "")
+            (with-foreign-objects ((p :pointer)
+                                   (length 'size-t))
+              (setf (mem-ref p :pointer) s)
+              (setf (mem-ref length 'size-t) 0)
+              (let ((program (cl-create-program-with-source context
+                                                            1
+                                                            p
+                                                            length
+                                                            errcode-ret)))
+                (ok program)
+                (is +cl-success+ (mem-aref errcode-ret 'cl-int))
+                (is +cl-success+ (cl-retain-program program))
+                (is +cl-success+ (cl-release-program program))))))))))
 
 (finalize)
