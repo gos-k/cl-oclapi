@@ -8,7 +8,7 @@
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-oclapi)' in your Lisp.
 
-(plan 5)
+(plan 6)
 
 (defun set-platform-id (properties platform-id)
   (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
@@ -339,5 +339,62 @@
                 (is +cl-success+ (mem-aref errcode-ret 'cl-int))
                 (is +cl-success+ (cl-retain-mem-object image))
                 (is +cl-success+ (cl-release-mem-object image))))))))))
+
+(subtest "Program API"
+  (subtest "can call functions."
+    (ok (cl-create-program-with-source (null-pointer)
+                                       0
+                                       (null-pointer)
+                                       (null-pointer)
+                                       (null-pointer)))
+    (ok (cl-create-program-with-binary (null-pointer)
+                                       0
+                                       (null-pointer)
+                                       (null-pointer)
+                                       (null-pointer)
+                                       (null-pointer)
+                                       (null-pointer)))
+    (ok (cl-create-program-with-built-in-kernels (null-pointer)
+                                                 0
+                                                 (null-pointer)
+                                                 (null-pointer)
+                                                 (null-pointer)))
+    (is +cl-invalid-program+ (cl-retain-program (null-pointer)))
+    (is +cl-invalid-program+ (cl-release-program (null-pointer)))
+    (is +cl-invalid-program+ (cl-build-program (null-pointer)
+                                               0
+                                               (null-pointer)
+                                               (null-pointer)
+                                               (null-pointer)
+                                               (null-pointer)))
+    (is +cl-invalid-program+ (cl-compile-program (null-pointer)
+                                                 0
+                                                 (null-pointer)
+                                                 (null-pointer)
+                                                 0
+                                                 (null-pointer)
+                                                 (null-pointer)
+                                                 (null-pointer)
+                                                 (null-pointer)))
+    (ok (cl-link-program (null-pointer)
+                         0
+                         (null-pointer)
+                         (null-pointer)
+                         0
+                         (null-pointer)
+                         (null-pointer)
+                         (null-pointer)))
+    ;(is +cl-invalid-platform+ (cl-unload-platform-compiler (null-pointer)))
+    (is +cl-invalid-program+ (cl-get-program-info (null-pointer)
+                                                  0
+                                                  0
+                                                  (null-pointer)
+                                                  (null-pointer)))
+    (is +cl-invalid-program+ (cl-get-program-build-info (null-pointer)
+                                                        (null-pointer)
+                                                        0
+                                                        0
+                                                        (null-pointer)
+                                                        (null-pointer)))))
 
 (finalize)
