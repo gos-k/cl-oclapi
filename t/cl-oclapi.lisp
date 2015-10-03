@@ -8,7 +8,7 @@
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-oclapi)' in your Lisp.
 
-(plan 8)
+(plan 9)
 
 (defun set-platform-id (properties platform-id)
   (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
@@ -469,5 +469,229 @@
   (subtest "can call functions."
     (is +cl-invalid-command-queue+ (cl-flush (null-pointer)))
     (is +cl-invalid-command-queue+ (cl-finish (null-pointer)))))
+
+(subtest "Enqueued Commands APIs"
+  (subtest "can call functions."
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-read-buffer (null-pointer)
+                                (null-pointer)
+                                0
+                                0
+                                0
+                                (null-pointer)
+                                0
+                                (null-pointer)
+                                (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-read-buffer-rect (null-pointer)
+                                     (null-pointer)
+                                     0
+                                     (null-pointer)
+                                     (null-pointer)
+                                     (null-pointer)
+                                     0
+                                     0
+                                     0
+                                     0
+                                     (null-pointer)
+                                     0
+                                     (null-pointer)
+                                     (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-write-buffer (null-pointer)
+                                 (null-pointer)
+                                 0
+                                 0
+                                 0
+                                 (null-pointer)
+                                 0
+                                 (null-pointer)
+                                 (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-write-buffer-rect (null-pointer)
+                                      (null-pointer)
+                                      0
+                                      (null-pointer)
+                                      (null-pointer)
+                                      (null-pointer)
+                                      0
+                                      0
+                                      0
+                                      0
+                                      (null-pointer)
+                                      0
+                                      (null-pointer)
+                                      (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-fill-buffer (null-pointer)
+                                (null-pointer)
+                                (null-pointer)
+                                0
+                                0
+                                0
+                                0
+                                (null-pointer)
+                                (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-copy-buffer (null-pointer)
+                                (null-pointer)
+                                (null-pointer)
+                                0
+                                0
+                                0
+                                0
+                                (null-pointer)
+                                (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-copy-buffer-rect (null-pointer)
+                                     (null-pointer)
+                                     (null-pointer)
+                                     (null-pointer)
+                                     (null-pointer)
+                                     (null-pointer)
+                                     0
+                                     0
+                                     0
+                                     0
+                                     0
+                                     (null-pointer)
+                                     (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-read-image (null-pointer)
+                               (null-pointer)
+                               0
+                               (null-pointer)
+                               (null-pointer)
+                               0
+                               0
+                               (null-pointer)
+                               0
+                               (null-pointer)
+                               (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-write-image (null-pointer)
+                                (null-pointer)
+                                0
+                                (null-pointer)
+                                (null-pointer)
+                                0
+                                0
+                                (null-pointer)
+                                0
+                                (null-pointer)
+                                (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-fill-image (null-pointer)
+                               (null-pointer)
+                               (null-pointer)
+                               (null-pointer)
+                               (null-pointer)
+                               0
+                               (null-pointer)
+                               (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-copy-image (null-pointer)
+                               (null-pointer)
+                               (null-pointer)
+                               (null-pointer)
+                               (null-pointer)
+                               (null-pointer)
+                               0
+                               (null-pointer)
+                               (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-copy-image-to-buffer (null-pointer)
+                                         (null-pointer)
+                                         (null-pointer)
+                                         (null-pointer)
+                                         (null-pointer)
+                                         0
+                                         0
+                                         (null-pointer)
+                                         (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-copy-buffer-to-image (null-pointer)
+                                         (null-pointer)
+                                         (null-pointer)
+                                         0
+                                         (null-pointer)
+                                         (null-pointer)
+                                         0
+                                         (null-pointer)
+                                         (null-pointer)))
+    (ok (cl-enqueue-map-buffer (null-pointer)
+                               (null-pointer)
+                               0
+                               0
+                               0
+                               0
+                               0
+                               (null-pointer)
+                               (null-pointer)
+                               (null-pointer)))
+    (ok (cl-enqueue-map-image (null-pointer)
+                              (null-pointer)
+                              0
+                              0
+                              (null-pointer)
+                              (null-pointer)
+                              (null-pointer)
+                              (null-pointer)
+                              0
+                              (null-pointer)
+                              (null-pointer)
+                              (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-unmap-mem-object (null-pointer)
+                                     (null-pointer)
+                                     (null-pointer)
+                                     0
+                                     (null-pointer)
+                                     (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-migrate-mem-objects (null-pointer)
+                                        0
+                                        (null-pointer)
+                                        0
+                                        0
+                                        (null-pointer)
+                                        (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-ndrange-kernel (null-pointer)
+                                   (null-pointer)
+                                   0
+                                   (null-pointer)
+                                   (null-pointer)
+                                   (null-pointer)
+                                   0
+                                   (null-pointer)
+                                   (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-task (null-pointer)
+                         (null-pointer)
+                         0
+                         (null-pointer)
+                         (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-native-kernel (null-pointer)
+                                  (null-pointer)
+                                  (null-pointer)
+                                  0
+                                  0
+                                  (null-pointer)
+                                  (null-pointer)
+                                  0
+                                  (null-pointer)
+                                  (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-markerwith-wait-list (null-pointer)
+                                         0
+                                         (null-pointer)
+                                         (null-pointer)))
+    (is +cl-invalid-command-queue+
+        (cl-enqueue-barrier-with-wait-list (null-pointer)
+                                           0
+                                           (null-pointer)
+                                           (null-pointer)))))
 
 (finalize)
