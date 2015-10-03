@@ -16,7 +16,7 @@
   :version "0.1"
   :author "gos-k"
   :license "MIT"
-  :depends-on (:cffi)
+  :depends-on (:cffi :cl-annot)
   :components ((:module "src"
                 :components
                 ((:file "cl-oclapi"))))

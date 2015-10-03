@@ -1,31 +1,9 @@
 (in-package :cl-user)
 (defpackage cl-oclapi
-  (:use :cl :cffi)
-  (:export :cl-get-platform-ids
-           :cl-get-platform-info
-           :cl-get-device-ids
-           :cl-get-device-info
-           :cl-create-sub-devices
-           :cl-retain-device
-           :cl-release-device
-           :cl-create-context
-           :cl-create-context-from-type
-           :cl-retain-context
-           :cl-release-context
-           :cl-get-context-info
-           :cl-create-command-queue
-           :cl-retain-command-queue
-           :cl-release-command-queue
-           :cl-get-command-queue-info
-           :cl-create-buffer
-           :cl-create-sub-buffer
-           :cl-create-image
-           :cl-retain-mem-object
-           :cl-release-mem-object
-           :cl-get-supported-image-formats
-           :cl-get-mem-object-info
-           :cl-get-image-info))
+  (:use :cl :cffi :cl-annot))
 (in-package :cl-oclapi)
+
+(annot:enable-annot-syntax)
 
 (define-foreign-library libopencl
   (t (:default "libOpenCL")))
@@ -458,12 +436,14 @@
 #| cl.h - platform API. |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clGetPlatformIDs" cl-get-platform-ids) cl-int
   (num-entries cl-uint)
   (platforms (:pointer cl-platform-id))
   (num-platforms (:pointer cl-uint)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clGetPlatformInfo" cl-get-platform-info) cl-int
   (platform cl-platform-id)
   (param-name cl-platform-info)
@@ -474,6 +454,7 @@
 #| cl.h - Device APIs |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clGetDeviceIDs" cl-get-device-ids) cl-int
   (platform cl-platform-id)
   (device-type cl-device-type)
@@ -482,6 +463,7 @@
   (num-devices (:pointer cl-uint)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clGetDeviceInfo" cl-get-device-info) cl-int
   (device cl-device-id)
   (param-name cl-device-info)
@@ -490,6 +472,7 @@
   (param-value-size-ret (:pointer size-t)))
 
 ;; CL_API_SUFFIX__VERSION_1_2;
+@export
 (defcfun ("clCreateSubDevices" cl-create-sub-devices) cl-int
   (in-device cl-device-id)
   (properties (:pointer cl-device-partition-property))
@@ -498,15 +481,18 @@
   (num-devices-ret (:pointer cl-uint)))
 
 ;; CL_API_SUFFIX__VERSION_1_2;
+@export
 (defcfun ("clRetainDevice" cl-retain-device) cl-int
   (device cl-device-id))
 
 ;; CL_API_SUFFIX__VERSION_1_2;
+@export
 (defcfun ("clReleaseDevice" cl-release-device) cl-int
   (device cl-device-id))
 
 #| cl.h - Context APIs |#
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clCreateContext" cl-create-context) cl-context
   (properties (:pointer cl-context-properties))
   (num-devices cl-uint)
@@ -516,6 +502,7 @@
   (errcode-ret (:pointer cl-int)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clCreateContextFromType" cl-create-context-from-type) cl-context
   (properties (:pointer cl-context-properties))
   (device-type cl-device-type)
@@ -524,14 +511,17 @@
   (errcode-ret (:pointer cl-int)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clRetainContext" cl-retain-context) cl-int
   (context cl-context))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clReleaseContext" cl-release-context) cl-int
   (context cl-context))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clGetContextInfo" cl-get-context-info) cl-int
   (context cl-context)
   (param-name cl-context-info)
@@ -542,6 +532,7 @@
 #| cl.h - Command Queue APIs |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clCreateCommandQueue" cl-create-command-queue) cl-command-queue
   (context cl-context)
   (device cl-device-id)
@@ -549,14 +540,17 @@
   (errcode-ret (:pointer cl-int)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clRetainCommandQueue" cl-retain-command-queue) cl-int
   (command-queue cl-command-queue))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clReleaseCommandQueue" cl-release-command-queue) cl-int
   (command-queue cl-command-queue))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clGetCommandQueueInfo" cl-get-command-queue-info) cl-int
   (command-queue cl-command-queue)
   (param-name cl-command-queue-info)
@@ -567,6 +561,7 @@
 #| Memory Object APIs |#
 
 ;; CL-API-SUFFIX--VERSION-1-0;
+@export
 (defcfun ("clCreateBuffer" cl-create-buffer) cl-mem
   (context cl-context)
   (flags cl-mem-flags)
@@ -575,6 +570,7 @@
   (errcode-ret (:pointer cl-int)))
 
 ;; CL-API-SUFFIX--VERSION-1-1;
+@export
 (defcfun ("clCreateSubBuffer" cl-create-sub-buffer) cl-mem
   (buffer cl-mem)
   (flags cl-mem-flags)
@@ -583,6 +579,7 @@
   (errcode-ret (:pointer cl-int)))
 
 ;; CL-API-SUFFIX--VERSION-1-2;
+@export
 (defcfun ("clCreateImage" cl-create-image) cl-mem
   (context cl-context)
   (flags cl-mem-flags)
@@ -592,14 +589,17 @@
   (errcode-ret (:pointer cl-int)))
 
 ;; CL-API-SUFFIX--VERSION-1-0;
+@export
 (defcfun ("clRetainMemObject" cl-retain-mem-object) cl-int
   (memobj cl-mem))
 
 ;; CL-API-SUFFIX--VERSION-1-0;
+@export
 (defcfun ("clReleaseMemObject" cl-release-mem-object) cl-int
   (memobj cl-mem))
 
 ;; CL-API-SUFFIX--VERSION-1-0;
+@export
 (defcfun ("clGetSupportedImageFormats" cl-get-supported-image-formats) cl-int
   (context cl-context)
   (flags cl-mem-flags)
@@ -609,6 +609,7 @@
   (num-image-formats (:pointer cl-uint)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clGetMemObjectInfo" cl-get-mem-object-info) cl-int
   (memobj cl-mem)
   (param-name cl-mem-info)
@@ -617,6 +618,7 @@
   (param-value-size-ret (:pointer size-t)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
+@export
 (defcfun ("clGetImageInfo" cl-get-image-info) cl-int
   (image cl-mem)
   (param-name cl-image-info)
