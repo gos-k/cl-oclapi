@@ -1,6 +1,6 @@
 machine:
     environment:
-        LISP: sbcl
+        LISP: sbcl-bin
         PATH: ~/.roswell/bin:$PATH
 
 checkout:
@@ -9,6 +9,7 @@ checkout:
 
 dependencies:
     pre:
+        - sudo apt-get update
         - sudo apt-get install libpocl-dev libpocl-dbg libpoclu-dev
 
     cache_directories:
