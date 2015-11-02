@@ -9,6 +9,7 @@ checkout:
 
 dependencies:
     pre:
+        - sudo bash -c 'echo "deb http://mirrors.kernel.org/ubuntu vivid main universe" >> /etc/apt/sources.list'
         - sudo apt-get update
         - sudo apt-get install libpocl-dev libpocl-dbg libpoclu-dev
 
