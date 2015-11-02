@@ -13,6 +13,8 @@ dependencies:
         - sudo apt-get update
         - sudo apt-get install libpocl-dev libpocl-dbg libpoclu-dev
 
+        - ros install prove
+
     cache_directories:
         - ~/.roswell/
 
