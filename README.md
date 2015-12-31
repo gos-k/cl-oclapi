@@ -22,6 +22,14 @@ If you use Roswell then
 git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
 ```
 
+## Test
+
+```
+(ql:quickload :cl-oclapi)
+(ql:quickload :cl-oclapi-test)
+(prove:run :cl-oclapi-test)
+```
+
 ## Specifications and platforms
 
 * Specifications
