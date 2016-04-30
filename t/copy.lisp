@@ -8,10 +8,7 @@
 
 (plan nil)
 
-;(defconstant copy-kernel "__kernel void alfa(__global char * a) { a[0] = 1; }")
-(defparameter copy-kernel
-  "__kernel void alfa(__global char * a) { a[0] = 1; }")
-  ;"__kernel void alfa(__global char * a) { }")
+(defconstant copy-kernel "__kernel void alfa(__global char * a) { a[0] = 1; }")
 
 (subtest "Copy buffer"
   (with-foreign-objects ((platforms 'cl-platform-id)
@@ -72,6 +69,102 @@
               (is +cl-success+ (cl-finish command-queue)))
             (is +cl-success+ (cl-release-mem-object out)))
           (is +cl-success+ (cl-release-mem-object in)))
+        (is +cl-success+ (cl-release-context context) "release context")
+        (is +cl-success+ (cl-release-device device) "release device")))))
+
+(subtest "Copy kernel"
+  (with-foreign-objects ((platforms 'cl-platform-id)
+                         (num-platforms 'cl-uint)
+                         (devices 'cl-device-id)
+                         (num-devices 'cl-uint)
+                         (errcode-ret 'cl-int))
+    (is +cl-success+ (cl-get-platform-ids 1 platforms num-platforms) "create platform")
+    (let ((platform (mem-aref platforms 'cl-platform-id)))
+      (is +cl-success+ (cl-get-device-ids platform
+                                          +cl-device-type-default+
+                                          1
+                                          devices
+                                          num-devices) "create device")
+      (let ((context (cl-create-context (null-pointer)
+                                        1
+                                        devices
+                                        (null-pointer)
+                                        (null-pointer)
+                                        errcode-ret))
+            (device (mem-aref devices 'cl-device-id)))
+        (is +cl-success+ (mem-aref errcode-ret 'cl-int) "create context")
+        (let ((buffer (cl-create-buffer context
+                                        +cl-mem-read-write+
+                                        1000
+                                        (null-pointer)
+                                        errcode-ret)))
+          (is +cl-success+ (mem-aref errcode-ret 'cl-int) "create buffer")
+          (ok buffer "create buffer")
+          (with-foreign-string (source copy-kernel)
+            (with-foreign-object (p :pointer)
+              (setf (mem-ref p :pointer) source)
+              (let ((program (cl-create-program-with-source context
+                                                            1
+                                                            p
+                                                            (null-pointer)
+                                                            errcode-ret)))
+                (is +cl-success+ (mem-aref errcode-ret 'cl-int) "create program")
+                (ok program "create program")
+                (is +cl-success+ (cl-build-program program
+                                                   1
+                                                   devices
+                                                   (null-pointer)
+                                                   (null-pointer)
+                                                   (null-pointer)) "build program")
+                (with-foreign-string (name "alfa")
+                  (let ((kernel (cl-create-kernel program name errcode-ret)))
+                    (is +cl-success+ (mem-aref errcode-ret 'cl-int) "create kernel")
+                    (ok kernel "create kernel")
+                    (with-foreign-object (p :pointer)
+                      (setf (mem-ref p :pointer) buffer)
+                      (is +cl-success+ (cl-set-kernel-arg kernel 0 8 p) "set kernel arg")
+                      (let ((command-queue (cl-create-command-queue context
+                                                                    device
+                                                                    0
+                                                                    errcode-ret)))
+                        (is +cl-success+ (mem-aref errcode-ret 'cl-int) "create command queue")
+                        (ok command-queue "create command queue")
+                        (with-foreign-objects ((global-work-size 'size-t 3)
+                                               (local-work-size 'size-t 3))
+                          (setf (mem-ref global-work-size 'size-t 0) 1
+                                (mem-ref global-work-size 'size-t 1) 0
+                                (mem-ref global-work-size 'size-t 2) 0)
+                          (setf (mem-ref local-work-size 'size-t 0) 1
+                                (mem-ref local-work-size 'size-t 1) 0
+                                (mem-ref local-work-size 'size-t 2) 0)
+                          (is +cl-success+ (cl-enqueue-ndrange-kernel command-queue
+                                                                      kernel
+                                                                      1
+                                                                      (null-pointer)
+                                                                      global-work-size
+                                                                      local-work-size
+                                                                      0
+                                                                      (null-pointer)
+                                                                      (null-pointer)) "enqueue kernel"))
+                        (is +cl-success+ (cl-finish command-queue) "finish")
+                        (with-foreign-object (value 'cl-char)
+                          (setf (mem-ref value 'cl-char) 0)
+                          (is +cl-success+ (cl-enqueue-read-buffer command-queue
+                                                                   buffer
+                                                                   0
+                                                                   0
+                                                                   1
+                                                                   value
+                                                                   0
+                                                                   (null-pointer)
+                                                                   (null-pointer)) "enqueue read buffer")
+
+                          (is +cl-success+ (cl-finish command-queue) "finish")
+                          (is 1 (mem-aref value 'cl-char) "result"))
+                        (is +cl-success+ (cl-release-command-queue command-queue) "release command queueu")))
+                    (is +cl-success+ (cl-release-kernel kernel))))
+                (is +cl-success+ (cl-release-program program)))))
+          (is +cl-success+ (cl-release-mem-object buffer)))
         (is +cl-success+ (cl-release-context context) "release context")
         (is +cl-success+ (cl-release-device device) "release device")))))
 
