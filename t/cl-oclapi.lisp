@@ -99,7 +99,7 @@
                                                  256
                                                  param-value
                                                  param-value-size-ret))
-            (is "OpenCL 1.2 pocl" (foreign-string-to-lisp param-value))))
+            (ok (search "OpenCL" (foreign-string-to-lisp param-value)))))
         (subtest "clCreateSubDevices"
           (is +cl-invalid-device+ (cl-create-sub-devices (null-pointer)
                                                          (null-pointer)
