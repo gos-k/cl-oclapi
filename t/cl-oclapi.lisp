@@ -45,7 +45,7 @@
                                                  256
                                                  param-value
                                                  param-value-size-ret))
-          (is "OpenCL 1.2 pocl 0.10" (foreign-string-to-lisp param-value))
+          (ok (search "OpenCL" (foreign-string-to-lisp param-value)))
           (is +cl-success+ (cl-get-platform-info platform
                                                  +cl-platform-name+
                                                  256
