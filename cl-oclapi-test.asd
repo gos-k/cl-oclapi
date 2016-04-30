@@ -15,7 +15,8 @@
                :prove)
   :components ((:module "t"
                 :components
-                ((:test-file "cl-oclapi"))))
+                ((:test-file "cl-oclapi")
+                 (:test-file "copy"))))
   :description "Test system for cl-oclapi"
 
   :defsystem-depends-on (:prove-asdf)
