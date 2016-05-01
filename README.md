@@ -1,6 +1,7 @@
 # cl-oclapi
 
 [![Build Status](https://circleci.com/gh/gos-k/cl-oclapi.svg?style=shield)](https://circleci.com/gh/gos-k/cl-oclapi)
+[![TravisCI Status](https://travis-ci.org/gos-k/cl-oclapi.svg?branch=master)](https://travis-ci.org/gos-k/cl-oclapi)
 
 Yet another [OpenCL](https://www.khronos.org/opencl/) API bindings for Common Lisp.
 
