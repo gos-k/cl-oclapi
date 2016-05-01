@@ -13,12 +13,6 @@ Yet another [OpenCL](https://www.khronos.org/opencl/) API bindings for Common Li
 
 ### Ubuntu
 
-Install POCL.
-
-```
-sudo apt-get install libpocl-dev libpocl-dbg libpoclu-dev
-```
-
 If you use Roswell then
 
 ```
@@ -28,7 +22,6 @@ git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
 ## Test
 
 ```
-(ql:quickload :cl-oclapi)
 (ql:quickload :cl-oclapi-test)
 (prove:run :cl-oclapi-test)
 ```
@@ -38,7 +31,7 @@ git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
 * Specifications
   * OpenCL 1.2
 * Platforms
-  * Pocl 0.10
+  * pocl 0.12
 
 ## Author
 

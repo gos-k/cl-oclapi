@@ -24,4 +24,4 @@ install:
   - ros install prove
 
 script:
-  - run-prove cl-oclapi.asd
+  - run-prove cl-oclapi-test.asd
