@@ -26,5 +26,11 @@ install:
   - popd
   - ros install prove
 
+cache:
+  directories:
+    - $HOME/.roswell
+    - $HOME/.cache/common-lisp
+    - $HOME/pocl-0.12
+
 script:
   - run-prove cl-oclapi-test.asd
