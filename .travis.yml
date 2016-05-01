@@ -1,0 +1,27 @@
+language: common-lisp
+sudo: required
+
+env:
+  global:
+    - PATH=~/.roswell/bin:$PATH
+    - CXX=clang++
+  matrix:
+    - LISP=sbcl-bin
+    - LISP=ccl-bin
+    - LISP=abcl
+    - LISP=clisp
+
+matrix:
+  allow_failures:
+    - env: LISP=abcl
+    - env: LISP=clisp
+
+install:
+  - curl -L https://raw.githubusercontent.com/snmsts/roswell/release/scripts/install-for-ci.sh | sh
+  - sudo apt-get install -y clinfo pkg-config libltdl3-dev libhwloc-dev llvm-dev clang libclang-dev ocl-icd-opencl-dev libedit-dev
+  - wget http://portablecl.org/downloads/pocl-0.12.tar.gz
+  - tar xzf pocl-0.12.tar.gz && cd pocl-0.12/ && ./configure && make && sudo make install
+  - ros install prove
+
+script:
+  - run-prove cl-oclapi.asd
