@@ -18,6 +18,7 @@ dependencies:
 
     cache_directories:
         - ~/.roswell/
+        - ~/pocl-0.12/
 
 test:
     override:
