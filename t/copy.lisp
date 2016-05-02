@@ -8,7 +8,8 @@
 
 (plan nil)
 
-(defconstant copy-kernel "__kernel void alfa(__global char * a) { a[0] = 1; }")
+(defparameter *copy-kernel*
+  "__kernel void alfa(__global char * a) { a[0] = 1; }")
 
 (subtest "Copy buffer"
   (with-foreign-objects ((platforms 'cl-platform-id)
@@ -100,7 +101,7 @@
                                         errcode-ret)))
           (is +cl-success+ (mem-aref errcode-ret 'cl-int) "create buffer")
           (ok buffer "create buffer")
-          (with-foreign-string (source copy-kernel)
+          (with-foreign-string (source *copy-kernel*)
             (with-foreign-object (p :pointer)
               (setf (mem-ref p :pointer) source)
               (let ((program (cl-create-program-with-source context
