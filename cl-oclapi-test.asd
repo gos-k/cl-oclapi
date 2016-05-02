@@ -12,10 +12,12 @@
   :author "gos-k"
   :license "MIT"
   :depends-on (:cl-oclapi
-               :prove)
+               :prove
+               :cl-annot)
   :components ((:module "t"
                 :components
-                ((:test-file "cl-oclapi")
+                ((:file "init")
+                 (:test-file "cl-oclapi")
                  (:test-file "copy"))))
   :description "Test system for cl-oclapi"
 
