@@ -31,19 +31,9 @@
                                         errcode-ret))
             (device (mem-aref devices 'cl-device-id)))
         (is-success (mem-aref errcode-ret 'cl-int) "create context")
-        (let ((in (cl-create-buffer context
-                                    +cl-mem-read-only+
-                                    1
-                                    (null-pointer)
-                                    errcode-ret)))
-          (is-success (mem-aref errcode-ret 'cl-int) "create buffer")
+        (let ((in (create-buffer context +cl-mem-read-only+ 1)))
           (ok in "create buffer")
-          (let ((out (cl-create-buffer context
-                                       +cl-mem-write-only+
-                                       1
-                                       (null-pointer)
-                                       errcode-ret)))
-            (is-success (mem-aref errcode-ret 'cl-int) "create buffer")
+          (let ((out (create-buffer context +cl-mem-write-only+ 1)))
             (ok out "create buffer")
             (let ((command-queue (cl-create-command-queue context
                                                           device
@@ -91,12 +81,7 @@
                                         errcode-ret))
             (device (mem-aref devices 'cl-device-id)))
         (is-success (mem-aref errcode-ret 'cl-int) "create context")
-        (let ((buffer (cl-create-buffer context
-                                        +cl-mem-read-write+
-                                        1000
-                                        (null-pointer)
-                                        errcode-ret)))
-          (is-success (mem-aref errcode-ret 'cl-int) "create buffer")
+        (let ((buffer (create-buffer context +cl-mem-read-write+ 1000)))
           (ok buffer "create buffer")
           (with-foreign-string (source *copy-kernel*)
             (with-foreign-object (p :pointer)

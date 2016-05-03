@@ -31,3 +31,16 @@
           (when-success (cl-get-platform-ids num platforms num-platforms)
             (loop for n from 0 below num
                   collecting (mem-aref platforms 'cl-platform-id n))))))))
+
+@export
+(defun create-buffer (context flags size &optional (host-ptr (null-pointer)))
+  (with-foreign-object (errcode-ret 'cl-int)
+    (let ((buffer (cl-create-buffer context
+                                    flags
+                                    size
+                                    host-ptr
+                                    errcode-ret)))
+      (unless (= +cl-success+ (mem-aref errcode-ret 'cl-int))
+        (error "cl-create-buffer error ~s"
+               (mem-aref errcode-ret 'cl-int)))
+      buffer)))
