@@ -341,3 +341,11 @@
   (+cl-image-buffer+         #x1118)
   (+cl-image-num-mip-levels+ #x1119)
   (+cl-image-num-samples+    #x111a))
+
+#| cl.h - cl_addressing_mode |#
+(defconstants
+  (+cl-address-none+            #x1130)
+  (+cl-address-clamp-to-edge+   #x1131)
+  (+cl-address-clamp+           #x1132)
+  (+cl-address-repeat+          #x1133)
+  (+cl-address-mirrored-repeat+ #x1134))
