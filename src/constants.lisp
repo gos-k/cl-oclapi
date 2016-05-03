@@ -349,3 +349,8 @@
   (+cl-address-clamp+           #x1132)
   (+cl-address-repeat+          #x1133)
   (+cl-address-mirrored-repeat+ #x1134))
+
+#| cl.h - cl_filter_mode |#
+(defconstants
+  (+cl-filter-nearest+ #x1140)
+  (+cl-filter-linear+  #x1141))
