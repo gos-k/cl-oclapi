@@ -381,7 +381,13 @@
   (+cl-program-num-kernels+     #x1167)
   (+cl-program-kernel-names+    #x1168))
 
-#| TODO: cl.h - cl_program_build_info |#
+#| cl.h - cl_program_build_info |#
+(defconstants
+  (+cl-program-build-status+  #x1181)
+  (+cl-program-build-options+ #x1182)
+  (+cl-program-build-log+     #x1183)
+  (+cl-program-binary-type+   #x1184))
+
 #| TODO: cl.h - cl_program_binary_type |#
 #| TODO: cl.h - cl_build_status |#
 #| TODO: cl.h - cl_kernel_info |#
