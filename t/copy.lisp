@@ -23,14 +23,9 @@
                                      1
                                      devices
                                      num-devices) "get device")
-      (let ((context (cl-create-context (null-pointer)
-                                        1
-                                        devices
-                                        (null-pointer)
-                                        (null-pointer)
-                                        errcode-ret))
+      (let ((context (create-context (null-pointer) 1 devices))
             (device (mem-aref devices 'cl-device-id)))
-        (is-success (mem-aref errcode-ret 'cl-int) "create context")
+        (ok context "create context")
         (let ((in (create-buffer context +cl-mem-read-only+ 1)))
           (ok in "create buffer")
           (let ((out (create-buffer context +cl-mem-write-only+ 1)))
@@ -73,14 +68,9 @@
                                      1
                                      devices
                                      num-devices) "get device")
-      (let ((context (cl-create-context (null-pointer)
-                                        1
-                                        devices
-                                        (null-pointer)
-                                        (null-pointer)
-                                        errcode-ret))
+      (let ((context (create-context (null-pointer) 1 devices))
             (device (mem-aref devices 'cl-device-id)))
-        (is-success (mem-aref errcode-ret 'cl-int) "create context")
+        (ok context "create context")
         (let ((buffer (create-buffer context +cl-mem-read-write+ 1000)))
           (ok buffer "create buffer")
           (with-foreign-string (source *copy-kernel*)

@@ -40,6 +40,25 @@
                   collecting (mem-aref platforms 'cl-platform-id n))))))))
 
 @export
+(defun create-context (properties
+                       num-devices
+                       devices
+                       &optional
+                         (pfn-notify (null-pointer))
+                         (user-data (null-pointer)))
+  (with-foreign-object (errcode-ret 'cl-int)
+    (let ((context (cl-create-context properties
+                                      num-devices
+                                      devices
+                                      pfn-notify
+                                      user-data
+                                      errcode-ret)))
+      (if (= +cl-success+ (mem-aref errcode-ret 'cl-int))
+          context
+          (api-error 'cl-create-context
+                     (mem-aref errcode-ret 'cl-int))))))
+
+@export
 (defun create-buffer (context flags size &optional (host-ptr (null-pointer)))
   (with-foreign-object (errcode-ret 'cl-int)
     (let ((buffer (cl-create-buffer context
