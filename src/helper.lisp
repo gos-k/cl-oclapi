@@ -17,6 +17,12 @@
   (when *oclapi-helper-error*
     (error "~s error ~s" name code)))
 
+(defun check-errcode-ret (result name errcode-ret)
+  (let ((code (mem-aref errcode-ret 'cl-int)))
+    (if (= +cl-success+ code)
+        result
+        (api-error name code))))
+
 @export
 (defmacro when-success (expr &body body)
   `(when (= +cl-success+ ,expr)
@@ -53,10 +59,7 @@
                                       pfn-notify
                                       user-data
                                       errcode-ret)))
-      (if (= +cl-success+ (mem-aref errcode-ret 'cl-int))
-          context
-          (api-error 'cl-create-context
-                     (mem-aref errcode-ret 'cl-int))))))
+      (check-errcode-ret context 'cl-create-context errcode-ret))))
 
 @export
 (defun create-buffer (context flags size &optional (host-ptr (null-pointer)))
@@ -66,7 +69,4 @@
                                     size
                                     host-ptr
                                     errcode-ret)))
-      (if (= +cl-success+ (mem-aref errcode-ret 'cl-int))
-          buffer
-          (api-error 'cl-create-buffer
-                     (mem-aref errcode-ret 'cl-int))))))
+      (check-errcode-ret buffer 'cl-create-buffer errcode-ret))))
