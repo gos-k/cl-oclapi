@@ -13,13 +13,11 @@
   "__kernel void alfa(__global char * a) { a[0] = 1; }")
 
 (subtest "Copy buffer"
-  (with-foreign-objects ((platforms 'cl-platform-id)
-                         (num-platforms 'cl-uint)
-                         (devices 'cl-device-id)
+  (with-foreign-objects ((devices 'cl-device-id)
                          (num-devices 'cl-uint)
                          (errcode-ret 'cl-int))
-    (is-success (cl-get-platform-ids 1 platforms num-platforms) "get platform")
-    (let ((platform (mem-aref platforms 'cl-platform-id)))
+    (let ((platform (get-platform-id)))
+      (ok platform "get platform")
       (is-success (cl-get-device-ids platform
                                      +cl-device-type-default+
                                      1
@@ -75,13 +73,11 @@
         (is-success (cl-release-device device) "release device")))))
 
 (subtest "Copy kernel"
-  (with-foreign-objects ((platforms 'cl-platform-id)
-                         (num-platforms 'cl-uint)
-                         (devices 'cl-device-id)
+  (with-foreign-objects ((devices 'cl-device-id)
                          (num-devices 'cl-uint)
                          (errcode-ret 'cl-int))
-    (is-success (cl-get-platform-ids 1 platforms num-platforms) "get platform")
-    (let ((platform (mem-aref platforms 'cl-platform-id)))
+    (let ((platform (get-platform-id)))
+      (ok platform "get platform")
       (is-success (cl-get-device-ids platform
                                      +cl-device-type-default+
                                      1

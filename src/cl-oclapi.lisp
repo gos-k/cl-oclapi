@@ -8,6 +8,7 @@
 (reexport-from :cl-oclapi.constants)
 (reexport-from :cl-oclapi.types)
 (reexport-from :cl-oclapi.functions)
+(reexport-from :cl-oclapi.helper)
 
 (define-foreign-library libopencl
   (t (:default "libOpenCL")))

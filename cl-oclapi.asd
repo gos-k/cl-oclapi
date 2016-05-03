@@ -22,6 +22,7 @@
                 ((:file "constants")
                  (:file "types")
                  (:file "functions")
+                 (:file "helper")
                  (:file "cl-oclapi"))))
   :description ""
   :long-description
