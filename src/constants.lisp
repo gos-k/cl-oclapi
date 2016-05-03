@@ -380,3 +380,18 @@
   (+cl-program-binaries+        #x1166)
   (+cl-program-num-kernels+     #x1167)
   (+cl-program-kernel-names+    #x1168))
+
+#| TODO: cl.h - cl_program_build_info |#
+#| TODO: cl.h - cl_program_binary_type |#
+#| TODO: cl.h - cl_build_status |#
+#| TODO: cl.h - cl_kernel_info |#
+#| TODO: cl.h - cl_kernel_arg_info |#
+#| TODO: cl.h - cl_kernel_arg_address_qualifier |#
+#| TODO: cl.h - cl_kernel_arg_access_qualifier |#
+#| TODO: cl.h - cl_kernel_arg_type_qualifer |#
+#| TODO: cl.h - cl_kernel_work_group_info |#
+#| TODO: cl.h - cl_event_info  |#
+#| TODO: cl.h - cl_command_type |#
+#| TODO: cl.h - command execution status |#
+#| TODO: cl.h - cl_buffer_create_type  |#
+#| TODO: cl.h - cl_profiling_info  |#
