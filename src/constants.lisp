@@ -492,5 +492,6 @@
   (+cl-submitted+ #x2)
   (+cl-queued+    #x3))
 
-#| TODO: cl.h - cl_buffer_create_type  |#
-#| TODO: cl.h - cl_profiling_info  |#
+#| cl.h - cl_buffer_create_type  |#
+(defconstants
+  (+cl-buffer-create-type-region+ #x1220))
