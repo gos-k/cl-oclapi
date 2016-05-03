@@ -314,3 +314,16 @@
   (+cl-mem-object-image1d+        #x10f4)
   (+cl-mem-object-image1d-array+  #x10f5)
   (+cl-mem-object-image1d-buffer+ #x10f6))
+
+#| cl.h - cl_mem_info |#
+(defconstants
+  (+cl-mem-type+                 #x1100)
+  (+cl-mem-flags+                #x1101)
+  (+cl-mem-size+                 #x1102)
+  (+cl-mem-host-ptr+             #x1103)
+  (+cl-mem-map-count+            #x1104)
+  (+cl-mem-reference-count+      #x1105)
+  (+cl-mem-context+              #x1106)
+  (+cl-mem-associated-memobject+ #x1107)
+  (+cl-mem-offset+               #x1108)
+  (+cl-mem-uses-svm-pointer+     #x1109))
