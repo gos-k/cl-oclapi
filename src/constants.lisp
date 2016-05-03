@@ -354,3 +354,11 @@
 (defconstants
   (+cl-filter-nearest+ #x1140)
   (+cl-filter-linear+  #x1141))
+
+#| cl.h - cl_sampler_info |#
+(defconstants
+  (+cl-sampler-reference-count+   #x1150)
+  (+cl-sampler-context+           #x1151)
+  (+cl-sampler-normalized-coords+ #x1152)
+  (+cl-sampler-addressing-mode+   #x1153)
+  (+cl-sampler-filter-mode+       #x1154))
