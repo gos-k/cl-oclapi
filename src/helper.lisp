@@ -80,3 +80,9 @@
                                                   lengths
                                                   errcode-ret)))
       (check-errcode-ret program 'cl-create-program-with-source errcode-ret))))
+
+@export
+(defun create-kernel (program kernel-name)
+  (with-foreign-object (errcode-ret 'cl-int)
+    (let ((kernel (cl-create-kernel program kernel-name errcode-ret)))
+      (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
