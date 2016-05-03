@@ -449,7 +449,14 @@
   (+cl-kernel-private-mem-size+                   #x11b4)
   (+cl-kernel-global-work-size+                   #x11b5))
 
-#| TODO: cl.h - cl_event_info  |#
+#| cl.h - cl_event_info  |#
+(defconstants
+  (+cl-event-command-queue+            #x11d0)
+  (+cl-event-command-type+             #x11d1)
+  (+cl-event-reference-count+          #x11d2)
+  (+cl-event-command-execution-status+ #x11d3)
+  (+cl-event-context+                  #x11d4))
+
 #| TODO: cl.h - cl_command_type |#
 #| TODO: cl.h - command execution status |#
 #| TODO: cl.h - cl_buffer_create_type  |#
