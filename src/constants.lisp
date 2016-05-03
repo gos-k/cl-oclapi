@@ -395,7 +395,13 @@
   (+cl-program-binary-type-library+         #x2)
   (+cl-program-binary-type-executable+      #x4))
 
-#| TODO: cl.h - cl_build_status |#
+#| cl.h - cl_build_status |#
+(defconstants
+  (+cl-build-success+     0)
+  (+cl-build-none+        -1)
+  (+cl-build-error+       -2)
+  (+cl-build-in-progress+ -3))
+
 #| TODO: cl.h - cl_kernel_info |#
 #| TODO: cl.h - cl_kernel_arg_info |#
 #| TODO: cl.h - cl_kernel_arg_address_qualifier |#
