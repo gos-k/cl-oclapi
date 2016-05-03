@@ -16,10 +16,11 @@
   :version "0.1"
   :author "gos-k"
   :license "MIT"
-  :depends-on (:cffi :cl-annot)
+  :depends-on (:cffi :cl-annot :cl-reexport)
   :components ((:module "src"
                 :components
-                ((:file "cl-oclapi"))))
+                ((:file "constants")
+                 (:file "cl-oclapi"))))
   :description ""
   :long-description
   #.(with-open-file (stream (merge-pathnames
