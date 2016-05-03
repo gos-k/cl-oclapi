@@ -18,13 +18,13 @@
                          (devices 'cl-device-id)
                          (num-devices 'cl-uint)
                          (errcode-ret 'cl-int))
-    (is-success (cl-get-platform-ids 1 platforms num-platforms) "create platform")
+    (is-success (cl-get-platform-ids 1 platforms num-platforms) "get platform")
     (let ((platform (mem-aref platforms 'cl-platform-id)))
       (is-success (cl-get-device-ids platform
                                      +cl-device-type-default+
                                      1
                                      devices
-                                     num-devices) "create device")
+                                     num-devices) "get device")
       (let ((context (cl-create-context (null-pointer)
                                         1
                                         devices
@@ -80,13 +80,13 @@
                          (devices 'cl-device-id)
                          (num-devices 'cl-uint)
                          (errcode-ret 'cl-int))
-    (is-success (cl-get-platform-ids 1 platforms num-platforms) "create platform")
+    (is-success (cl-get-platform-ids 1 platforms num-platforms) "get platform")
     (let ((platform (mem-aref platforms 'cl-platform-id)))
       (is-success (cl-get-device-ids platform
                                      +cl-device-type-default+
                                      1
                                      devices
-                                     num-devices) "create device")
+                                     num-devices) "get device")
       (let ((context (cl-create-context (null-pointer)
                                         1
                                         devices
