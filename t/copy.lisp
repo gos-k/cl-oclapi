@@ -14,8 +14,7 @@
 
 (subtest "Copy buffer"
   (with-foreign-objects ((devices 'cl-device-id)
-                         (num-devices 'cl-uint)
-                         (errcode-ret 'cl-int))
+                         (num-devices 'cl-uint))
     (let ((platform (get-platform-id)))
       (ok platform "get platform")
       (is-success (cl-get-device-ids platform
@@ -30,11 +29,7 @@
           (ok in "create buffer")
           (let ((out (create-buffer context +cl-mem-write-only+ 1)))
             (ok out "create buffer")
-            (let ((command-queue (cl-create-command-queue context
-                                                          device
-                                                          0
-                                                          errcode-ret)))
-              (is-success (mem-aref errcode-ret 'cl-int) "create command queue")
+            (let ((command-queue (create-command-queue context device 0)))
               (ok command-queue "create command queue")
               (with-foreign-objects ((src-offset 'size-t)
                                      (dst-offset 'size-t)
@@ -59,8 +54,7 @@
 
 (subtest "Copy kernel"
   (with-foreign-objects ((devices 'cl-device-id)
-                         (num-devices 'cl-uint)
-                         (errcode-ret 'cl-int))
+                         (num-devices 'cl-uint))
     (let ((platform (get-platform-id)))
       (ok platform "get platform")
       (is-success (cl-get-device-ids platform
@@ -90,11 +84,7 @@
                     (with-foreign-object (p :pointer)
                       (setf (mem-aref p :pointer) buffer)
                       (is-success (cl-set-kernel-arg kernel 0 8 p) "set kernel arg")
-                      (let ((command-queue (cl-create-command-queue context
-                                                                    device
-                                                                    0
-                                                                    errcode-ret)))
-                        (is-success (mem-aref errcode-ret 'cl-int) "create command queue")
+                      (let ((command-queue (create-command-queue context device 0)))
                         (ok command-queue "create command queue")
                         (with-foreign-objects ((global-work-size 'size-t 3)
                                                (local-work-size 'size-t 3))
