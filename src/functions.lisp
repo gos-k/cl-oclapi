@@ -203,7 +203,7 @@
 
 ;; TODO: clSetMemObjectDestructorCallback
 
-;; TODO: Sampler APIs
+#| TODO: Sampler APIs |#
 
 #| Program Object APIs  |#
 
