@@ -440,7 +440,15 @@
   (+cl-kernel-arg-type-restrict+ #.(ash 1 1))
   (+cl-kernel-arg-type-volatile+ #.(ash 1 2)))
 
-#| TODO: cl.h - cl_kernel_work_group_info |#
+#| cl.h - cl_kernel_work_group_info |#
+(defconstants
+  (+cl-kernel-work-group-size+                    #x11b0)
+  (+cl-kernel-compile-work-group-size+            #x11b1)
+  (+cl-kernel-local-mem-size+                     #x11b2)
+  (+cl-kernel-preferred-work-group-size-multiple+ #x11b3)
+  (+cl-kernel-private-mem-size+                   #x11b4)
+  (+cl-kernel-global-work-size+                   #x11b5))
+
 #| TODO: cl.h - cl_event_info  |#
 #| TODO: cl.h - cl_command_type |#
 #| TODO: cl.h - command execution status |#
