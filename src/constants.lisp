@@ -457,7 +457,34 @@
   (+cl-event-command-execution-status+ #x11d3)
   (+cl-event-context+                  #x11d4))
 
-#| TODO: cl.h - cl_command_type |#
+#| cl.h - cl_command_type |#
+(defconstants
+  (+cl-command-ndrange-kernel+       #x11f0)
+  (+cl-command-task+                 #x11f1)
+  (+cl-command-native-kernel+        #x11f2)
+  (+cl-command-read-buffer+          #x11f3)
+  (+cl-command-write-buffer+         #x11f4)
+  (+cl-command-copy-buffer+          #x11f5)
+  (+cl-command-read-image+           #x11f6)
+  (+cl-command-write-image+          #x11f7)
+  (+cl-command-copy-image+           #x11f8)
+  (+cl-command-copy-image-to-buffer+ #x11f9)
+  (+cl-command-copy-buffer-to-image+ #x11fa)
+  (+cl-command-map-buffer+           #x11fb)
+  (+cl-command-map-image+            #x11fc)
+  (+cl-command-unmap-mem-object+     #x11fd)
+  (+cl-command-marker+               #x11fe)
+  (+cl-command-acquire-gl-objects+   #x11ff)
+  (+cl-command-release-gl-objects+   #x1200)
+  (+cl-command-read-buffer-rect+     #x1201)
+  (+cl-command-write-buffer-rect+    #x1202)
+  (+cl-command-copy-buffer-rect+     #x1203)
+  (+cl-command-user+                 #x1204)
+  (+cl-command-barrier+              #x1205)
+  (+cl-command-migrate-mem-objects+  #x1206)
+  (+cl-command-fill-buffer+          #x1207)
+  (+cl-command-fill-image+           #x1208))
+
 #| TODO: cl.h - command execution status |#
 #| TODO: cl.h - cl_buffer_create_type  |#
 #| TODO: cl.h - cl_profiling_info  |#
