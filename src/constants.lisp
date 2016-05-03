@@ -411,7 +411,14 @@
   (+cl-kernel-program+         #x1194)
   (+cl-kernel-attributes+      #x1195))
 
-#| TODO: cl.h - cl_kernel_arg_info |#
+#| cl.h - cl_kernel_arg_info |#
+(defconstants
+  (+cl-kernel-arg-address-qualifier+ #x1196)
+  (+cl-kernel-arg-access-qualifier+  #x1197)
+  (+cl-kernel-arg-type-name+         #x1198)
+  (+cl-kernel-arg-type-qualifier+    #x1199)
+  (+cl-kernel-arg-name+              #x119a))
+
 #| TODO: cl.h - cl_kernel_arg_address_qualifier |#
 #| TODO: cl.h - cl_kernel_arg_access_qualifier |#
 #| TODO: cl.h - cl_kernel_arg_type_qualifer |#
