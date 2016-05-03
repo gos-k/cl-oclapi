@@ -95,3 +95,9 @@
                                                   properties
                                                   errcode-ret)))
       (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
+
+@export
+(defun set-platform-id (properties platform-id)
+  (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
+  (setf (mem-aref properties 'cl-platform-id 1) platform-id)
+  (setf (mem-aref properties 'cl-context-properties 2) 0))

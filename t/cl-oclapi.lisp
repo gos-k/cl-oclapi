@@ -11,11 +11,6 @@
 
 (plan 9)
 
-(defun set-platform-id (properties platform-id)
-  (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
-  (setf (mem-aref properties 'cl-platform-id 1) platform-id)
-  (setf (mem-aref properties 'cl-context-properties 2) 0))
-
 (subtest "platform API"
   (with-foreign-objects ((platforms 'cl-platform-id)
                          (num-platforms 'cl-uint))
