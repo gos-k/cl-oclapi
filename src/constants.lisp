@@ -495,3 +495,10 @@
 #| cl.h - cl_buffer_create_type  |#
 (defconstants
   (+cl-buffer-create-type-region+ #x1220))
+
+#| cl.h - cl_profiling_info  |#
+(defconstants
+  (+cl-profiling-command-queued+ #x1280)
+  (+cl-profiling-command-submit+ #x1281)
+  (+cl-profiling-command-start+  #x1282)
+  (+cl-profiling-command-end+    #x1283))
