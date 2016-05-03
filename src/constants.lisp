@@ -368,3 +368,15 @@
   (+cl-map-read+                    #.(ash 1 0))
   (+cl-map-write+                   #.(ash 1 1))
   (+cl-map-write-invalidate-region+ #.(ash 1 2)))
+
+#| cl.h - cl_program_info |#
+(defconstants
+  (+cl-program-reference-count+ #x1160)
+  (+cl-program-context+         #x1161)
+  (+cl-program-num-devices+     #x1162)
+  (+cl-program-devices+         #x1163)
+  (+cl-program-source+          #x1164)
+  (+cl-program-binary-sizes+    #x1165)
+  (+cl-program-binaries+        #x1166)
+  (+cl-program-num-kernels+     #x1167)
+  (+cl-program-kernel-names+    #x1168))
