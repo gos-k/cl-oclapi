@@ -426,7 +426,13 @@
   (+cl-kernel-arg-address-constant+ #x119d)
   (+cl-kernel-arg-address-private+  #x119e))
 
-#| TODO: cl.h - cl_kernel_arg_access_qualifier |#
+#| cl.h - cl_kernel_arg_access_qualifier |#
+(defconstants
+  (+cl-kernel-arg-access-read-only+  #x11a0)
+  (+cl-kernel-arg-access-write-only+ #x11a1)
+  (+cl-kernel-arg-access-read-write+ #x11a2)
+  (+cl-kernel-arg-access-none+       #x11a3))
+
 #| TODO: cl.h - cl_kernel_arg_type_qualifer |#
 #| TODO: cl.h - cl_kernel_work_group_info |#
 #| TODO: cl.h - cl_event_info  |#
