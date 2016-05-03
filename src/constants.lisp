@@ -419,7 +419,13 @@
   (+cl-kernel-arg-type-qualifier+    #x1199)
   (+cl-kernel-arg-name+              #x119a))
 
-#| TODO: cl.h - cl_kernel_arg_address_qualifier |#
+#| cl.h - cl_kernel_arg_address_qualifier |#
+(defconstants
+  (+cl-kernel-arg-address-global+   #x119b)
+  (+cl-kernel-arg-address-local+    #x119c)
+  (+cl-kernel-arg-address-constant+ #x119d)
+  (+cl-kernel-arg-address-private+  #x119e))
+
 #| TODO: cl.h - cl_kernel_arg_access_qualifier |#
 #| TODO: cl.h - cl_kernel_arg_type_qualifer |#
 #| TODO: cl.h - cl_kernel_work_group_info |#
