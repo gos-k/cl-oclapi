@@ -433,7 +433,13 @@
   (+cl-kernel-arg-access-read-write+ #x11a2)
   (+cl-kernel-arg-access-none+       #x11a3))
 
-#| TODO: cl.h - cl_kernel_arg_type_qualifer |#
+#| cl.h - cl_kernel_arg_type_qualifer |#
+(defconstants
+  (+cl-kernel-arg-type-none+     0)
+  (+cl-kernel-arg-type-const+    #.(ash 1 0))
+  (+cl-kernel-arg-type-restrict+ #.(ash 1 1))
+  (+cl-kernel-arg-type-volatile+ #.(ash 1 2)))
+
 #| TODO: cl.h - cl_kernel_work_group_info |#
 #| TODO: cl.h - cl_event_info  |#
 #| TODO: cl.h - cl_command_type |#
