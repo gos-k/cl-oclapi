@@ -20,6 +20,7 @@
   :components ((:module "src"
                 :components
                 ((:file "constants")
+                 (:file "types")
                  (:file "cl-oclapi"))))
   :description ""
   :long-description
