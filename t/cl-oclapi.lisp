@@ -421,8 +421,8 @@
           (with-foreign-string (s "")
             (with-foreign-objects ((p :pointer)
                                    (length 'size-t))
-              (setf (mem-ref p :pointer) s)
-              (setf (mem-ref length 'size-t) 0)
+              (setf (mem-aref p :pointer) s)
+              (setf (mem-aref length 'size-t) 0)
               (let ((program (cl-create-program-with-source context
                                                             1
                                                             p

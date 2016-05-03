@@ -56,15 +56,15 @@
               (with-foreign-objects ((src-offset 'size-t)
                                      (dst-offset 'size-t)
                                      (size 'size-t))
-                (setf (mem-ref src-offset 'size-t) 0
-                      (mem-ref dst-offset 'size-t) 0
-                      (mem-ref size 'size-t) 1)
+                (setf (mem-aref src-offset 'size-t) 0
+                      (mem-aref dst-offset 'size-t) 0
+                      (mem-aref size 'size-t) 1)
                 (is-success (cl-enqueue-copy-buffer command-queue
                                                     in
                                                     out
-                                                    (mem-ref src-offset 'size-t)
-                                                    (mem-ref dst-offset 'size-t)
-                                                    (mem-ref size 'size-t)
+                                                    (mem-aref src-offset 'size-t)
+                                                    (mem-aref dst-offset 'size-t)
+                                                    (mem-aref size 'size-t)
                                                     0
                                                     (null-pointer)
                                                     (null-pointer)) "enqueue copy buffer"))
@@ -104,7 +104,7 @@
           (ok buffer "create buffer")
           (with-foreign-string (source *copy-kernel*)
             (with-foreign-object (p :pointer)
-              (setf (mem-ref p :pointer) source)
+              (setf (mem-aref p :pointer) source)
               (let ((program (cl-create-program-with-source context
                                                             1
                                                             p
@@ -123,7 +123,7 @@
                     (is-success (mem-aref errcode-ret 'cl-int) "create kernel")
                     (ok kernel "create kernel")
                     (with-foreign-object (p :pointer)
-                      (setf (mem-ref p :pointer) buffer)
+                      (setf (mem-aref p :pointer) buffer)
                       (is-success (cl-set-kernel-arg kernel 0 8 p) "set kernel arg")
                       (let ((command-queue (cl-create-command-queue context
                                                                     device
@@ -133,12 +133,12 @@
                         (ok command-queue "create command queue")
                         (with-foreign-objects ((global-work-size 'size-t 3)
                                                (local-work-size 'size-t 3))
-                          (setf (mem-ref global-work-size 'size-t 0) 1
-                                (mem-ref global-work-size 'size-t 1) 0
-                                (mem-ref global-work-size 'size-t 2) 0)
-                          (setf (mem-ref local-work-size 'size-t 0) 1
-                                (mem-ref local-work-size 'size-t 1) 0
-                                (mem-ref local-work-size 'size-t 2) 0)
+                          (setf (mem-aref global-work-size 'size-t 0) 1
+                                (mem-aref global-work-size 'size-t 1) 0
+                                (mem-aref global-work-size 'size-t 2) 0)
+                          (setf (mem-aref local-work-size 'size-t 0) 1
+                                (mem-aref local-work-size 'size-t 1) 0
+                                (mem-aref local-work-size 'size-t 2) 0)
                           (is-success (cl-enqueue-ndrange-kernel command-queue
                                                                  kernel
                                                                  1
@@ -150,7 +150,7 @@
                                                                  (null-pointer)) "enqueue kernel"))
                         (is-success (cl-finish command-queue) "finish")
                         (with-foreign-object (value 'cl-char)
-                          (setf (mem-ref value 'cl-char) 0)
+                          (setf (mem-aref value 'cl-char) 0)
                           (is-success (cl-enqueue-read-buffer command-queue
                                                               buffer
                                                               0
