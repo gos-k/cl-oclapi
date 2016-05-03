@@ -10,13 +10,10 @@ checkout:
 
 
 dependencies:
-    cache_directories:
-        - ~/pocl-0.12/
-
     pre:
         - sudo apt-get install -y pkg-config libltdl3-dev libhwloc-dev llvm-dev clang libclang-dev ocl-icd-opencl-dev libedit-dev
-        - if [ ! -d ~/pocl-0.12/ ]; then pushd . && cd && wget http://portablecl.org/downloads/pocl-0.12.tar.gz && popd; fi
-        - if [ ! -d ~/pocl-0.12/ ]; then pushd . && cd && tar xzf pocl-0.12.tar.gz && cd pocl-0.12/ && ./configure && make && sudo make install && popd; fi
+        - wget http://portablecl.org/downloads/pocl-0.12.tar.gz
+        - tar xzf pocl-0.12.tar.gz && cd pocl-0.12/ && ./configure && make && sudo make install
         - ros install prove
 
 test:
