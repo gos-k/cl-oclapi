@@ -388,7 +388,13 @@
   (+cl-program-build-log+     #x1183)
   (+cl-program-binary-type+   #x1184))
 
-#| TODO: cl.h - cl_program_binary_type |#
+#| cl.h - cl_program_binary_type |#
+(defconstants
+  (+cl-program-binary-type-none+            #x0)
+  (+cl-program-binary-type-compiled-object+ #x1)
+  (+cl-program-binary-type-library+         #x2)
+  (+cl-program-binary-type-executable+      #x4))
+
 #| TODO: cl.h - cl_build_status |#
 #| TODO: cl.h - cl_kernel_info |#
 #| TODO: cl.h - cl_kernel_arg_info |#
