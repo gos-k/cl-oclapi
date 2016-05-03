@@ -33,6 +33,22 @@ git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
 * Platforms
   * pocl 0.12
 
+### Support functions
+
+| Status | APIs |
+|:------:|:-----|
+| Yes    | Device APIs |
+| Yes    | Context APIs |
+| Yes    | Command Queue APIs |
+| Part   | Memory Object APIs |
+| No     | Sampler APIs |
+| Yes    | Program Object APIs |
+| Yes    | Kernel Object APIs |
+| No     | Event Object APIs |
+| No     | Profiling APIs |
+| Yes    | Flush and Finish APIs |
+| Yes    | Enqueued Commands APIs |
+
 ## Author
 
 * gos-k (mag4.elan@gmail.com)
