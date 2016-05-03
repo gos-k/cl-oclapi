@@ -11,6 +11,13 @@
 (annot:enable-annot-syntax)
 
 @export
+(defvar *oclapi-helper-error* t)
+
+(defun api-error (name code)
+  (when *oclapi-helper-error*
+    (error "~s error ~s" name code)))
+
+@export
 (defmacro when-success (expr &body body)
   `(when (= +cl-success+ ,expr)
      ,@body))
@@ -40,7 +47,7 @@
                                     size
                                     host-ptr
                                     errcode-ret)))
-      (unless (= +cl-success+ (mem-aref errcode-ret 'cl-int))
-        (error "cl-create-buffer error ~s"
-               (mem-aref errcode-ret 'cl-int)))
-      buffer)))
+      (if (= +cl-success+ (mem-aref errcode-ret 'cl-int))
+          buffer
+          (api-error 'cl-create-buffer
+                     (mem-aref errcode-ret 'cl-int))))))
