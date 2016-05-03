@@ -327,3 +327,17 @@
   (+cl-mem-associated-memobject+ #x1107)
   (+cl-mem-offset+               #x1108)
   (+cl-mem-uses-svm-pointer+     #x1109))
+
+#| cl.h - cl_image_info |#
+(defconstants
+  (+cl-image-format+         #x1110)
+  (+cl-image-element-size+   #x1111)
+  (+cl-image-row-pitch+      #x1112)
+  (+cl-image-slice-pitch+    #x1113)
+  (+cl-image-width+          #x1114)
+  (+cl-image-height+         #x1115)
+  (+cl-image-depth+          #x1116)
+  (+cl-image-array-size+     #x1117)
+  (+cl-image-buffer+         #x1118)
+  (+cl-image-num-mip-levels+ #x1119)
+  (+cl-image-num-samples+    #x111a))
