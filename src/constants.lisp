@@ -362,3 +362,9 @@
   (+cl-sampler-normalized-coords+ #x1152)
   (+cl-sampler-addressing-mode+   #x1153)
   (+cl-sampler-filter-mode+       #x1154))
+
+#| cl.h - cl_map_flags - bitfield |#
+(defconstants
+  (+cl-map-read+                    #.(ash 1 0))
+  (+cl-map-write+                   #.(ash 1 1))
+  (+cl-map-write-invalidate-region+ #.(ash 1 2)))
