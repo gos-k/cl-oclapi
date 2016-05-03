@@ -11,21 +11,23 @@
 (annot:enable-annot-syntax)
 
 @export
+(defmacro when-success (expr &body body)
+  `(when (= +cl-success+ ,expr)
+     ,@body))
+
+@export
 (defun get-platform-id ()
   (with-foreign-objects ((platforms 'cl-platform-id)
                          (num-platforms 'cl-uint))
-    (let ((result (cl-get-platform-ids 1 platforms num-platforms)))
-      (when (= +cl-success+ result)
-          (mem-aref platforms 'cl-platform-id)))))
+    (when-success (cl-get-platform-ids 1 platforms num-platforms)
+      (mem-aref platforms 'cl-platform-id))))
 
 @export
 (defun get-platform-ids ()
   (with-foreign-object (num-platforms 'cl-uint)
-    (let ((result (cl-get-platform-ids 0 (null-pointer) num-platforms)))
-      (when (= +cl-success+ result)
-        (let ((num (mem-aref num-platforms 'cl-uint)))
-          (with-foreign-object (platforms 'cl-platform-id num)
-            (let ((result (cl-get-platform-ids num platforms num-platforms)))
-              (when (= +cl-success+ result)
-                (loop for n from 0 below num
-                      collecting (mem-aref platforms 'cl-platform-id n))))))))))
+    (when-success (cl-get-platform-ids 0 (null-pointer) num-platforms)
+      (let ((num (mem-aref num-platforms 'cl-uint)))
+        (with-foreign-object (platforms 'cl-platform-id num)
+          (when-success (cl-get-platform-ids num platforms num-platforms)
+            (loop for n from 0 below num
+                  collecting (mem-aref platforms 'cl-platform-id n))))))))
