@@ -485,6 +485,12 @@
   (+cl-command-fill-buffer+          #x1207)
   (+cl-command-fill-image+           #x1208))
 
-#| TODO: cl.h - command execution status |#
+#| cl.h - command execution status |#
+(defconstants
+  (+cl-complete+  #x0)
+  (+cl-running+   #x1)
+  (+cl-submitted+ #x2)
+  (+cl-queued+    #x3))
+
 #| TODO: cl.h - cl_buffer_create_type  |#
 #| TODO: cl.h - cl_profiling_info  |#
