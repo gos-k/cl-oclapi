@@ -402,7 +402,15 @@
   (+cl-build-error+       -2)
   (+cl-build-in-progress+ -3))
 
-#| TODO: cl.h - cl_kernel_info |#
+#| cl.h - cl_kernel_info |#
+(defconstants
+  (+cl-kernel-function-name+   #x1190)
+  (+cl-kernel-num-args+        #x1191)
+  (+cl-kernel-reference-count+ #x1192)
+  (+cl-kernel-context+         #x1193)
+  (+cl-kernel-program+         #x1194)
+  (+cl-kernel-attributes+      #x1195))
+
 #| TODO: cl.h - cl_kernel_arg_info |#
 #| TODO: cl.h - cl_kernel_arg_address_qualifier |#
 #| TODO: cl.h - cl_kernel_arg_access_qualifier |#
