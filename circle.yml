@@ -3,23 +3,18 @@ machine:
         LISP: sbcl-bin
         PATH: ~/.roswell/bin:$PATH
         CXX: clang++
-        POCL: pocl-0.12
-
-checkout:
-    pre:
-        - curl -L https://raw.githubusercontent.com/snmsts/roswell/master/scripts/install-for-ci.sh | sh
 
 dependencies:
-    pre:
-        - sudo apt-get install -y pkg-config libltdl3-dev libhwloc-dev llvm-dev clang libclang-dev ocl-icd-opencl-dev libedit-dev
-        - if [ ! -d ${POCL} ]; then wget http://portablecl.org/downloads/${POCL}.tar.gz; fi
-        - if [ ! -d ${POCL} ]; then tar xzf ${POCL}.tar.gz && cd ${POCL}/ && ./configure && make && sudo make install; fi
-
-        - ros install prove
-
     cache_directories:
         - ~/.roswell/
-        - ~/${POCL}/
+        - ~/pocl-0.12/
+
+    pre:
+        - sudo apt-get install -y pkg-config libltdl3-dev libhwloc-dev llvm-dev clang libclang-dev ocl-icd-opencl-dev libedit-dev
+        - if [ ! -d ~/.roswell/ ]; then curl -L https://raw.githubusercontent.com/snmsts/roswell/master/scripts/install-for-ci.sh | sh; fi
+        - if [ ! -d ~/pocl-0.12/ ]; then pushd . && cd && wget http://portablecl.org/downloads/pocl-0.12.tar.gz && popd; fi
+        - if [ ! -d ~/pocl-0.12/ ]; then pushd . && cd && tar xzf pocl-0.12.tar.gz && cd pocl-0.12/ && ./configure && make && sudo make install && popd; fi
+        - ros install prove
 
 test:
     override:
