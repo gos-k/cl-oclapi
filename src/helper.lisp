@@ -70,3 +70,13 @@
                                     host-ptr
                                     errcode-ret)))
       (check-errcode-ret buffer 'cl-create-buffer errcode-ret))))
+
+@export
+(defun create-program-with-source (context count strings &optional (lengths (null-pointer)))
+  (with-foreign-object (errcode-ret 'cl-int)
+    (let ((program (cl-create-program-with-source context
+                                                  count
+                                                  strings
+                                                  lengths
+                                                  errcode-ret)))
+      (check-errcode-ret program 'cl-create-program-with-source errcode-ret))))

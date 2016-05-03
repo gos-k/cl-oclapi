@@ -76,12 +76,7 @@
           (with-foreign-string (source *copy-kernel*)
             (with-foreign-object (p :pointer)
               (setf (mem-aref p :pointer) source)
-              (let ((program (cl-create-program-with-source context
-                                                            1
-                                                            p
-                                                            (null-pointer)
-                                                            errcode-ret)))
-                (is-success (mem-aref errcode-ret 'cl-int) "create program")
+              (let ((program (create-program-with-source context 1 p)))
                 (ok program "create program")
                 (is-success (cl-build-program program
                                               1
