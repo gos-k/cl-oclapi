@@ -408,6 +408,8 @@
   (event cl-event)
   (execution-status cl-int))
 
+;; TODO: clSetEventCallback
+
 #| TODO: Profiling APIs |#
 
 #| Flush and Finish APIs |#
