@@ -386,6 +386,12 @@
   (param-value (:pointer :void))
   (param-value-size-ret (:pointer size-t)))
 
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clCreateUserEvent" cl-create-user-event) cl-event
+  (context cl-context)
+  (errcode-ret (:pointer cl-int)))
+
 #| TODO: Profiling APIs |#
 
 #| Flush and Finish APIs |#
