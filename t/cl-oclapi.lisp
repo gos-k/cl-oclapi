@@ -461,6 +461,10 @@
                                                            (null-pointer)
                                                            (null-pointer)))))
 
+(subtest "Event Object APIs"
+  (subtest "can call functions."
+    (is +cl-invalid-value+ (cl-wait-for-events 0 (null-pointer)))))
+
 (subtest "Flush and Finish API"
   (subtest "can call functions."
     (is +cl-invalid-command-queue+ (cl-flush (null-pointer)))
