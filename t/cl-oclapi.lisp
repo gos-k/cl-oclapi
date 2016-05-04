@@ -472,7 +472,9 @@
     (ok (null-pointer-p (cl-create-user-event (null-pointer)
                                               (null-pointer))))
     (is +cl-invalid-event+ (cl-retain-event (null-pointer)))
-    (is +cl-invalid-event+ (cl-release-event (null-pointer)))))
+    (is +cl-invalid-event+ (cl-release-event (null-pointer)))
+    (is +cl-invalid-event+ (cl-set-user-event-status (null-pointer)
+                                                     0))))
 
 (subtest "Flush and Finish API"
   (subtest "can call functions."
