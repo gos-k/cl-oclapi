@@ -468,7 +468,9 @@
                                               0
                                               0
                                               (null-pointer)
-                                              (null-pointer)))))
+                                              (null-pointer)))
+    (ok (null-pointer-p (cl-create-user-event (null-pointer)
+                                              (null-pointer))))))
 
 (subtest "Flush and Finish API"
   (subtest "can call functions."
