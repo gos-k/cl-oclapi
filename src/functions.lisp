@@ -369,7 +369,13 @@
   (param-value (:pointer :void))
   (param-value-size-ret (:pointer size-t)))
 
-#| TODO: Event Object APIs |#
+#| Event Object APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clWaitForEvents" cl-wait-for-events) cl-int
+  (num-events cl-uint)
+  (event-list (:pointer cl-event)))
 
 #| TODO: Profiling APIs |#
 
