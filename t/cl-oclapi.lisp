@@ -476,6 +476,13 @@
     (is +cl-invalid-event+ (cl-set-user-event-status (null-pointer)
                                                      0))))
 
+(subtest "Profiling APIs"
+  (is +cl-invalid-event+ (cl-get-event-profiling-info (null-pointer)
+                                                      0
+                                                      0
+                                                      (null-pointer)
+                                                      (null-pointer))))
+
 (subtest "Flush and Finish API"
   (subtest "can call functions."
     (is +cl-invalid-command-queue+ (cl-flush (null-pointer)))
