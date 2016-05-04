@@ -9,7 +9,7 @@
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-oclapi)' in your Lisp.
 
-(plan 9)
+(plan nil)
 
 (subtest "platform API"
   (with-foreign-objects ((platforms 'cl-platform-id)
