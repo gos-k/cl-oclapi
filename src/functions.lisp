@@ -377,6 +377,15 @@
   (num-events cl-uint)
   (event-list (:pointer cl-event)))
 
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clGetEventInfo" cl-get-event-info) cl-int
+  (event cl-event)
+  (param-name cl-event-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
+
 #| TODO: Profiling APIs |#
 
 #| Flush and Finish APIs |#
