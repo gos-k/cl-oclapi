@@ -402,6 +402,12 @@
 (defcfun ("clReleaseEvent" cl-release-event) cl-int
   (event cl-event))
 
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clSetUserEventStatus" cl-set-user-event-status) cl-int
+  (event cl-event)
+  (execution-status cl-int))
+
 #| TODO: Profiling APIs |#
 
 #| Flush and Finish APIs |#
