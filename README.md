@@ -45,7 +45,7 @@ git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
 | Yes    | Program Object APIs |
 | Yes    | Kernel Object APIs |
 | Part   | Event Object APIs |
-| No     | Profiling APIs |
+| Yes    | Profiling APIs |
 | Yes    | Flush and Finish APIs |
 | Yes    | Enqueued Commands APIs |
 
