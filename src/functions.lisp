@@ -397,6 +397,11 @@
 (defcfun ("clRetainEvent" cl-retain-event) cl-int
   (event cl-event))
 
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clReleaseEvent" cl-release-event) cl-int
+  (event cl-event))
+
 #| TODO: Profiling APIs |#
 
 #| Flush and Finish APIs |#
