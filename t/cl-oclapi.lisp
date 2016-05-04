@@ -463,7 +463,12 @@
 
 (subtest "Event Object APIs"
   (subtest "can call functions."
-    (is +cl-invalid-value+ (cl-wait-for-events 0 (null-pointer)))))
+    (is +cl-invalid-value+ (cl-wait-for-events 0 (null-pointer)))
+    (is +cl-invalid-event+ (cl-get-event-info (null-pointer)
+                                              0
+                                              0
+                                              (null-pointer)
+                                              (null-pointer)))))
 
 (subtest "Flush and Finish API"
   (subtest "can call functions."
