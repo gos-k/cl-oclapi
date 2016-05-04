@@ -410,7 +410,16 @@
 
 ;; TODO: clSetEventCallback
 
-#| TODO: Profiling APIs |#
+#| Profiling APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clGetEventProfilingInfo" cl-get-event-profiling-info) cl-int
+  (event cl-event)
+  (param-name cl-profiling-info)
+  (param-value-size size-t)
+  (param-value (:pointer :void))
+  (param-value-size-ret (:pointer size-t)))
 
 #| Flush and Finish APIs |#
 
