@@ -1,9 +1,9 @@
 (in-package :cl-user)
 (defpackage cl-oclapi-test
   (:use :cl
-        :cl-oclapi
+   :cl-oclapi
         :prove
-        :cffi
+   :cffi
         :cl-oclapi-test.init))
 (in-package :cl-oclapi-test)
 
@@ -109,12 +109,12 @@
 
 (subtest "Context API"
   (subtest "can call context api functions."
-    (ok (cl-create-context (null-pointer)
-                           0
-                           (null-pointer)
-                           (null-pointer)
-                           (null-pointer)
-                           (null-pointer)))
+    (is-null (cl-create-context (null-pointer)
+                                0
+                                (null-pointer)
+                                (null-pointer)
+                                (null-pointer)
+                                (null-pointer)))
     (ok (cl-create-context-from-type (null-pointer)
                                      0
                                      (null-pointer)
@@ -193,10 +193,10 @@
 
 (subtest "Command Queue API"
   (subtest "can call functions."
-    (ok (cl-create-command-queue (null-pointer)
-                                 (null-pointer)
-                                 0
-                                 (null-pointer)))
+    (is-null (cl-create-command-queue (null-pointer)
+                                      (null-pointer)
+                                      0
+                                      (null-pointer)))
     (is +cl-invalid-command-queue+ (cl-retain-command-queue (null-pointer)))
     (is +cl-invalid-command-queue+ (cl-release-command-queue (null-pointer)))
     (is +cl-invalid-command-queue+ (cl-get-command-queue-info (null-pointer)
@@ -244,22 +244,22 @@
 
 (subtest "Memmory Object API"
   (subtest "can call functions."
-    (ok (cl-create-buffer (null-pointer)
-                          0
-                          0
-                          (null-pointer)
-                          (null-pointer)))
-    (ok (cl-create-sub-buffer (null-pointer)
-                              0
+    (is-null (cl-create-buffer (null-pointer)
+                               0
+                               0
+                               (null-pointer)
+                               (null-pointer)))
+    (is-null (cl-create-sub-buffer (null-pointer)
+                                   0
+                                   0
+                                   (null-pointer)
+                                   (null-pointer)))
+    (is-null (cl-create-image (null-pointer)
                               0
                               (null-pointer)
+                              (null-pointer)
+                              (null-pointer)
                               (null-pointer)))
-    (ok (cl-create-image (null-pointer)
-                         0
-                         (null-pointer)
-                         (null-pointer)
-                         (null-pointer)
-                         (null-pointer)))
     (is +cl-invalid-mem-object+ (cl-retain-mem-object (null-pointer)))
     (is +cl-invalid-mem-object+ (cl-release-mem-object (null-pointer)))
     (is +cl-invalid-context+ (cl-get-supported-image-formats (null-pointer)
@@ -338,23 +338,23 @@
 
 (subtest "Program API"
   (subtest "can call functions."
-    (ok (cl-create-program-with-source (null-pointer)
-                                       0
-                                       (null-pointer)
-                                       (null-pointer)
-                                       (null-pointer)))
-    (ok (cl-create-program-with-binary (null-pointer)
-                                       0
-                                       (null-pointer)
-                                       (null-pointer)
-                                       (null-pointer)
-                                       (null-pointer)
-                                       (null-pointer)))
-    (ok (cl-create-program-with-built-in-kernels (null-pointer)
-                                                 0
-                                                 (null-pointer)
-                                                 (null-pointer)
-                                                 (null-pointer)))
+    (is-null (cl-create-program-with-source (null-pointer)
+                                            0
+                                            (null-pointer)
+                                            (null-pointer)
+                                            (null-pointer)))
+    (is-null (cl-create-program-with-binary (null-pointer)
+                                            0
+                                            (null-pointer)
+                                            (null-pointer)
+                                            (null-pointer)
+                                            (null-pointer)
+                                            (null-pointer)))
+    (is-null (cl-create-program-with-built-in-kernels (null-pointer)
+                                                      0
+                                                      (null-pointer)
+                                                      (null-pointer)
+                                                      (null-pointer)))
     (is +cl-invalid-program+ (cl-retain-program (null-pointer)))
     (is +cl-invalid-program+ (cl-release-program (null-pointer)))
     (is +cl-invalid-program+ (cl-build-program (null-pointer)
@@ -372,14 +372,14 @@
                                                  (null-pointer)
                                                  (null-pointer)
                                                  (null-pointer)))
-    (ok (cl-link-program (null-pointer)
-                         0
-                         (null-pointer)
-                         (null-pointer)
-                         0
-                         (null-pointer)
-                         (null-pointer)
-                         (null-pointer)))
+    (is-null (cl-link-program (null-pointer)
+                              0
+                              (null-pointer)
+                              (null-pointer)
+                              0
+                              (null-pointer)
+                              (null-pointer)
+                              (null-pointer)))
                                         ;(is +cl-invalid-platform+ (cl-unload-platform-compiler (null-pointer)))
     (is +cl-invalid-program+ (cl-get-program-info (null-pointer)
                                                   0
@@ -430,9 +430,9 @@
 
 (subtest "Kernel Object API"
   (subtest "can call functions."
-    (ok (cl-create-kernel (null-pointer)
-                          (null-pointer)
-                          (null-pointer)))
+    (is-null (cl-create-kernel (null-pointer)
+                               (null-pointer)
+                               (null-pointer)))
     (is +cl-invalid-program+ (cl-create-kernels-in-program (null-pointer)
                                                            0
                                                            (null-pointer)
@@ -469,8 +469,8 @@
                                               0
                                               (null-pointer)
                                               (null-pointer)))
-    (ok (null-pointer-p (cl-create-user-event (null-pointer)
-                                              (null-pointer))))
+    (is-null (cl-create-user-event (null-pointer)
+                                   (null-pointer)))
     (is +cl-invalid-event+ (cl-retain-event (null-pointer)))
     (is +cl-invalid-event+ (cl-release-event (null-pointer)))
     (is +cl-invalid-event+ (cl-set-user-event-status (null-pointer)
@@ -637,28 +637,28 @@
                                          0
                                          (null-pointer)
                                          (null-pointer)))
-    (ok (cl-enqueue-map-buffer (null-pointer)
-                               (null-pointer)
-                               0
-                               0
-                               0
-                               0
-                               0
-                               (null-pointer)
-                               (null-pointer)
-                               (null-pointer)))
-    (ok (cl-enqueue-map-image (null-pointer)
-                              (null-pointer)
-                              0
-                              0
-                              (null-pointer)
-                              (null-pointer)
-                              (null-pointer)
-                              (null-pointer)
-                              0
-                              (null-pointer)
-                              (null-pointer)
-                              (null-pointer)))
+    (is-null (cl-enqueue-map-buffer (null-pointer)
+                                    (null-pointer)
+                                    0
+                                    0
+                                    0
+                                    0
+                                    0
+                                    (null-pointer)
+                                    (null-pointer)
+                                    (null-pointer)))
+    (is-null (cl-enqueue-map-image (null-pointer)
+                                   (null-pointer)
+                                   0
+                                   0
+                                   (null-pointer)
+                                   (null-pointer)
+                                   (null-pointer)
+                                   (null-pointer)
+                                   0
+                                   (null-pointer)
+                                   (null-pointer)
+                                   (null-pointer)))
     (is +cl-invalid-command-queue+
         (cl-enqueue-unmap-mem-object (null-pointer)
                                      (null-pointer)

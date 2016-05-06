@@ -3,6 +3,7 @@
   (:use :cl
         :cl-annot
         :prove
+        :cffi
         :cl-oclapi))
 (in-package :cl-oclapi-test.init)
 
@@ -11,3 +12,7 @@
 @export
 (defmacro is-success (got &optional desc)
   `(is ,got +cl-success+ ,desc))
+
+@export
+(defmacro is-null (got &optional desc)
+  `(ok (null-pointer-p ,got) ,desc))
