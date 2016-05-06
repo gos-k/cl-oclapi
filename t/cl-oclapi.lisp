@@ -55,7 +55,9 @@
                                             256
                                             param-value
                                             param-value-size-ret))
-          (is "The pocl project" (foreign-string-to-lisp param-value))
+          (let ((platform-vendor (foreign-string-to-lisp param-value)))
+            (ok (or (string= "The pocl project" platform-vendor)
+                    (string= "NVIDIA Corporation" platform-vendor))))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-extensions+
                                             256
