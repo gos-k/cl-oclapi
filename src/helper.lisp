@@ -101,3 +101,9 @@
   (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
   (setf (mem-aref properties 'cl-platform-id 1) platform-id)
   (setf (mem-aref properties 'cl-context-properties 2) 0))
+
+@export
+(defun set-work-size (work-size x &optional (y 0) (z 0))
+  (setf (mem-aref work-size 'size-t 0) x
+        (mem-aref work-size 'size-t 1) y
+        (mem-aref work-size 'size-t 2) z))

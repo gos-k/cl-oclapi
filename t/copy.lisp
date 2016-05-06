@@ -88,12 +88,8 @@
                         (ok command-queue "create command queue")
                         (with-foreign-objects ((global-work-size 'size-t 3)
                                                (local-work-size 'size-t 3))
-                          (setf (mem-aref global-work-size 'size-t 0) 1
-                                (mem-aref global-work-size 'size-t 1) 0
-                                (mem-aref global-work-size 'size-t 2) 0)
-                          (setf (mem-aref local-work-size 'size-t 0) 1
-                                (mem-aref local-work-size 'size-t 1) 0
-                                (mem-aref local-work-size 'size-t 2) 0)
+                          (set-work-size global-work-size 1)
+                          (set-work-size local-work-size 1)
                           (is-success (cl-enqueue-ndrange-kernel command-queue
                                                                  kernel
                                                                  1
