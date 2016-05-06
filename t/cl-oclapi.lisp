@@ -79,7 +79,7 @@
                                                   (null-pointer)
                                                   (null-pointer)))
         (is-success (cl-get-device-ids platform
-                                       +cl-device-type-cpu+
+                                       +cl-device-type-default+
                                        1
                                        devices
                                        num-devices))
