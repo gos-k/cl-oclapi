@@ -28,23 +28,23 @@
                                                    (null-pointer)))
       (cl-get-platform-ids 1 platforms num-platforms)
       (let ((platform (mem-aref platforms 'cl-platform-id)))
-        (with-foreign-objects ((param-value 'cl-uchar 256)
+        (with-foreign-objects ((param-value 'cl-uchar 1024)
                                (param-value-size-ret 'size-t))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-profile+
-                                            256
+                                            1024
                                             param-value
                                             param-value-size-ret))
           (is "FULL_PROFILE" (foreign-string-to-lisp param-value))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-version+
-                                            256
+                                            1024
                                             param-value
                                             param-value-size-ret))
           (ok (search "OpenCL" (foreign-string-to-lisp param-value)))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-name+
-                                            256
+                                            1024
                                             param-value
                                             param-value-size-ret))
           (let ((platform-name (foreign-string-to-lisp param-value)))
@@ -52,7 +52,7 @@
                     (string= "NVIDIA CUDA" platform-name))))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-vendor+
-                                            256
+                                            1024
                                             param-value
                                             param-value-size-ret))
           (let ((platform-vendor (foreign-string-to-lisp param-value)))
@@ -60,7 +60,7 @@
                     (string= "NVIDIA Corporation" platform-vendor))))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-extensions+
-                                            256
+                                            1024
                                             param-value
                                             param-value-size-ret))
           (is "cl_khr_icd" (foreign-string-to-lisp param-value)))))))
