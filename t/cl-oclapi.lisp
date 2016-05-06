@@ -47,7 +47,9 @@
                                             256
                                             param-value
                                             param-value-size-ret))
-          (is "Portable Computing Language" (foreign-string-to-lisp param-value))
+          (let ((platform-name (foreign-string-to-lisp param-value)))
+            (ok (or (string= "Portable Computing Language" platform-name)
+                    (string= "NVIDIA CUDA" platform-name))))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-vendor+
                                             256
