@@ -90,15 +90,12 @@
                                                (local-work-size 'size-t 3))
                           (set-work-size global-work-size 1)
                           (set-work-size local-work-size 1)
-                          (is-success (cl-enqueue-ndrange-kernel command-queue
-                                                                 kernel
-                                                                 1
-                                                                 (null-pointer)
-                                                                 global-work-size
-                                                                 local-work-size
-                                                                 0
-                                                                 (null-pointer)
-                                                                 (null-pointer)) "enqueue kernel"))
+                          (enqueue-ndrange-kernel command-queue
+                                                  kernel
+                                                  1
+                                                  (null-pointer)
+                                                  global-work-size
+                                                  local-work-size))
                         (is-success (cl-finish command-queue) "finish")
                         (with-foreign-object (value 'cl-char)
                           (setf (mem-aref value 'cl-char) 0)

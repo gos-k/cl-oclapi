@@ -97,6 +97,29 @@
       (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
 
 @export
+(defun enqueue-ndrange-kernel (command-queue
+                               kernel
+                               work-dim
+                               global-work-offset
+                               global-work-size
+                               local-work-size
+                               &optional
+                                 (num-events-in-wait-list 0)
+                                 (event-wait-list (null-pointer))
+                                 (event (null-pointer)))
+  (let ((result (cl-enqueue-ndrange-kernel command-queue
+                                           kernel
+                                           work-dim
+                                           global-work-offset
+                                           global-work-size
+                                           local-work-size
+                                           num-events-in-wait-list
+                                           event-wait-list
+                                           event)))
+    (unless (= +cl-success+ result)
+      (api-error 'enqueue-ndrange-kernel result))))
+
+@export
 (defun set-platform-id (properties platform-id)
   (setf (mem-aref properties 'cl-context-properties 0) +cl-context-platform+)
   (setf (mem-aref properties 'cl-platform-id 1) platform-id)
