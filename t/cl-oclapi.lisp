@@ -80,7 +80,7 @@
                                        devices
                                        num-devices))
         (ok (> (mem-aref num-devices 'cl-uint) 0)))
-      (cl-get-device-ids platform +cl-device-type-cpu+ 1 devices num-devices)
+      (is-success (cl-get-device-ids platform +cl-device-type-default+ 1 devices num-devices))
       (let ((device (mem-aref devices 'cl-device-id)))
         (subtest "clGetDeviceInfo"
           (is +cl-invalid-device+ (cl-get-device-info (null-pointer)
