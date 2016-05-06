@@ -63,7 +63,7 @@
                                             1024
                                             param-value
                                             param-value-size-ret))
-          (is "cl_khr_icd" (foreign-string-to-lisp param-value)))))))
+          (ok (search "cl_khr_icd" (foreign-string-to-lisp param-value))))))))
 
 (subtest "Device API"
   (with-foreign-objects ((platforms 'cl-platform-id)
