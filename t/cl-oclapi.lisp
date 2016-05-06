@@ -73,11 +73,13 @@
     (cl-get-platform-ids 1 platforms num-platforms)
     (let ((platform (mem-aref platforms 'cl-platform-id)))
       (subtest "clGetDeviceIDs"
-        (is +cl-invalid-value+ (cl-get-device-ids (null-pointer)
-                                                  0
-                                                  0
-                                                  (null-pointer)
-                                                  (null-pointer)))
+        (let ((result (cl-get-device-ids (null-pointer)
+                                         0
+                                         0
+                                         (null-pointer)
+                                         (null-pointer))))
+          (ok (or (= result +cl-invalid-value+)
+                  (= result +cl-invalid-device-type+))))
         (is-success (cl-get-device-ids platform
                                        +cl-device-type-default+
                                        1
