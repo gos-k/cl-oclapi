@@ -64,6 +64,17 @@
                                       errcode-ret)))
       (check-errcode-ret context 'cl-create-context errcode-ret))))
 
+#| Command Queue APIs |#
+
+@export
+(defun create-command-queue (context device properties)
+  (with-foreign-object (errcode-ret 'cl-int)
+    (let ((command-queue (cl-create-command-queue context
+                                                  device
+                                                  properties
+                                                  errcode-ret)))
+      (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
+
 #| Memory Object APIs |#
 
 @export
@@ -95,17 +106,6 @@
   (with-foreign-object (errcode-ret 'cl-int)
     (let ((kernel (cl-create-kernel program kernel-name errcode-ret)))
       (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
-
-#| Command Queue APIs |#
-
-@export
-(defun create-command-queue (context device properties)
-  (with-foreign-object (errcode-ret 'cl-int)
-    (let ((command-queue (cl-create-command-queue context
-                                                  device
-                                                  properties
-                                                  errcode-ret)))
-      (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
 
 #| Enqueued Commands APIs |#
 
