@@ -37,15 +37,12 @@
                 (setf (mem-aref src-offset 'size-t) 0
                       (mem-aref dst-offset 'size-t) 0
                       (mem-aref size 'size-t) 1)
-                (is-success (cl-enqueue-copy-buffer command-queue
-                                                    in
-                                                    out
-                                                    (mem-aref src-offset 'size-t)
-                                                    (mem-aref dst-offset 'size-t)
-                                                    (mem-aref size 'size-t)
-                                                    0
-                                                    (null-pointer)
-                                                    (null-pointer)) "enqueue copy buffer"))
+                (enqueue-copy-buffer command-queue
+                                     in
+                                     out
+                                     (mem-aref src-offset 'size-t)
+                                     (mem-aref dst-offset 'size-t)
+                                     (mem-aref size 'size-t)))
               (is-success (cl-finish command-queue) "finish"))
             (is-success (cl-release-mem-object out) "release mem object"))
           (is-success (cl-release-mem-object in) "release mem object"))

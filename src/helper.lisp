@@ -178,6 +178,29 @@
     (unless (= +cl-success+ result)
       (api-error 'enqueue-write-buffer result))))
 
+@export
+(defun enqueue-copy-buffer (command-queue
+                            src-buffer
+                            dst-buffer
+                            src-offset
+                            dst-offset
+                            size
+                            &optional
+                              (num-events-in-wait-list 0)
+                              (event-wait-list (null-pointer))
+                              (event (null-pointer)))
+  (let ((result (cl-enqueue-copy-buffer command-queue
+                                        src-buffer
+                                        dst-buffer
+                                        src-offset
+                                        dst-offset
+                                        size
+                                        num-events-in-wait-list
+                                        event-wait-list
+                                        event)))
+    (unless (= +cl-success+ result)
+      (api-error 'enqueue-copy-buffer result))))
+
 #| parameter setup |#
 
 @export
