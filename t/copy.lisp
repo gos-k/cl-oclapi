@@ -69,12 +69,9 @@
               (setf (mem-aref p :pointer) source)
               (let ((program (create-program-with-source context 1 p)))
                 (ok program "create program")
-                (is-success (cl-build-program program
-                                              1
-                                              devices
-                                              (null-pointer)
-                                              (null-pointer)
-                                              (null-pointer)) "build program")
+                (build-program program
+                               1
+                               devices)
                 (with-foreign-string (name "alfa")
                   (let ((kernel (create-kernel program name)))
                     (ok kernel "create kernel")

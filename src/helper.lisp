@@ -87,6 +87,23 @@
                                     errcode-ret)))
       (check-errcode-ret buffer 'cl-create-buffer errcode-ret))))
 
+@export
+(defun build-program (program
+                      num-devices
+                      device-list
+                      &optional
+                        (options (null-pointer))
+                        (cl-callback (null-pointer))
+                        (user-data (null-pointer)))
+  (let ((result (cl-build-program program
+                                  num-devices
+                                  device-list
+                                  options
+                                  cl-callback
+                                  user-data)))
+    (unless (= +cl-success+ result)
+      (api-error 'build-program result))))
+
 #| Program Object APIs  |#
 
 @export
