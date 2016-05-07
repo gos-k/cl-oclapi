@@ -132,6 +132,29 @@
     (unless (= +cl-success+ result)
       (api-error 'enqueue-ndrange-kernel result))))
 
+@export
+(defun enqueue-read-buffer (command-queue
+                            buffer
+                            blocking-read
+                            offset
+                            size
+                            ptr
+                            &optional
+                              (num-events-in-wait-list 0)
+                              (event-wait-list (null-pointer))
+                              (event (null-pointer)))
+  (let ((result (cl-enqueue-read-buffer command-queue
+                                        buffer
+                                        blocking-read
+                                        offset
+                                        size
+                                        ptr
+                                        num-events-in-wait-list
+                                        event-wait-list
+                                        event)))
+    (unless (= +cl-success+ result)
+      (api-error 'enqueue-read-buffer result))))
+
 #| parameter setup |#
 
 @export

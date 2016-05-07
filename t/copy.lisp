@@ -99,16 +99,12 @@
                         (is-success (cl-finish command-queue) "finish")
                         (with-foreign-object (value 'cl-char)
                           (setf (mem-aref value 'cl-char) 0)
-                          (is-success (cl-enqueue-read-buffer command-queue
-                                                              buffer
-                                                              0
-                                                              0
-                                                              1
-                                                              value
-                                                              0
-                                                              (null-pointer)
-                                                              (null-pointer)) "enqueue read buffer")
-
+                          (enqueue-read-buffer command-queue
+                                               buffer
+                                               0
+                                               0
+                                               1
+                                               value)
                           (is-success (cl-finish command-queue) "finish")
                           (is 1 (mem-aref value 'cl-char) "result"))
                         (is-success (cl-release-command-queue command-queue) "release command queueu")))
