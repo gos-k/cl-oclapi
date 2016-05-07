@@ -23,7 +23,6 @@
         result
         (api-error name code))))
 
-@export
 (defmacro when-success (expr &body body)
   `(when (= +cl-success+ ,expr)
      ,@body))
