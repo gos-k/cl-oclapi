@@ -27,6 +27,8 @@
   `(when (= +cl-success+ ,expr)
      ,@body))
 
+#| Platform APIs |#
+
 @export
 (defun get-platform-id ()
   (with-foreign-objects ((platforms 'cl-platform-id)
@@ -44,6 +46,8 @@
             (loop for n from 0 below num
                   collecting (mem-aref platforms 'cl-platform-id n))))))))
 
+#| Context APIs |#
+
 @export
 (defun create-context (properties
                        num-devices
@@ -60,6 +64,8 @@
                                       errcode-ret)))
       (check-errcode-ret context 'cl-create-context errcode-ret))))
 
+#| Memory Object APIs |#
+
 @export
 (defun create-buffer (context flags size &optional (host-ptr (null-pointer)))
   (with-foreign-object (errcode-ret 'cl-int)
@@ -69,6 +75,8 @@
                                     host-ptr
                                     errcode-ret)))
       (check-errcode-ret buffer 'cl-create-buffer errcode-ret))))
+
+#| Program Object APIs  |#
 
 @export
 (defun create-program-with-source (context count strings &optional (lengths (null-pointer)))
@@ -80,11 +88,15 @@
                                                   errcode-ret)))
       (check-errcode-ret program 'cl-create-program-with-source errcode-ret))))
 
+#| Kernel Object APIs |#
+
 @export
 (defun create-kernel (program kernel-name)
   (with-foreign-object (errcode-ret 'cl-int)
     (let ((kernel (cl-create-kernel program kernel-name errcode-ret)))
       (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
+
+#| Command Queue APIs |#
 
 @export
 (defun create-command-queue (context device properties)
@@ -94,6 +106,8 @@
                                                   properties
                                                   errcode-ret)))
       (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
+
+#| Enqueued Commands APIs |#
 
 @export
 (defun enqueue-ndrange-kernel (command-queue
@@ -117,6 +131,8 @@
                                            event)))
     (unless (= +cl-success+ result)
       (api-error 'enqueue-ndrange-kernel result))))
+
+#| parameter setup |#
 
 @export
 (defun set-platform-id (properties platform-id)
