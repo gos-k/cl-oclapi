@@ -155,6 +155,29 @@
     (unless (= +cl-success+ result)
       (api-error 'enqueue-read-buffer result))))
 
+@export
+(defun enqueue-write-buffer (command-queue
+                             buffer
+                             blocking-write
+                             offset
+                             size
+                             ptr
+                             &optional
+                               (num-events-in-wait-list 0)
+                               (event-wait-list (null-pointer))
+                               (event (null-pointer)))
+  (let ((result (cl-enqueue-write-buffer command-queue
+                                         buffer
+                                         blocking-write
+                                         offset
+                                         size
+                                         ptr
+                                         num-events-in-wait-list
+                                         event-wait-list
+                                         event)))
+    (unless (= +cl-success+ result)
+      (api-error 'enqueue-write-buffer result))))
+
 #| parameter setup |#
 
 @export
