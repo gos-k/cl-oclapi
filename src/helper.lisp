@@ -27,6 +27,10 @@
   `(when (= +cl-success+ ,expr)
      ,@body))
 
+(defmacro unless-success (expr &body body)
+  `(unless (= +cl-success+ ,expr)
+     ,@body))
+
 #| Platform APIs |#
 
 @export
