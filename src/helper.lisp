@@ -31,6 +31,10 @@
   `(unless (= +cl-success+ ,expr)
      ,@body))
 
+(defun check-result (result name)
+  (unless-success result
+    (api-error name result)))
+
 #| Platform APIs |#
 
 @export
@@ -99,14 +103,13 @@
                         (options (null-pointer))
                         (cl-callback (null-pointer))
                         (user-data (null-pointer)))
-  (let ((result (cl-build-program program
+  (check-result (cl-build-program program
                                   num-devices
                                   device-list
                                   options
                                   cl-callback
-                                  user-data)))
-    (unless (= +cl-success+ result)
-      (api-error 'build-program result))))
+                                  user-data)
+                'build-program))
 
 #| Program Object APIs  |#
 
@@ -141,7 +144,7 @@
                                  (num-events-in-wait-list 0)
                                  (event-wait-list (null-pointer))
                                  (event (null-pointer)))
-  (let ((result (cl-enqueue-ndrange-kernel command-queue
+  (check-result (cl-enqueue-ndrange-kernel command-queue
                                            kernel
                                            work-dim
                                            global-work-offset
@@ -149,9 +152,8 @@
                                            local-work-size
                                            num-events-in-wait-list
                                            event-wait-list
-                                           event)))
-    (unless (= +cl-success+ result)
-      (api-error 'enqueue-ndrange-kernel result))))
+                                           event)
+                'enqueue-ndrange-kernel))
 
 @export
 (defun enqueue-read-buffer (command-queue
@@ -164,7 +166,7 @@
                               (num-events-in-wait-list 0)
                               (event-wait-list (null-pointer))
                               (event (null-pointer)))
-  (let ((result (cl-enqueue-read-buffer command-queue
+  (check-result (cl-enqueue-read-buffer command-queue
                                         buffer
                                         blocking-read
                                         offset
@@ -172,9 +174,8 @@
                                         ptr
                                         num-events-in-wait-list
                                         event-wait-list
-                                        event)))
-    (unless (= +cl-success+ result)
-      (api-error 'enqueue-read-buffer result))))
+                                        event)
+                'enqueue-read-buffer))
 
 @export
 (defun enqueue-write-buffer (command-queue
@@ -187,7 +188,7 @@
                                (num-events-in-wait-list 0)
                                (event-wait-list (null-pointer))
                                (event (null-pointer)))
-  (let ((result (cl-enqueue-write-buffer command-queue
+  (check-result (cl-enqueue-write-buffer command-queue
                                          buffer
                                          blocking-write
                                          offset
@@ -195,9 +196,8 @@
                                          ptr
                                          num-events-in-wait-list
                                          event-wait-list
-                                         event)))
-    (unless (= +cl-success+ result)
-      (api-error 'enqueue-write-buffer result))))
+                                         event)
+                'enqueue-write-buffer))
 
 @export
 (defun enqueue-copy-buffer (command-queue
@@ -210,7 +210,7 @@
                               (num-events-in-wait-list 0)
                               (event-wait-list (null-pointer))
                               (event (null-pointer)))
-  (let ((result (cl-enqueue-copy-buffer command-queue
+  (check-result (cl-enqueue-copy-buffer command-queue
                                         src-buffer
                                         dst-buffer
                                         src-offset
@@ -218,9 +218,8 @@
                                         size
                                         num-events-in-wait-list
                                         event-wait-list
-                                        event)))
-    (unless (= +cl-success+ result)
-      (api-error 'enqueue-copy-buffer result))))
+                                        event)
+                'enqueue-copy-buffer))
 
 #| parameter setup |#
 
