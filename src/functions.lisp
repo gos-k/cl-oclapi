@@ -413,7 +413,13 @@
   (event cl-event)
   (execution-status cl-int))
 
-;; TODO: clSetEventCallback
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clSetEventCallback" cl-set-event-callback) cl-int
+  (event cl-event)
+  (command-exec-callback-type cl-int)
+  (pfn-notify :pointer)
+  (user-data :pointer))
 
 #| Profiling APIs |#
 
