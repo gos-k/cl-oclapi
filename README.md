@@ -40,7 +40,7 @@ git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
 | Yes    | Device APIs |
 | Yes    | Context APIs |
 | Yes    | Command Queue APIs |
-| Part   | Memory Object APIs |
+| Yes    | Memory Object APIs |
 | No     | Sampler APIs |
 | Yes    | Program Object APIs |
 | Yes    | Kernel Object APIs |
