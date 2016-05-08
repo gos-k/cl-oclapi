@@ -328,10 +328,10 @@
               (setf (foreign-slot-value desc '(:struct cl-image-desc) 'image-type) +cl-mem-object-image2d+
                     (foreign-slot-value desc '(:struct cl-image-desc) 'image-width) 1
                     (foreign-slot-value desc '(:struct cl-image-desc) 'image-height) 1
-                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-depth) 1
-                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-array-size) 1
-                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-row-pitch) 1
-                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-slice-pitch) 1
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-depth) 0
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-array-size) 0
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-row-pitch) 0
+                    (foreign-slot-value desc '(:struct cl-image-desc) 'image-slice-pitch) 0
                     (foreign-slot-value desc '(:struct cl-image-desc) 'num-mip-levels) 0
                     (foreign-slot-value desc '(:struct cl-image-desc) 'num-samples) 0
                     (foreign-slot-value desc '(:struct cl-image-desc) 'buffer) (null-pointer))
