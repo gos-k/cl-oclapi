@@ -219,6 +219,11 @@
   (filter-mode cl-addressing-mode)
   (errcode-ret (:pointer cl-int)))
 
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clRetainSampler" cl-retain-sampler) cl-int
+  (sampler cl-sampler))
+
 #| Program Object APIs  |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
