@@ -37,14 +37,15 @@ git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
 
 | Status | APIs |
 |:------:|:-----|
+| Yes    | Platform APIs |
 | Yes    | Device APIs |
 | Yes    | Context APIs |
 | Yes    | Command Queue APIs |
-| Part   | Memory Object APIs |
-| No     | Sampler APIs |
+| Yes    | Memory Object APIs |
+| Yes    | Sampler APIs |
 | Yes    | Program Object APIs |
 | Yes    | Kernel Object APIs |
-| Part   | Event Object APIs |
+| Yes    | Event Object APIs |
 | Yes    | Profiling APIs |
 | Yes    | Flush and Finish APIs |
 | Yes    | Enqueued Commands APIs |

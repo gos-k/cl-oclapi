@@ -283,7 +283,10 @@
                                                    0
                                                    0
                                                    (null-pointer)
-                                                   (null-pointer))))
+                                                   (null-pointer)))
+    (is +cl-invalid-mem-object+ (cl-set-mem-object-destruction-callback (null-pointer)
+                                                                        (null-pointer)
+                                                                        (null-pointer))))
   (subtest "valid params."
     (with-foreign-objects ((platforms 'cl-platform-id)
                            (num-platforms 'cl-uint)
@@ -341,6 +344,21 @@
                 (is-success (mem-aref errcode-ret 'cl-int))
                 (is-success (cl-retain-mem-object image))
                 (is-success (cl-release-mem-object image))))))))))
+
+(subtest "Sampler API"
+  (subtest "can call functions."
+    (is-null (cl-create-sampler (null-pointer)
+                           0
+                           0
+                           0
+                           (null-pointer)))
+    (is (cl-retain-sampler (null-pointer)) +cl-invalid-sampler+)
+    (is (cl-release-sampler (null-pointer)) +cl-invalid-sampler+)
+    (is (cl-get-sampler-info (null-pointer)
+                             0
+                             0
+                             (null-pointer)
+                             (null-pointer)) +cl-invalid-sampler+)))
 
 (subtest "Program API"
   (subtest "can call functions."
@@ -480,7 +498,11 @@
     (is +cl-invalid-event+ (cl-retain-event (null-pointer)))
     (is +cl-invalid-event+ (cl-release-event (null-pointer)))
     (is +cl-invalid-event+ (cl-set-user-event-status (null-pointer)
-                                                     0))))
+                                                     0))
+    (is +cl-invalid-event+ (cl-set-event-callback (null-pointer)
+                                                  0
+                                                  (null-pointer)
+                                                  (null-pointer)))))
 
 (subtest "Profiling APIs"
   (is +cl-invalid-event+ (cl-get-event-profiling-info (null-pointer)

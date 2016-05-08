@@ -23,10 +23,19 @@
         result
         (api-error name code))))
 
-@export
 (defmacro when-success (expr &body body)
   `(when (= +cl-success+ ,expr)
      ,@body))
+
+(defmacro unless-success (expr &body body)
+  `(unless (= +cl-success+ ,expr)
+     ,@body))
+
+(defun check-result (result name)
+  (unless-success result
+    (api-error name result)))
+
+#| Platform APIs |#
 
 @export
 (defun get-platform-id ()
@@ -45,6 +54,8 @@
             (loop for n from 0 below num
                   collecting (mem-aref platforms 'cl-platform-id n))))))))
 
+#| Context APIs |#
+
 @export
 (defun create-context (properties
                        num-devices
@@ -61,6 +72,27 @@
                                       errcode-ret)))
       (check-errcode-ret context 'cl-create-context errcode-ret))))
 
+#| Command Queue APIs |#
+
+@export
+(defun create-command-queue (context device properties)
+  (with-foreign-object (errcode-ret 'cl-int)
+    (let ((command-queue (cl-create-command-queue context
+                                                  device
+                                                  properties
+                                                  errcode-ret)))
+      (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
+
+@export
+(defmacro with-command-queue ((name context device properties) &body body)
+  `(let ((,name (create-command-queue ,context ,device ,properties)))
+     (unwind-protect
+          (progn
+            ,@body)
+       (cl-release-command-queue ,name))))
+
+#| Memory Object APIs |#
+
 @export
 (defun create-buffer (context flags size &optional (host-ptr (null-pointer)))
   (with-foreign-object (errcode-ret 'cl-int)
@@ -70,6 +102,16 @@
                                     host-ptr
                                     errcode-ret)))
       (check-errcode-ret buffer 'cl-create-buffer errcode-ret))))
+
+@export
+(defmacro with-buffer ((name context flags size &optional (host-ptr (null-pointer))) &body body)
+  `(let ((,name (create-buffer ,context ,flags ,size ,host-ptr)))
+     (unwind-protect
+          (progn
+            ,@body)
+       (cl-release-mem-object ,name))))
+
+#| Program Object APIs  |#
 
 @export
 (defun create-program-with-source (context count strings &optional (lengths (null-pointer)))
@@ -82,19 +124,30 @@
       (check-errcode-ret program 'cl-create-program-with-source errcode-ret))))
 
 @export
+(defun build-program (program
+                      num-devices
+                      device-list
+                      &optional
+                        (options (null-pointer))
+                        (cl-callback (null-pointer))
+                        (user-data (null-pointer)))
+  (check-result (cl-build-program program
+                                  num-devices
+                                  device-list
+                                  options
+                                  cl-callback
+                                  user-data)
+                'build-program))
+
+#| Kernel Object APIs |#
+
+@export
 (defun create-kernel (program kernel-name)
   (with-foreign-object (errcode-ret 'cl-int)
     (let ((kernel (cl-create-kernel program kernel-name errcode-ret)))
       (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
 
-@export
-(defun create-command-queue (context device properties)
-  (with-foreign-object (errcode-ret 'cl-int)
-    (let ((command-queue (cl-create-command-queue context
-                                                  device
-                                                  properties
-                                                  errcode-ret)))
-      (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
+#| Enqueued Commands APIs |#
 
 @export
 (defun enqueue-ndrange-kernel (command-queue
@@ -107,7 +160,7 @@
                                  (num-events-in-wait-list 0)
                                  (event-wait-list (null-pointer))
                                  (event (null-pointer)))
-  (let ((result (cl-enqueue-ndrange-kernel command-queue
+  (check-result (cl-enqueue-ndrange-kernel command-queue
                                            kernel
                                            work-dim
                                            global-work-offset
@@ -115,9 +168,76 @@
                                            local-work-size
                                            num-events-in-wait-list
                                            event-wait-list
-                                           event)))
-    (unless (= +cl-success+ result)
-      (api-error 'enqueue-ndrange-kernel result))))
+                                           event)
+                'enqueue-ndrange-kernel))
+
+@export
+(defun enqueue-read-buffer (command-queue
+                            buffer
+                            blocking-read
+                            offset
+                            size
+                            ptr
+                            &optional
+                              (num-events-in-wait-list 0)
+                              (event-wait-list (null-pointer))
+                              (event (null-pointer)))
+  (check-result (cl-enqueue-read-buffer command-queue
+                                        buffer
+                                        blocking-read
+                                        offset
+                                        size
+                                        ptr
+                                        num-events-in-wait-list
+                                        event-wait-list
+                                        event)
+                'enqueue-read-buffer))
+
+@export
+(defun enqueue-write-buffer (command-queue
+                             buffer
+                             blocking-write
+                             offset
+                             size
+                             ptr
+                             &optional
+                               (num-events-in-wait-list 0)
+                               (event-wait-list (null-pointer))
+                               (event (null-pointer)))
+  (check-result (cl-enqueue-write-buffer command-queue
+                                         buffer
+                                         blocking-write
+                                         offset
+                                         size
+                                         ptr
+                                         num-events-in-wait-list
+                                         event-wait-list
+                                         event)
+                'enqueue-write-buffer))
+
+@export
+(defun enqueue-copy-buffer (command-queue
+                            src-buffer
+                            dst-buffer
+                            src-offset
+                            dst-offset
+                            size
+                            &optional
+                              (num-events-in-wait-list 0)
+                              (event-wait-list (null-pointer))
+                              (event (null-pointer)))
+  (check-result (cl-enqueue-copy-buffer command-queue
+                                        src-buffer
+                                        dst-buffer
+                                        src-offset
+                                        dst-offset
+                                        size
+                                        num-events-in-wait-list
+                                        event-wait-list
+                                        event)
+                'enqueue-copy-buffer))
+
+#| parameter setup |#
 
 @export
 (defun set-platform-id (properties platform-id)
@@ -130,3 +250,10 @@
   (setf (mem-aref work-size 'size-t 0) x
         (mem-aref work-size 'size-t 1) y
         (mem-aref work-size 'size-t 2) z))
+
+@export
+(defmacro with-work-size ((name x &optional (y 0) (z 0)) &body body)
+  `(with-foreign-object (,name 'size-t 3)
+     (set-work-size ,name ,x ,y ,z)
+     (progn
+       ,@body)))

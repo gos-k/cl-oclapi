@@ -201,9 +201,42 @@
   (param-value :pointer)
   (param-value-size-ret (:pointer size-t)))
 
-;; TODO: clSetMemObjectDestructorCallback
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clSetMemObjectDestructorCallback" cl-set-mem-object-destruction-callback) cl-int
+  (memobj cl-mem)
+  (pfn-notify :pointer)
+  (user-data :pointer))
 
-#| TODO: Sampler APIs |#
+#| Sampler APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clCreateSampler" cl-create-sampler) cl-sampler
+  (context cl-context)
+  (normalized-coords cl-bool)
+  (addressing-mode cl-filter-mode)
+  (filter-mode cl-addressing-mode)
+  (errcode-ret (:pointer cl-int)))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clRetainSampler" cl-retain-sampler) cl-int
+  (sampler cl-sampler))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clReleaseSampler" cl-release-sampler) cl-int
+  (sampler cl-sampler))
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clGetSamplerInfo" cl-get-sampler-info) cl-int
+  (sampler cl-sampler)
+  (param-name cl-sampler-info)
+  (param-value-size size-t)
+  (param-value :pointer)
+  (param-value-size-ret (:pointer size-t)))
 
 #| Program Object APIs  |#
 
@@ -408,7 +441,13 @@
   (event cl-event)
   (execution-status cl-int))
 
-;; TODO: clSetEventCallback
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clSetEventCallback" cl-set-event-callback) cl-int
+  (event cl-event)
+  (command-exec-callback-type cl-int)
+  (pfn-notify :pointer)
+  (user-data :pointer))
 
 #| Profiling APIs |#
 
