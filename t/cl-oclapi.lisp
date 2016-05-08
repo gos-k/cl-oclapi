@@ -481,7 +481,11 @@
     (is +cl-invalid-event+ (cl-retain-event (null-pointer)))
     (is +cl-invalid-event+ (cl-release-event (null-pointer)))
     (is +cl-invalid-event+ (cl-set-user-event-status (null-pointer)
-                                                     0))))
+                                                     0))
+    (is +cl-invalid-event+ (cl-set-event-callback (null-pointer)
+                                                  0
+                                                  (null-pointer)
+                                                  (null-pointer)))))
 
 (subtest "Profiling APIs"
   (is +cl-invalid-event+ (cl-get-event-profiling-info (null-pointer)
