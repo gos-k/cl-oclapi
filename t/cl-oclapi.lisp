@@ -351,7 +351,12 @@
                            0
                            (null-pointer)))
     (is (cl-retain-sampler (null-pointer)) +cl-invalid-sampler+)
-    (is (cl-release-sampler (null-pointer)) +cl-invalid-sampler+)))
+    (is (cl-release-sampler (null-pointer)) +cl-invalid-sampler+)
+    (is (cl-get-sampler-info (null-pointer)
+                             0
+                             0
+                             (null-pointer)
+                             (null-pointer)) +cl-invalid-sampler+)))
 
 (subtest "Program API"
   (subtest "can call functions."
