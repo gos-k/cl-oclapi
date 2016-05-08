@@ -224,6 +224,11 @@
 (defcfun ("clRetainSampler" cl-retain-sampler) cl-int
   (sampler cl-sampler))
 
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clReleaseSampler" cl-release-sampler) cl-int
+  (sampler cl-sampler))
+
 #| Program Object APIs  |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
