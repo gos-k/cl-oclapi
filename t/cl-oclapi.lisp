@@ -343,6 +343,14 @@
                 (is-success (cl-retain-mem-object image))
                 (is-success (cl-release-mem-object image))))))))))
 
+(subtest "Sampler API"
+  (subtest "can call functions."
+    (is-null (cl-create-sampler (null-pointer)
+                           0
+                           0
+                           0
+                           (null-pointer)))))
+
 (subtest "Program API"
   (subtest "can call functions."
     (is-null (cl-create-program-with-source (null-pointer)
