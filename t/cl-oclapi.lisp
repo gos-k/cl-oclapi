@@ -349,7 +349,8 @@
                            0
                            0
                            0
-                           (null-pointer)))))
+                           (null-pointer)))
+    (is (cl-retain-sampler (null-pointer)) +cl-invalid-sampler+)))
 
 (subtest "Program API"
   (subtest "can call functions."
