@@ -95,6 +95,14 @@
                                     errcode-ret)))
       (check-errcode-ret buffer 'cl-create-buffer errcode-ret))))
 
+@export
+(defmacro with-buffer ((name context flags size &optional (host-ptr (null-pointer))) &body body)
+  `(let ((,name (create-buffer ,context ,flags ,size ,host-ptr)))
+     (unwind-protect
+          (progn
+            ,@body)
+       (cl-release-mem-object ,name))))
+
 #| Program Object APIs  |#
 
 @export
