@@ -229,6 +229,15 @@
 (defcfun ("clReleaseSampler" cl-release-sampler) cl-int
   (sampler cl-sampler))
 
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clGetSamplerInfo" cl-get-sampler-info) cl-int
+  (sampler cl-sampler)
+  (param-name cl-sampler-info)
+  (param-value-size size-t)
+  (param-value :pointer)
+  (param-value-size-ret (:pointer size-t)))
+
 #| Program Object APIs  |#
 
 ;; CL_API_SUFFIX__VERSION_1_0;
