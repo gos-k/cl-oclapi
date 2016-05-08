@@ -201,7 +201,12 @@
   (param-value :pointer)
   (param-value-size-ret (:pointer size-t)))
 
-;; TODO: clSetMemObjectDestructorCallback
+;; CL_API_SUFFIX__VERSION_1_1;
+@export
+(defcfun ("clSetMemObjectDestructorCallback" cl-set-mem-object-destruction-callback) cl-int
+  (memobj cl-mem)
+  (pfn-notify :pointer)
+  (user-data :pointer))
 
 #| TODO: Sampler APIs |#
 
