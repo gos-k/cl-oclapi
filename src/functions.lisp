@@ -208,7 +208,16 @@
   (pfn-notify :pointer)
   (user-data :pointer))
 
-#| TODO: Sampler APIs |#
+#| Sampler APIs |#
+
+;; CL_API_SUFFIX__VERSION_1_0;
+@export
+(defcfun ("clCreateSampler" cl-create-sampler) cl-sampler
+  (context cl-context)
+  (normalized-coords cl-bool)
+  (addressing-mode cl-filter-mode)
+  (filter-mode cl-addressing-mode)
+  (errcode-ret (:pointer cl-int)))
 
 #| Program Object APIs  |#
 
