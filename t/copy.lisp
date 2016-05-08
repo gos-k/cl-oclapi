@@ -90,16 +90,14 @@
                           (enqueue-write-buffer command-queue buffer-in 1 0 1 value)
                           (setf (mem-aref value 'cl-char) 2)
                           (enqueue-write-buffer command-queue buffer-out 1 0 1 value))
-                        (with-foreign-objects ((global-work-size 'size-t 3)
-                                               (local-work-size 'size-t 3))
-                          (set-work-size global-work-size 1)
-                          (set-work-size local-work-size 1)
-                          (enqueue-ndrange-kernel command-queue
-                                                  kernel
-                                                  1
-                                                  (null-pointer)
-                                                  global-work-size
-                                                  local-work-size))
+                        (with-work-size (global-work-size 1)
+                          (with-work-size (local-work-size 1)
+                            (enqueue-ndrange-kernel command-queue
+                                                    kernel
+                                                    1
+                                                    (null-pointer)
+                                                    global-work-size
+                                                    local-work-size)))
                         (is-success (cl-finish command-queue) "finish")
                         (with-foreign-object (value 'cl-char)
                           (setf (mem-aref value 'cl-char) 0)

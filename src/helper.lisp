@@ -234,3 +234,10 @@
   (setf (mem-aref work-size 'size-t 0) x
         (mem-aref work-size 'size-t 1) y
         (mem-aref work-size 'size-t 2) z))
+
+@export
+(defmacro with-work-size ((name x &optional (y 0) (z 0)) &body body)
+  `(with-foreign-object (,name 'size-t 3)
+     (set-work-size ,name ,x ,y ,z)
+     (progn
+       ,@body)))
