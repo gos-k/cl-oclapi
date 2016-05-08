@@ -32,6 +32,7 @@ git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
   * OpenCL 1.2
 * Platforms
   * pocl 0.12
+  * OpenCL 1.2 CUDA 8.0.20
 
 ### Support functions
 
