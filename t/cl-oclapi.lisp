@@ -281,7 +281,10 @@
                                                    0
                                                    0
                                                    (null-pointer)
-                                                   (null-pointer))))
+                                                   (null-pointer)))
+    (is +cl-invalid-mem-object+ (cl-set-mem-object-destruction-callback (null-pointer)
+                                                                        (null-pointer)
+                                                                        (null-pointer))))
   (subtest "valid params."
     (with-foreign-objects ((platforms 'cl-platform-id)
                            (num-platforms 'cl-uint)
