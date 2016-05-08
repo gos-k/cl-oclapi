@@ -83,6 +83,14 @@
                                                   errcode-ret)))
       (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
 
+@export
+(defmacro with-command-queue ((name context device properties) &body body)
+  `(let ((,name (create-command-queue ,context ,device ,properties)))
+     (unwind-protect
+          (progn
+            ,@body)
+       (cl-release-command-queue ,name))))
+
 #| Memory Object APIs |#
 
 @export
