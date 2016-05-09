@@ -18,12 +18,14 @@
   :license "MIT"
   :depends-on (:cffi :cl-annot :cl-reexport)
   :components ((:module "src"
-                :components
-                ((:file "constants")
-                 (:file "types")
-                 (:file "functions")
-                 (:file "helper")
-                 (:file "cl-oclapi"))))
+                        :components
+                        ((:module "bindings"
+                                  :components
+                                  ((:file "constants")
+                                   (:file "types")
+                                   (:file "functions")))
+                         (:file "helper")
+                         (:file "cl-oclapi"))))
   :description ""
   :long-description
   #.(with-open-file (stream (merge-pathnames
