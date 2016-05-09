@@ -1,3 +1,8 @@
+#|
+  This file is a part of cl-oclapi project.
+  Copyright (c) 2015 gos-k (mag4.elan@gmail.com)
+|#
+
 (in-package :cl-user)
 (defpackage cl-oclapi.functions
   (:use :cl
