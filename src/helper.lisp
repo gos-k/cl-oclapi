@@ -116,6 +116,15 @@
             ,@body)
        (cl-release-mem-object ,name))))
 
+@export
+(defmacro with-buffers (bindings &body body)
+  (if bindings
+      `(with-buffer ,(car bindings)
+         (with-buffers ,(cdr bindings)
+           ,@body))
+      `(progn
+         ,@body)))
+
 #| Program Object APIs  |#
 
 @export
