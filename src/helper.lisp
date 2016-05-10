@@ -271,3 +271,12 @@
      (set-work-size ,name ,x ,y ,z)
      (progn
        ,@body)))
+
+@export
+(defmacro with-work-sizes (bindings &body body)
+  (if bindings
+      `(with-work-size ,(car bindings)
+         (with-work-sizes ,(cdr bindings)
+           ,@body))
+      `(progn
+         ,@body)))
