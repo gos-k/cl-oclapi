@@ -15,7 +15,9 @@
 (reexport-from :cl-oclapi.functions)
 (reexport-from :cl-oclapi.helper)
 
-(define-foreign-library libopencl
-  (t (:default "libOpenCL")))
+(eval-when (:load-toplevel)
+  (define-foreign-library libopencl
+    (t (:default "libOpenCL")))
 
-(use-foreign-library libopencl)
+  (unless (foreign-library-loaded-p 'libopencl)
+    (use-foreign-library libopencl)))
