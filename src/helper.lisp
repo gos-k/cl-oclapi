@@ -6,6 +6,7 @@
 (in-package :cl-user)
 (defpackage cl-oclapi.helper
   (:use :cl
+        :alexandria
         :cffi
         :cl-annot
         :cl-oclapi.constants
@@ -160,6 +161,17 @@
   (with-foreign-object (errcode-ret 'cl-int)
     (let ((kernel (cl-create-kernel program kernel-name errcode-ret)))
       (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
+
+@export
+(defmacro with-kernel ((name program kernel-name) &body body)
+  (with-gensyms (foreign-name)
+    `(let* ((,foreign-name (foreign-string-alloc ,kernel-name))
+            (,name (create-kernel ,program ,foreign-name)))
+       (unwind-protect
+            (progn
+              ,@body)
+         (cl-release-kernel ,name)
+         (foreign-string-free ,foreign-name)))))
 
 #| Flush and Finish APIs |#
 
