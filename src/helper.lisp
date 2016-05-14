@@ -164,6 +164,11 @@
 #| Flush and Finish APIs |#
 
 @export
+(defun flush (command-queue)
+  (check-result (cl-flush command-queue)
+                'flush))
+
+@export
 (defun finish (command-queue)
   (check-result (cl-finish command-queue)
                 'finish))
