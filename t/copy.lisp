@@ -15,7 +15,7 @@
 (plan nil)
 
 (defparameter *copy-kernel*
-  "__kernel void alfa(__global char * a, __global char * b) { a[0] = b[0]; }")
+  "__kernel void copy(__global char * a, __global char * b) { a[0] = b[0]; }")
 
 (subtest "Copy buffer"
   (with-foreign-objects ((devices 'cl-device-id)
@@ -77,7 +77,7 @@
                 (build-program program
                                1
                                devices)
-                (with-kernel (kernel program "alfa")
+                (with-kernel (kernel program "copy")
                   (ok kernel "create kernel")
                   (with-foreign-objects ((p-in :pointer)
                                          (p-out :pointer))
