@@ -4,15 +4,14 @@
 |#
 
 (in-package :cl-user)
-(defpackage cl-oclapi.helper
+(defpackage cl-oclapi.helpers.safe-call
   (:use :cl
-        :alexandria
         :cffi
         :cl-annot
         :cl-oclapi.constants
         :cl-oclapi.types
         :cl-oclapi.functions))
-(in-package :cl-oclapi.helper)
+(in-package :cl-oclapi.helpers.safe-call)
 
 (annot:enable-annot-syntax)
 
@@ -89,14 +88,6 @@
                                                   errcode-ret)))
       (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
 
-@export
-(defmacro with-command-queue ((name context device properties) &body body)
-  `(let ((,name (create-command-queue ,context ,device ,properties)))
-     (unwind-protect
-          (progn
-            ,@body)
-       (cl-release-command-queue ,name))))
-
 #| Memory Object APIs |#
 
 @export
@@ -108,23 +99,6 @@
                                     host-ptr
                                     errcode-ret)))
       (check-errcode-ret buffer 'cl-create-buffer errcode-ret))))
-
-@export
-(defmacro with-buffer ((name context flags size &optional (host-ptr (null-pointer))) &body body)
-  `(let ((,name (create-buffer ,context ,flags ,size ,host-ptr)))
-     (unwind-protect
-          (progn
-            ,@body)
-       (cl-release-mem-object ,name))))
-
-@export
-(defmacro with-buffers (bindings &body body)
-  (if bindings
-      `(with-buffer ,(car bindings)
-         (with-buffers ,(cdr bindings)
-           ,@body))
-      `(progn
-         ,@body)))
 
 #| Program Object APIs  |#
 
@@ -161,17 +135,6 @@
   (with-foreign-object (errcode-ret 'cl-int)
     (let ((kernel (cl-create-kernel program kernel-name errcode-ret)))
       (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
-
-@export
-(defmacro with-kernel ((name program kernel-name) &body body)
-  (with-gensyms (foreign-name)
-    `(let* ((,foreign-name (foreign-string-alloc ,kernel-name))
-            (,name (create-kernel ,program ,foreign-name)))
-       (unwind-protect
-            (progn
-              ,@body)
-         (cl-release-kernel ,name)
-         (foreign-string-free ,foreign-name)))))
 
 #| Flush and Finish APIs |#
 
@@ -288,19 +251,3 @@
   (setf (mem-aref work-size 'size-t 0) x
         (mem-aref work-size 'size-t 1) y
         (mem-aref work-size 'size-t 2) z))
-
-@export
-(defmacro with-work-size ((name x &optional (y 0) (z 0)) &body body)
-  `(with-foreign-object (,name 'size-t 3)
-     (set-work-size ,name ,x ,y ,z)
-     (progn
-       ,@body)))
-
-@export
-(defmacro with-work-sizes (bindings &body body)
-  (if bindings
-      `(with-work-size ,(car bindings)
-         (with-work-sizes ,(cdr bindings)
-           ,@body))
-      `(progn
-         ,@body)))

@@ -16,7 +16,10 @@
   :version "0.1"
   :author "gos-k"
   :license "MIT"
-  :depends-on (:cffi :cl-annot :cl-reexport)
+  :depends-on (:alexandria
+               :cffi
+               :cl-annot
+               :cl-reexport)
   :components ((:module "src"
                         :components
                         ((:module "bindings"
@@ -24,7 +27,10 @@
                                   ((:file "constants")
                                    (:file "types")
                                    (:file "functions")))
-                         (:file "helper")
+                         (:module "helpers"
+                                  :components
+                                  ((:file "safe-call")
+                                   (:file "with")))
                          (:file "cl-oclapi"))))
   :description ""
   :long-description

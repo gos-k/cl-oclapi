@@ -13,7 +13,9 @@
 (reexport-from :cl-oclapi.constants)
 (reexport-from :cl-oclapi.types)
 (reexport-from :cl-oclapi.functions)
-(reexport-from :cl-oclapi.helper)
+
+(reexport-from :cl-oclapi.helpers.safe-call)
+(reexport-from :cl-oclapi.helpers.with)
 
 (eval-when (:load-toplevel)
   (define-foreign-library libopencl
