@@ -10,7 +10,6 @@
         :cffi
         :cl-annot
         :cl-oclapi.types
-        :cl-oclapi.functions
         :cl-oclapi.helpers.safe-call))
 (in-package :cl-oclapi.helpers.with)
 
@@ -44,6 +43,16 @@
            ,@body))
       `(progn
          ,@body)))
+
+#| Program Object APIs  |#
+
+@export
+(defmacro with-program-with-source ((program context count strings &optional (lengths (null-pointer))) &body body)
+  `(let ((,program (create-program-with-source ,context ,count ,strings ,lengths)))
+     (unwind-protect
+          (progn
+            ,@body)
+       (release-program ,program))))
 
 #| Kernel Object APIs |#
 
