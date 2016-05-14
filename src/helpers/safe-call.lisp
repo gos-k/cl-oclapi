@@ -156,6 +156,10 @@
                      arg-size
                      arg-value))
 
+@export
+(defun-check-result release-kernel (kernel)
+  (cl-release-kernel kernel))
+
 #| Flush and Finish APIs |#
 
 @export
