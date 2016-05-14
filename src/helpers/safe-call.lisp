@@ -106,6 +106,10 @@
                                     errcode-ret)))
       (check-errcode-ret buffer 'cl-create-buffer errcode-ret))))
 
+@export
+(defun-check-result release-mem-object (memobj)
+  (cl-release-mem-object memobj))
+
 #| Program Object APIs  |#
 
 @export
