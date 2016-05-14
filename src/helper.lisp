@@ -161,6 +161,13 @@
     (let ((kernel (cl-create-kernel program kernel-name errcode-ret)))
       (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
 
+#| Flush and Finish APIs |#
+
+@export
+(defun finish (command-queue)
+  (check-result (cl-finish command-queue)
+                'finish))
+
 #| Enqueued Commands APIs |#
 
 @export

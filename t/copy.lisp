@@ -48,7 +48,7 @@
                                    (mem-aref src-offset 'size-t)
                                    (mem-aref dst-offset 'size-t)
                                    (mem-aref size 'size-t)))
-            (is-success (cl-finish command-queue) "finish")))
+            (finish command-queue)))
         (is-success (cl-release-context context) "release context")
         (is-success (cl-release-device device) "release device")))))
 
@@ -101,7 +101,7 @@
                                                   (null-pointer)
                                                   global-work-size
                                                   local-work-size))
-                        (is-success (cl-finish command-queue) "finish")
+                        (finish command-queue)
                         (with-foreign-object (value 'cl-char)
                           (setf (mem-aref value 'cl-char) 0)
                           (enqueue-read-buffer command-queue buffer-out 1 0 1 value)
