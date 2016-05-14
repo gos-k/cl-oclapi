@@ -136,6 +136,14 @@
     (let ((kernel (cl-create-kernel program kernel-name errcode-ret)))
       (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
 
+@export
+(defun set-kernel-arg (kernel arg-index arg-size arg-value)
+  (check-result (cl-set-kernel-arg kernel
+                                   arg-index
+                                   arg-size
+                                   arg-value)
+                'set-kernel-arg))
+
 #| Flush and Finish APIs |#
 
 @export
