@@ -94,6 +94,10 @@
                                                   errcode-ret)))
       (check-errcode-ret command-queue 'cl-create-command-queue errcode-ret))))
 
+@export
+(defun-check-result release-command-queue (command-queue)
+  (cl-release-command-queue command-queue))
+
 #| Memory Object APIs |#
 
 @export
