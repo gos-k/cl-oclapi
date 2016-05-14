@@ -17,7 +17,7 @@
   :components ((:module "t"
                 :components
                 ((:file "init")
-                 (:test-file "cl-oclapi")
+                 (:test-file "bindings")
                  (:test-file "copy"))))
   :description "Test system for cl-oclapi"
 
