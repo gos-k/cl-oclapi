@@ -113,6 +113,11 @@
       (check-errcode-ret program 'cl-create-program-with-source errcode-ret))))
 
 @export
+(defun release-program (program)
+  (check-result (cl-release-program program)
+                'release-program))
+
+@export
 (defun build-program (program
                       num-devices
                       device-list
