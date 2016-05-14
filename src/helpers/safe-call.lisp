@@ -40,6 +40,12 @@
   (unless-success result
     (api-error name result)))
 
+(defmacro defun-check-result (name (&rest args) &body body)
+  `(defun ,name (,@args)
+     (check-result (progn
+                     ,@body)
+                   ',name)))
+
 #| Platform APIs |#
 
 @export
@@ -113,25 +119,23 @@
       (check-errcode-ret program 'cl-create-program-with-source errcode-ret))))
 
 @export
-(defun release-program (program)
-  (check-result (cl-release-program program)
-                'release-program))
+(defun-check-result release-program (program)
+  (cl-release-program program))
 
 @export
-(defun build-program (program
-                      num-devices
-                      device-list
-                      &optional
-                        (options (null-pointer))
-                        (cl-callback (null-pointer))
-                        (user-data (null-pointer)))
-  (check-result (cl-build-program program
-                                  num-devices
-                                  device-list
-                                  options
-                                  cl-callback
-                                  user-data)
-                'build-program))
+(defun-check-result build-program (program
+                                   num-devices
+                                   device-list
+                                   &optional
+                                   (options (null-pointer))
+                                   (cl-callback (null-pointer))
+                                   (user-data (null-pointer)))
+  (cl-build-program program
+                    num-devices
+                    device-list
+                    options
+                    cl-callback
+                    user-data))
 
 #| Kernel Object APIs |#
 
@@ -142,114 +146,107 @@
       (check-errcode-ret kernel 'cl-create-kernel errcode-ret))))
 
 @export
-(defun set-kernel-arg (kernel arg-index arg-size arg-value)
-  (check-result (cl-set-kernel-arg kernel
-                                   arg-index
-                                   arg-size
-                                   arg-value)
-                'set-kernel-arg))
+(defun-check-result set-kernel-arg (kernel arg-index arg-size arg-value)
+  (cl-set-kernel-arg kernel
+                     arg-index
+                     arg-size
+                     arg-value))
 
 #| Flush and Finish APIs |#
 
 @export
-(defun flush (command-queue)
-  (check-result (cl-flush command-queue)
-                'flush))
+(defun-check-result flush (command-queue)
+  (cl-flush command-queue))
 
 @export
-(defun finish (command-queue)
-  (check-result (cl-finish command-queue)
-                'finish))
+(defun-check-result finish (command-queue)
+  (cl-finish command-queue))
 
 #| Enqueued Commands APIs |#
 
 @export
-(defun enqueue-ndrange-kernel (command-queue
-                               kernel
-                               work-dim
-                               global-work-offset
-                               global-work-size
-                               local-work-size
-                               &optional
-                                 (num-events-in-wait-list 0)
-                                 (event-wait-list (null-pointer))
-                                 (event (null-pointer)))
-  (check-result (cl-enqueue-ndrange-kernel command-queue
-                                           kernel
-                                           work-dim
-                                           global-work-offset
-                                           global-work-size
-                                           local-work-size
-                                           num-events-in-wait-list
-                                           event-wait-list
-                                           event)
-                'enqueue-ndrange-kernel))
+(defun-check-result enqueue-ndrange-kernel (command-queue
+                                            kernel
+                                            work-dim
+                                            global-work-offset
+                                            global-work-size
+                                            local-work-size
+                                            &optional
+                                            (num-events-in-wait-list 0)
+                                            (event-wait-list (null-pointer))
+                                            (event (null-pointer)))
+  (cl-enqueue-ndrange-kernel command-queue
+                             kernel
+                             work-dim
+                             global-work-offset
+                             global-work-size
+                             local-work-size
+                             num-events-in-wait-list
+                             event-wait-list
+                             event))
 
 @export
-(defun enqueue-read-buffer (command-queue
-                            buffer
-                            blocking-read
-                            offset
-                            size
-                            ptr
-                            &optional
-                              (num-events-in-wait-list 0)
-                              (event-wait-list (null-pointer))
-                              (event (null-pointer)))
-  (check-result (cl-enqueue-read-buffer command-queue
-                                        buffer
-                                        blocking-read
-                                        offset
-                                        size
-                                        ptr
-                                        num-events-in-wait-list
-                                        event-wait-list
-                                        event)
-                'enqueue-read-buffer))
-
-@export
-(defun enqueue-write-buffer (command-queue
-                             buffer
-                             blocking-write
-                             offset
-                             size
-                             ptr
-                             &optional
-                               (num-events-in-wait-list 0)
-                               (event-wait-list (null-pointer))
-                               (event (null-pointer)))
-  (check-result (cl-enqueue-write-buffer command-queue
+(defun-check-result enqueue-read-buffer (command-queue
                                          buffer
-                                         blocking-write
+                                         blocking-read
                                          offset
                                          size
                                          ptr
-                                         num-events-in-wait-list
-                                         event-wait-list
-                                         event)
-                'enqueue-write-buffer))
+                                         &optional
+                                         (num-events-in-wait-list 0)
+                                         (event-wait-list (null-pointer))
+                                         (event (null-pointer)))
+  (cl-enqueue-read-buffer command-queue
+                          buffer
+                          blocking-read
+                          offset
+                          size
+                          ptr
+                          num-events-in-wait-list
+                          event-wait-list
+                          event))
 
 @export
-(defun enqueue-copy-buffer (command-queue
-                            src-buffer
-                            dst-buffer
-                            src-offset
-                            dst-offset
-                            size
-                            &optional
-                              (num-events-in-wait-list 0)
-                              (event-wait-list (null-pointer))
-                              (event (null-pointer)))
-  (check-result (cl-enqueue-copy-buffer command-queue
-                                        src-buffer
-                                        dst-buffer
-                                        src-offset
-                                        dst-offset
-                                        size
-                                        num-events-in-wait-list
-                                        event-wait-list
-                                        event)
-                'enqueue-copy-buffer))
+(defun-check-result enqueue-write-buffer (command-queue
+                                          buffer
+                                          blocking-write
+                                          offset
+                                          size
+                                          ptr
+                                          &optional
+                                          (num-events-in-wait-list 0)
+                                          (event-wait-list (null-pointer))
+                                          (event (null-pointer)))
+  (cl-enqueue-write-buffer command-queue
+                           buffer
+                           blocking-write
+                           offset
+                           size
+                           ptr
+                           num-events-in-wait-list
+                           event-wait-list
+                           event))
+
+@export
+(defun-check-result enqueue-copy-buffer (command-queue
+                                         src-buffer
+                                         dst-buffer
+                                         src-offset
+                                         dst-offset
+                                         size
+                                         &optional
+                                         (num-events-in-wait-list 0)
+                                         (event-wait-list (null-pointer))
+                                         (event (null-pointer)))
+  (cl-enqueue-copy-buffer command-queue
+                          src-buffer
+                          dst-buffer
+                          src-offset
+                          dst-offset
+                          size
+                          num-events-in-wait-list
+                          event-wait-list
+                          event))
 
 #| parameter setup |#
 
