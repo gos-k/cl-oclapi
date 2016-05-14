@@ -15,6 +15,27 @@
 
 (annot:enable-annot-syntax)
 
+#| Context APIs |#
+
+@export
+(defmacro with-context ((context
+                         properties
+                         num-devices
+                         devices
+                         &optional
+                           (pfn-notify (null-pointer))
+                           (user-data (null-pointer)))
+                        &body body)
+  `(let ((,context (create-context ,properties
+                                   ,num-devices
+                                   ,devices
+                                   ,pfn-notify
+                                   ,user-data)))
+     (unwind-protect
+          (progn
+            ,@body)
+       (release-context ,context))))
+
 #| Command Queue APIs |#
 
 @export
