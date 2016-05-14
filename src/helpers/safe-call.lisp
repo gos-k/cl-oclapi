@@ -83,6 +83,10 @@
                                       errcode-ret)))
       (check-errcode-ret context 'cl-create-context errcode-ret))))
 
+@export
+(defun-check-result release-context (context)
+  (cl-release-context context))
+
 #| Command Queue APIs |#
 
 @export
