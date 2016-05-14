@@ -24,7 +24,7 @@
      (unwind-protect
           (progn
             ,@body)
-       (cl-release-command-queue ,name))))
+       (release-command-queue ,name))))
 
 #| Memory Object APIs |#
 
@@ -34,7 +34,7 @@
      (unwind-protect
           (progn
             ,@body)
-       (cl-release-mem-object ,name))))
+       (release-mem-object ,name))))
 
 @export
 (defmacro with-buffers (bindings &body body)
@@ -55,7 +55,7 @@
        (unwind-protect
             (progn
               ,@body)
-         (cl-release-kernel ,name)
+         (release-kernel ,name)
          (foreign-string-free ,foreign-name)))))
 
 #| parameter setup |#
