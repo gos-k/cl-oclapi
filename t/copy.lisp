@@ -22,11 +22,11 @@
                          (num-devices 'cl-uint))
     (with-platform-id (platform)
       (ok platform "get platform")
-      (is-success (cl-get-device-ids platform
-                                     +cl-device-type-default+
-                                     1
-                                     devices
-                                     num-devices) "get device")
+      (get-device-ids platform
+                      +cl-device-type-default+
+                      1
+                      devices
+                      num-devices)
       (with-context (context (null-pointer) 1 devices)
         (let ((device (mem-aref devices 'cl-device-id)))
           (ok context "create context")
@@ -45,11 +45,11 @@
                          (num-devices 'cl-uint))
     (with-platform-id (platform)
       (ok platform "get platform")
-      (is-success (cl-get-device-ids platform
-                                     +cl-device-type-default+
-                                     1
-                                     devices
-                                     num-devices) "get device")
+      (get-device-ids platform
+                      +cl-device-type-default+
+                      1
+                      devices
+                      num-devices)
       (with-context (context (null-pointer) 1 devices)
         (let ((device (mem-aref devices 'cl-device-id)))
           (ok context "create context")

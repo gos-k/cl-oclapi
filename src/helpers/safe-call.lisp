@@ -52,6 +52,12 @@
 (defun-check-result get-platform-ids (num platforms num-platforms)
   (cl-get-platform-ids num platforms num-platforms))
 
+#| Device APIs |#
+
+@export
+(defun-check-result get-device-ids (platform device-type num-entries devices num-devices)
+  (cl-get-device-ids platform device-type num-entries devices num-devices))
+
 #| Context APIs |#
 
 @export
