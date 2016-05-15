@@ -68,12 +68,16 @@
 #| Program Object APIs  |#
 
 @export
-(defmacro with-program-with-source ((program context count strings &optional (lengths (null-pointer))) &body body)
-  `(let ((,program (create-program-with-source ,context ,count ,strings ,lengths)))
-     (unwind-protect
-          (progn
-            ,@body)
-       (release-program ,program))))
+(defmacro with-program-with-source ((program context count source &optional (lengths (null-pointer))) &body body)
+  (with-gensyms (string pointer)
+    `(with-foreign-string (,string ,source)
+       (with-foreign-object (,pointer :pointer)
+         (setf (mem-aref ,pointer :pointer) ,string)
+         (let ((,program (create-program-with-source ,context ,count ,pointer ,lengths)))
+           (unwind-protect
+                (progn
+                  ,@body)
+             (release-program ,program)))))))
 
 #| Kernel Object APIs |#
 
