@@ -49,21 +49,8 @@
 #| Platform APIs |#
 
 @export
-(defun get-platform-id ()
-  (with-foreign-objects ((platforms 'cl-platform-id)
-                         (num-platforms 'cl-uint))
-    (when-success (cl-get-platform-ids 1 platforms num-platforms)
-      (mem-aref platforms 'cl-platform-id))))
-
-@export
-(defun get-platform-ids ()
-  (with-foreign-object (num-platforms 'cl-uint)
-    (when-success (cl-get-platform-ids 0 (null-pointer) num-platforms)
-      (let ((num (mem-aref num-platforms 'cl-uint)))
-        (with-foreign-object (platforms 'cl-platform-id num)
-          (when-success (cl-get-platform-ids num platforms num-platforms)
-            (loop for n from 0 below num
-                  collecting (mem-aref platforms 'cl-platform-id n))))))))
+(defun-check-result get-platform-ids (num platforms num-platforms)
+  (cl-get-platform-ids num platforms num-platforms))
 
 #| Context APIs |#
 

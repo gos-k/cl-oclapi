@@ -20,7 +20,7 @@
 (subtest "Copy buffer"
   (with-foreign-objects ((devices 'cl-device-id)
                          (num-devices 'cl-uint))
-    (let ((platform (get-platform-id)))
+    (with-platform-id (platform)
       (ok platform "get platform")
       (is-success (cl-get-device-ids platform
                                      +cl-device-type-default+
@@ -54,7 +54,7 @@
 (subtest "Copy kernel"
   (with-foreign-objects ((devices 'cl-device-id)
                          (num-devices 'cl-uint))
-    (let ((platform (get-platform-id)))
+    (with-platform-id (platform)
       (ok platform "get platform")
       (is-success (cl-get-device-ids platform
                                      +cl-device-type-default+
@@ -84,18 +84,32 @@
                   (with-command-queue (command-queue context device 0)
                     (ok command-queue "create command queue")
                     (with-foreign-object (value 'cl-char)
-                      (setf (mem-aref value 'cl-char) 1)
-                      (enqueue-write-buffer command-queue buffer-in 1 0 1 value)
-                      (setf (mem-aref value 'cl-char) 2)
-                      (enqueue-write-buffer command-queue buffer-out 1 0 1 value))
-                    (with-work-sizes ((global-work-size 1)
-                                      (local-work-size 1))
-                      (enqueue-ndrange-kernel command-queue
-                                              kernel
+                      (with-foreign-objects ((offset 'size-t)
+                                             (size 'size-t))
+                        (setf (mem-aref offset 'size-t) 0
+                              (mem-aref size 'size-t) 1)
+                        (setf (mem-aref value 'cl-char) 1)
+                        (enqueue-write-buffer command-queue
+                                              buffer-in
                                               1
-                                              (null-pointer)
-                                              global-work-size
-                                              local-work-size))
+                                              (mem-aref offset 'size-t)
+                                              (mem-aref size 'size-t)
+                                              value)
+                        (setf (mem-aref value 'cl-char) 2)
+                        (enqueue-write-buffer command-queue
+                                              buffer-out
+                                              1
+                                              (mem-aref offset 'size-t)
+                                              (mem-aref size 'size-t)
+                                              value))
+                      (with-work-sizes ((global-work-size 1)
+                                        (local-work-size 1))
+                        (enqueue-ndrange-kernel command-queue
+                                                kernel
+                                                1
+                                                (null-pointer)
+                                                global-work-size
+                                                local-work-size)))
                     (finish command-queue)
                     (with-foreign-object (value 'cl-char)
                       (setf (mem-aref value 'cl-char) 0)

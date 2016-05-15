@@ -10,10 +10,33 @@
         :cffi
         :cl-annot
         :cl-oclapi.types
+        :cl-oclapi.constants
+        :cl-oclapi.functions
         :cl-oclapi.helpers.safe-call))
 (in-package :cl-oclapi.helpers.with)
 
 (annot:enable-annot-syntax)
+
+#| Platform APIs |#
+
+@export
+(defmacro with-platform-ids ((platform-ids) &body body)
+  (with-gensyms (num-platforms num platforms)
+    `(with-foreign-object (,num-platforms 'cl-uint)
+       (get-platform-ids 0 (null-pointer) ,num-platforms)
+       (let ((,num (mem-aref ,num-platforms 'cl-uint)))
+         (with-foreign-object (,platforms 'cl-platform-id ,num)
+           (get-platform-ids ,num ,platforms ,num-platforms)
+           (let ((,platform-ids (loop for n from 0 below ,num
+                                      collecting (mem-aref ,platforms 'cl-platform-id n))))
+             ,@body))))))
+
+@export
+(defmacro with-platform-id ((platform-id) &body body)
+  (with-gensyms (platform-ids)
+    `(with-platform-ids (,platform-ids)
+       (let ((,platform-id (car ,platform-ids)))
+         ,@body))))
 
 #| Context APIs |#
 
