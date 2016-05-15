@@ -34,7 +34,7 @@
                        (out context +cl-mem-write-only+ 1))
           (ok in "create buffer")
           (ok out "create buffer")
-          (let ((command-queue (create-command-queue context device 0)))
+          (with-command-queue (command-queue context device 0)
             (ok command-queue "create command queue")
             (with-foreign-objects ((src-offset 'size-t)
                                    (dst-offset 'size-t)
