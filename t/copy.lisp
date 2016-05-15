@@ -18,15 +18,9 @@
   "__kernel void copy(__global char * a, __global char * b) { a[0] = b[0]; }")
 
 (subtest "Copy buffer"
-  (with-foreign-objects ((devices 'cl-device-id)
-                         (num-devices 'cl-uint))
-    (with-platform-id (platform)
-      (ok platform "get platform")
-      (get-device-ids platform
-                      +cl-device-type-default+
-                      1
-                      devices
-                      num-devices)
+  (with-platform-id (platform)
+    (ok platform "get platform")
+    (with-device-ids (devices num-devices platform)
       (with-context (context (null-pointer) 1 devices)
         (let ((device (mem-aref devices 'cl-device-id)))
           (ok context "create context")
@@ -37,19 +31,12 @@
             (with-command-queue (command-queue context device 0)
               (ok command-queue "create command queue")
               (enqueue-copy-buffer command-queue in out 0 0 1)
-              (finish command-queue)))
-          (is-success (cl-release-device device) "release device"))))))
+              (finish command-queue))))))))
 
 (subtest "Copy kernel"
-  (with-foreign-objects ((devices 'cl-device-id)
-                         (num-devices 'cl-uint))
-    (with-platform-id (platform)
-      (ok platform "get platform")
-      (get-device-ids platform
-                      +cl-device-type-default+
-                      1
-                      devices
-                      num-devices)
+  (with-platform-id (platform)
+    (ok platform "get platform")
+    (with-device-ids (devices num-devices platform)
       (with-context (context (null-pointer) 1 devices)
         (let ((device (mem-aref devices 'cl-device-id)))
           (ok context "create context")
@@ -103,7 +90,6 @@
                     (with-foreign-object (value 'cl-char)
                       (setf (mem-aref value 'cl-char) 0)
                       (enqueue-read-buffer command-queue buffer-out 1 0 1 value)
-                      (is 1 (mem-aref value 'cl-char) "buffer-out result")))))))
-          (is-success (cl-release-device device) "release device"))))))
+                      (is 1 (mem-aref value 'cl-char) "buffer-out result"))))))))))))
 
 (finalize)

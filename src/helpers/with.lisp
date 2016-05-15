@@ -38,6 +38,19 @@
        (let ((,platform-id (car ,platform-ids)))
          ,@body))))
 
+#| Device APIs |#
+
+@export
+(defmacro with-device-ids ((devices num-devices platform &key (device-type +cl-device-type-default+)) &body body)
+  (with-gensyms (num)
+    `(with-foreign-object (,num-devices 'cl-uint)
+      (get-device-ids ,platform ,device-type 0 (null-pointer) ,num-devices)
+      (let ((,num (mem-aref ,num-devices 'cl-uint)))
+        (with-foreign-object (,devices 'cl-device-id ,num)
+          (get-device-ids ,platform ,device-type ,num ,devices ,num-devices)
+          (progn
+            ,@body))))))
+
 #| Context APIs |#
 
 @export
