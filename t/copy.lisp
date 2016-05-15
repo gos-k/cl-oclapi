@@ -36,18 +36,7 @@
             (ok out "create buffer")
             (with-command-queue (command-queue context device 0)
               (ok command-queue "create command queue")
-              (with-foreign-objects ((src-offset 'size-t)
-                                     (dst-offset 'size-t)
-                                     (size 'size-t))
-                (setf (mem-aref src-offset 'size-t) 0
-                      (mem-aref dst-offset 'size-t) 0
-                      (mem-aref size 'size-t) 1)
-                (enqueue-copy-buffer command-queue
-                                     in
-                                     out
-                                     (mem-aref src-offset 'size-t)
-                                     (mem-aref dst-offset 'size-t)
-                                     (mem-aref size 'size-t)))
+              (enqueue-copy-buffer command-queue in out 0 0 1)
               (finish command-queue)))
           (is-success (cl-release-device device) "release device"))))))
 
