@@ -27,30 +27,29 @@
                                      1
                                      devices
                                      num-devices) "get device")
-      (let ((context (create-context (null-pointer) 1 devices))
-            (device (mem-aref devices 'cl-device-id)))
-        (ok context "create context")
-        (with-buffers ((in context +cl-mem-read-only+ 1)
-                       (out context +cl-mem-write-only+ 1))
-          (ok in "create buffer")
-          (ok out "create buffer")
-          (with-command-queue (command-queue context device 0)
-            (ok command-queue "create command queue")
-            (with-foreign-objects ((src-offset 'size-t)
-                                   (dst-offset 'size-t)
-                                   (size 'size-t))
-              (setf (mem-aref src-offset 'size-t) 0
-                    (mem-aref dst-offset 'size-t) 0
-                    (mem-aref size 'size-t) 1)
-              (enqueue-copy-buffer command-queue
-                                   in
-                                   out
-                                   (mem-aref src-offset 'size-t)
-                                   (mem-aref dst-offset 'size-t)
-                                   (mem-aref size 'size-t)))
-            (finish command-queue)))
-        (is-success (cl-release-context context) "release context")
-        (is-success (cl-release-device device) "release device")))))
+      (with-context (context (null-pointer) 1 devices)
+        (let ((device (mem-aref devices 'cl-device-id)))
+          (ok context "create context")
+          (with-buffers ((in context +cl-mem-read-only+ 1)
+                         (out context +cl-mem-write-only+ 1))
+            (ok in "create buffer")
+            (ok out "create buffer")
+            (with-command-queue (command-queue context device 0)
+              (ok command-queue "create command queue")
+              (with-foreign-objects ((src-offset 'size-t)
+                                     (dst-offset 'size-t)
+                                     (size 'size-t))
+                (setf (mem-aref src-offset 'size-t) 0
+                      (mem-aref dst-offset 'size-t) 0
+                      (mem-aref size 'size-t) 1)
+                (enqueue-copy-buffer command-queue
+                                     in
+                                     out
+                                     (mem-aref src-offset 'size-t)
+                                     (mem-aref dst-offset 'size-t)
+                                     (mem-aref size 'size-t)))
+              (finish command-queue)))
+          (is-success (cl-release-device device) "release device"))))))
 
 (subtest "Copy kernel"
   (with-foreign-objects ((devices 'cl-device-id)
