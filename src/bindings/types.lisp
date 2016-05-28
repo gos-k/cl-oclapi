@@ -40,8 +40,7 @@
 
 (defctypes
   (cl-size :ulong)
-  (intptr-t :long)
-  (uintptr-t :ulong))
+  (intptr-t :long))
 
 #| cl.h |#
 (defctypes
