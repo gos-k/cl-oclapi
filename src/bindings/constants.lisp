@@ -87,8 +87,8 @@
 
 #| cl.h - cl_bool |#
 (defconstants
-  (+cl-false+ nil)
-  (+cl-true+ t)
+  (+cl-false+ 0)
+  (+cl-true+ 1)
   (+cl-blocking+ +cl-true+)
   (+cl-non-blocking+ +cl-false+))
 
