@@ -54,19 +54,12 @@
 #| Context APIs |#
 
 @export
-(defmacro with-context ((context
-                         properties
-                         num-devices
-                         devices
-                         &optional
-                           (pfn-notify (null-pointer))
-                           (user-data (null-pointer)))
-                        &body body)
+(defmacro with-context ((context properties num-devices devices &optional pfn-notify user-data) &body body)
   `(let ((,context (create-context ,properties
                                    ,num-devices
                                    ,devices
-                                   ,pfn-notify
-                                   ,user-data)))
+                                   (or ,pfn-notify (null-pointer))
+                                   (or ,user-data (null-pointer)))))
      (unwind-protect
           (progn
             ,@body)
@@ -85,8 +78,11 @@
 #| Memory Object APIs |#
 
 @export
-(defmacro with-buffer ((name context flags size &optional (host-ptr (null-pointer))) &body body)
-  `(let ((,name (create-buffer ,context ,flags ,size ,host-ptr)))
+(defmacro with-buffer ((name context flags size &optional host-ptr) &body body)
+  `(let ((,name (create-buffer ,context
+                               ,flags
+                               ,size
+                               (or ,host-ptr (null-pointer)))))
      (unwind-protect
           (progn
             ,@body)
@@ -104,12 +100,15 @@
 #| Program Object APIs  |#
 
 @export
-(defmacro with-program-with-source ((program context count source &optional (lengths (null-pointer))) &body body)
+(defmacro with-program-with-source ((program context count source &optional lengths) &body body)
   (with-gensyms (string pointer)
     `(with-foreign-string (,string ,source)
        (with-foreign-object (,pointer :pointer)
          (setf (mem-aref ,pointer :pointer) ,string)
-         (let ((,program (create-program-with-source ,context ,count ,pointer ,lengths)))
+         (let ((,program (create-program-with-source ,context
+                                                     ,count
+                                                     ,pointer
+                                                     (or ,lengths (null-pointer)))))
            (unwind-protect
                 (progn
                   ,@body)
