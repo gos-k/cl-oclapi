@@ -131,7 +131,7 @@
 
 @export
 (defmacro with-work-size ((name x &optional (y 0) (z 0)) &body body)
-  `(with-foreign-object (,name 'size-t 3)
+  `(with-foreign-object (,name 'cl-size 3)
      (set-work-size ,name ,x ,y ,z)
      (progn
        ,@body)))

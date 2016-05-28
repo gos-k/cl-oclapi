@@ -39,7 +39,7 @@
   (cl-double :double))
 
 (defctypes
-  (size-t :ulong)
+  (cl-size :ulong)
   (intptr-t :long)
   (uintptr-t :ulong))
 
@@ -105,16 +105,16 @@
 
 (defcstruct-export cl-image-desc
   (image-type cl-mem-object-type)
-  (image-width size-t)
-  (image-height size-t)
-  (image-depth size-t)
-  (image-array-size size-t)
-  (image-row-pitch size-t)
-  (image-slice-pitch size-t)
+  (image-width cl-size)
+  (image-height cl-size)
+  (image-depth cl-size)
+  (image-array-size cl-size)
+  (image-row-pitch cl-size)
+  (image-slice-pitch cl-size)
   (num-mip-levels cl-uint)
   (num-samples cl-uint)
   (buffer cl-mem))
 
 (defcstruct-export cl-buffer-region
-  (origin size-t)
-  (size size-t))
+  (origin cl-size)
+  (size cl-size))

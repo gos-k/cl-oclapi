@@ -34,7 +34,7 @@
       (cl-get-platform-ids 1 platforms num-platforms)
       (let ((platform (mem-aref platforms 'cl-platform-id)))
         (with-foreign-objects ((param-value 'cl-uchar 1024)
-                               (param-value-size-ret 'size-t))
+                               (param-value-size-ret 'cl-size))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-profile+
                                             1024
@@ -100,7 +100,7 @@
                                                       (null-pointer)
                                                       (null-pointer)))
           (with-foreign-objects ((param-value 'cl-uchar 256)
-                                 (param-value-size-ret 'size-t))
+                                 (param-value-size-ret 'cl-size))
             (is-success (cl-get-device-info device
                                             +cl-device-version+
                                             256
@@ -243,13 +243,13 @@
                                                           errcode-ret)))
               (is-success (mem-aref errcode-ret 'cl-int))
               (with-foreign-objects ((param-value 'cl-uchar 256)
-                                     (param-value-size-ret 'size-t))
+                                     (param-value-size-ret 'cl-size))
                 (is-success (cl-get-command-queue-info command-queue
                                                        +cl-queue-device+
                                                        256
                                                        param-value
                                                        param-value-size-ret))
-                (ok (> (mem-aref param-value-size-ret 'size-t) 0))
+                (ok (> (mem-aref param-value-size-ret 'cl-size) 0))
                 (is-success (cl-retain-command-queue command-queue))
                 (is-success (cl-release-command-queue command-queue))))))))))
 
@@ -444,9 +444,9 @@
           (is-success (mem-aref errcode-ret 'cl-int))
           (with-foreign-string (s "")
             (with-foreign-objects ((p :pointer)
-                                   (length 'size-t))
+                                   (length 'cl-size))
               (setf (mem-aref p :pointer) s)
-              (setf (mem-aref length 'size-t) 0)
+              (setf (mem-aref length 'cl-size) 0)
               (let ((program (cl-create-program-with-source context
                                                             1
                                                             p

@@ -267,6 +267,6 @@
 
 @export
 (defun set-work-size (work-size x &optional (y 0) (z 0))
-  (setf (mem-aref work-size 'size-t 0) x
-        (mem-aref work-size 'size-t 1) y
-        (mem-aref work-size 'size-t 2) z))
+  (setf (mem-aref work-size 'cl-size 0) x
+        (mem-aref work-size 'cl-size 1) y
+        (mem-aref work-size 'cl-size 2) z))

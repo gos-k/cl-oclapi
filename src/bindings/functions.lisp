@@ -27,9 +27,9 @@
 (defcfun ("clGetPlatformInfo" cl-get-platform-info) cl-int
   (platform cl-platform-id)
   (param-name cl-platform-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value :pointer)
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 #| cl.h - Device APIs |#
 
@@ -47,9 +47,9 @@
 (defcfun ("clGetDeviceInfo" cl-get-device-info) cl-int
   (device cl-device-id)
   (param-name cl-device-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 ;; CL_API_SUFFIX__VERSION_1_2;
 @export
@@ -105,9 +105,9 @@
 (defcfun ("clGetContextInfo" cl-get-context-info) cl-int
   (context cl-context)
   (param-name cl-context-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 #| cl.h - Command Queue APIs |#
 
@@ -134,9 +134,9 @@
 (defcfun ("clGetCommandQueueInfo" cl-get-command-queue-info) cl-int
   (command-queue cl-command-queue)
   (param-name cl-command-queue-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 #| Memory Object APIs |#
 
@@ -145,7 +145,7 @@
 (defcfun ("clCreateBuffer" cl-create-buffer) cl-mem
   (context cl-context)
   (flags cl-mem-flags)
-  (size size-t)
+  (size cl-size)
   (host-ptr :pointer)
   (errcode-ret (:pointer cl-int)))
 
@@ -193,18 +193,18 @@
 (defcfun ("clGetMemObjectInfo" cl-get-mem-object-info) cl-int
   (memobj cl-mem)
   (param-name cl-mem-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value :pointer)
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
 @export
 (defcfun ("clGetImageInfo" cl-get-image-info) cl-int
   (image cl-mem)
   (param-name cl-image-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value :pointer)
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 ;; CL_API_SUFFIX__VERSION_1_1;
 @export
@@ -239,9 +239,9 @@
 (defcfun ("clGetSamplerInfo" cl-get-sampler-info) cl-int
   (sampler cl-sampler)
   (param-name cl-sampler-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value :pointer)
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 #| Program Object APIs  |#
 
@@ -251,7 +251,7 @@
   (context cl-context)
   (count cl-uint)
   (strings (:pointer (:pointer cl-char)))
-  (lengths (:pointer size-t))
+  (lengths (:pointer cl-size))
   (errcode-ret (:pointer cl-int)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
@@ -260,7 +260,7 @@
   (context cl-context)
   (num-devices cl-uint)
   (device-list (:pointer cl-device-id))
-  (lengths (:pointer size-t))
+  (lengths (:pointer cl-size))
   (binaries (:pointer (:pointer cl-char)))
   (binary-status (:pointer cl-int))
   (errcode-ret (:pointer cl-int)))
@@ -329,9 +329,9 @@
 (defcfun ("clGetProgramInfo" cl-get-program-info) cl-int
   (program cl-program)
   (param-name cl-program-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
 @export
@@ -339,9 +339,9 @@
   (program cl-program)
   (device cl-device-id)
   (param-name cl-program-build-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 #| Kernel Object APIs |#
 
@@ -375,7 +375,7 @@
 (defcfun ("clSetKernelArg" cl-set-kernel-arg) cl-int
   (kernel cl-kernel)
   (arg-index cl-uint)
-  (arg-size size-t)
+  (arg-size cl-size)
   (arg-value (:pointer :void)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
@@ -383,9 +383,9 @@
 (defcfun ("clGetKernelInfo" cl-get-kernel-info) cl-int
   (kernel cl-kernel)
   (param-name cl-kernel-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 ;; CL_API_SUFFIX__VERSION_1_2;
 @export
@@ -393,9 +393,9 @@
   (kernel cl-kernel)
   (arg-indx cl-uint)
   (param-name cl-kernel-arg-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 ;; CL_API_SUFFIX__VERSION_1_0;
 @export
@@ -403,9 +403,9 @@
   (kernel cl-kernel)
   (device cl-device-id)
   (param-name cl-kernel-work-group-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 #| Event Object APIs |#
 
@@ -420,9 +420,9 @@
 (defcfun ("clGetEventInfo" cl-get-event-info) cl-int
   (event cl-event)
   (param-name cl-event-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 ;; CL_API_SUFFIX__VERSION_1_1;
 @export
@@ -461,9 +461,9 @@
 (defcfun ("clGetEventProfilingInfo" cl-get-event-profiling-info) cl-int
   (event cl-event)
   (param-name cl-profiling-info)
-  (param-value-size size-t)
+  (param-value-size cl-size)
   (param-value (:pointer :void))
-  (param-value-size-ret (:pointer size-t)))
+  (param-value-size-ret (:pointer cl-size)))
 
 #| Flush and Finish APIs |#
 
@@ -485,8 +485,8 @@
   (command-queue cl-command-queue)
   (buffer cl-mem)
   (blocking-read cl-bool)
-  (offset size-t)
-  (size size-t)
+  (offset cl-size)
+  (size cl-size)
   (ptr (:pointer :void))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
@@ -498,13 +498,13 @@
   (command-queue cl-command-queue)
   (buffer cl-mem)
   (blocking-read cl-bool)
-  (buffer-offset (:pointer size-t))
-  (host-offset (:pointer size-t))
-  (region (:pointer size-t))
-  (buffer-row-pitch size-t)
-  (buffer-slice-pitch size-t)
-  (host-row-pitch size-t)
-  (host-slice-pitch size-t)
+  (buffer-offset (:pointer cl-size))
+  (host-offset (:pointer cl-size))
+  (region (:pointer cl-size))
+  (buffer-row-pitch cl-size)
+  (buffer-slice-pitch cl-size)
+  (host-row-pitch cl-size)
+  (host-slice-pitch cl-size)
   (ptr :pointer :void)
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
@@ -516,8 +516,8 @@
   (command-queue cl-command-queue)
   (buffer cl-mem)
   (blocking-write cl-bool)
-  (offset size-t)
-  (size size-t)
+  (offset cl-size)
+  (size cl-size)
   (ptr (:pointer :void))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
@@ -529,13 +529,13 @@
   (command-queue cl-command-queue)
   (buffer cl-mem)
   (blocking-write cl-bool)
-  (buffer-offset (:pointer size-t))
-  (host-offset (:pointer size-t))
-  (region (:pointer size-t))
-  (buffer-row-pitch size-t)
-  (buffer-slice-pitch size-t)
-  (host-row-pitch size-t)
-  (host-slice-pitch size-t)
+  (buffer-offset (:pointer cl-size))
+  (host-offset (:pointer cl-size))
+  (region (:pointer cl-size))
+  (buffer-row-pitch cl-size)
+  (buffer-slice-pitch cl-size)
+  (host-row-pitch cl-size)
+  (host-slice-pitch cl-size)
   (ptr (:pointer :void))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
@@ -547,9 +547,9 @@
   (command-queue cl-command-queue)
   (buffer cl-mem)
   (pattern (:pointer :void))
-  (pattern-size size-t)
-  (offset size-t)
-  (size size-t)
+  (pattern-size cl-size)
+  (offset cl-size)
+  (size cl-size)
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event))
@@ -560,9 +560,9 @@
   (command-queue cl-command-queue)
   (src-buffer cl-mem)
   (dst-buffer cl-mem)
-  (src-offset size-t)
-  (dst-offset size-t)
-  (size size-t)
+  (src-offset cl-size)
+  (dst-offset cl-size)
+  (size cl-size)
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event))
@@ -573,13 +573,13 @@
   (command-queue cl-command-queue)
   (src-buffer cl-mem)
   (dst-buffer cl-mem)
-  (src-origin (:pointer size-t))
-  (dst-origin (:pointer size-t))
-  (region (:pointer size-t))
-  (src-row-pitch size-t)
-  (src-slice-pitch size-t)
-  (dst-row-pitch size-t)
-  (dst-slice-pitch size-t)
+  (src-origin (:pointer cl-size))
+  (dst-origin (:pointer cl-size))
+  (region (:pointer cl-size))
+  (src-row-pitch cl-size)
+  (src-slice-pitch cl-size)
+  (dst-row-pitch cl-size)
+  (dst-slice-pitch cl-size)
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event))
@@ -590,10 +590,10 @@
   (command-queue cl-command-queue)
   (image cl-mem)
   (blocking-read cl-bool)
-  (origin (:pointer size-t))
-  (region (:pointer size-t))
-  (row-pitch size-t)
-  (slice-pitch size-t)
+  (origin (:pointer cl-size))
+  (region (:pointer cl-size))
+  (row-pitch cl-size)
+  (slice-pitch cl-size)
   (ptr (:pointer :void))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
@@ -605,10 +605,10 @@
   (command-queue cl-command-queue)
   (image cl-mem)
   (blocking-write cl-bool)
-  (origin (:pointer size-t))
-  (region (:pointer size-t))
-  (input-row-pitch size-t)
-  (input-slice-pitch size-t)
+  (origin (:pointer cl-size))
+  (region (:pointer cl-size))
+  (input-row-pitch cl-size)
+  (input-slice-pitch cl-size)
   (ptr (:pointer :void))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
@@ -620,8 +620,8 @@
   (command-queue cl-command-queue)
   (image cl-mem)
   (fill-color (:pointer :void))
-  (origin (:pointer size-t))
-  (region (:pointer size-t))
+  (origin (:pointer cl-size))
+  (region (:pointer cl-size))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event))
@@ -632,9 +632,9 @@
   (command-queue cl-command-queue)
   (src-image cl-mem)
   (dst-image cl-mem)
-  (src-origin (:pointer size-t))
-  (dst-origin (:pointer size-t))
-  (region (:pointer size-t))
+  (src-origin (:pointer cl-size))
+  (dst-origin (:pointer cl-size))
+  (region (:pointer cl-size))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event))
@@ -645,9 +645,9 @@
   (command-queue cl-command-queue)
   (src-image cl-mem)
   (dst-buffer cl-mem)
-  (src-origin (:pointer size-t))
-  (region (:pointer size-t))
-  (dst-offset size-t)
+  (src-origin (:pointer cl-size))
+  (region (:pointer cl-size))
+  (dst-offset cl-size)
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event))
@@ -658,9 +658,9 @@
   (command-queue cl-command-queue)
   (src-buffer cl-mem)
   (dst-image cl-mem)
-  (src-offset size-t)
-  (dst-origin (:pointer size-t))
-  (region (:pointer size-t))
+  (src-offset cl-size)
+  (dst-origin (:pointer cl-size))
+  (region (:pointer cl-size))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event))
@@ -672,8 +672,8 @@
   (buffer cl-mem)
   (blocking-map cl-bool)
   (map-flags cl-map-flags)
-  (offset size-t)
-  (size size-t)
+  (offset cl-size)
+  (size cl-size)
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event)
@@ -686,10 +686,10 @@
   (image cl-mem)
   (blocking-map cl-bool)
   (map-flags cl-map-flags)
-  (origin (:pointer size-t))
-  (region (:pointer size-t))
-  (image-row-pitch (:pointer size-t))
-  (image-slice-pitch (:pointer size-t))
+  (origin (:pointer cl-size))
+  (region (:pointer cl-size))
+  (image-row-pitch (:pointer cl-size))
+  (image-slice-pitch (:pointer cl-size))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event)
@@ -722,9 +722,9 @@
   (command-queue cl-command-queue)
   (kernel cl-kernel)
   (work-dim cl-uint)
-  (global-work-offset (:pointer size-t))
-  (global-work-size (:pointer size-t))
-  (local-work-size (:pointer size-t))
+  (global-work-offset (:pointer cl-size))
+  (global-work-size (:pointer cl-size))
+  (local-work-size (:pointer cl-size))
   (num-events-in-wait-list cl-uint)
   (event-wait-list cl-event)
   (event cl-event))
@@ -744,7 +744,7 @@
   (command-queue cl-command-queue)
   (user-func :pointer) ;; void (CL_CALLBACK * /*user_func*/)(void *),
   (args (:pointer :void))
-  (cb-args size-t)
+  (cb-args cl-size)
   (num-mem-objects cl-uint)
   (mem-list (:pointer cl-mem))
   (args-mem-loc (:pointer (:pointer :void)))

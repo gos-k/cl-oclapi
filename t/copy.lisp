@@ -48,6 +48,7 @@
               (ok program "create program")
               (build-program program
                              1
+
                              devices)
               (with-kernel (kernel program "copy")
                 (ok kernel "create kernel")
@@ -60,23 +61,23 @@
                   (with-command-queue (command-queue context device 0)
                     (ok command-queue "create command queue")
                     (with-foreign-object (value 'cl-char)
-                      (with-foreign-objects ((offset 'size-t)
-                                             (size 'size-t))
-                        (setf (mem-aref offset 'size-t) 0
-                              (mem-aref size 'size-t) 1)
+                      (with-foreign-objects ((offset 'cl-size)
+                                             (size 'cl-size))
+                        (setf (mem-aref offset 'cl-size) 0
+                              (mem-aref size 'cl-size) 1)
                         (setf (mem-aref value 'cl-char) 1)
                         (enqueue-write-buffer command-queue
                                               buffer-in
                                               1
-                                              (mem-aref offset 'size-t)
-                                              (mem-aref size 'size-t)
+                                              (mem-aref offset 'cl-size)
+                                              (mem-aref size 'cl-size)
                                               value)
                         (setf (mem-aref value 'cl-char) 2)
                         (enqueue-write-buffer command-queue
                                               buffer-out
                                               1
-                                              (mem-aref offset 'size-t)
-                                              (mem-aref size 'size-t)
+                                              (mem-aref offset 'cl-size)
+                                              (mem-aref size 'cl-size)
                                               value))
                       (with-work-sizes ((global-work-size 1)
                                         (local-work-size 1))
