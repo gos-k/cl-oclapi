@@ -40,7 +40,7 @@
 
 (defctypes
   (cl-size :ulong)
-  (intptr-t :long))
+  (cl-intptr :long))
 
 #| cl.h |#
 (defctypes
@@ -65,11 +65,11 @@
   (cl-device-local-mem-type cl-uint)
   (cl-device-exec-capabilities cl-bitfield)
   (cl-command-queue-properties cl-bitfield)
-  (cl-device-partition-property intptr-t)
+  (cl-device-partition-property cl-intptr)
   (cl-device-affinity-domain cl-bitfield))
 
 (defctypes
-  (cl-context-properties intptr-t)
+  (cl-context-properties cl-intptr)
   (cl-context-info cl-uint)
   (cl-command-queue-info cl-uint)
   (cl-channel-order cl-uint)
