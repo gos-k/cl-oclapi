@@ -151,3 +151,12 @@
      (setf (mem-aref ,name :pointer) ,buffer)
      (progn
        ,@body)))
+
+@export
+(defmacro with-pointers (bindings &body body)
+  (if bindings
+      `(with-pointer ,(car bindings)
+         (with-pointers ,(cdr bindings)
+           ,@body))
+      `(progn
+         ,@body)))
