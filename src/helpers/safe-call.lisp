@@ -177,7 +177,6 @@
 (defun-check-result enqueue-ndrange-kernel (command-queue
                                             kernel
                                             work-dim
-                                            global-work-offset
                                             global-work-size
                                             local-work-size
                                             &optional
@@ -187,7 +186,7 @@
   (cl-enqueue-ndrange-kernel command-queue
                              kernel
                              work-dim
-                             global-work-offset
+                             (null-pointer)
                              global-work-size
                              local-work-size
                              num-events-in-wait-list

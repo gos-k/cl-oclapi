@@ -84,7 +84,6 @@
                         (enqueue-ndrange-kernel command-queue
                                                 kernel
                                                 1
-                                                (null-pointer)
                                                 global-work-size
                                                 local-work-size)))
                     (finish command-queue)
