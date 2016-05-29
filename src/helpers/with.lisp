@@ -144,3 +144,10 @@
            ,@body))
       `(progn
          ,@body)))
+
+@export
+(defmacro with-pointer ((name buffer) &body body)
+  `(with-foreign-object (,name :pointer)
+     (setf (mem-aref ,name :pointer) ,buffer)
+     (progn
+       ,@body)))
