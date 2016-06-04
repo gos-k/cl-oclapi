@@ -4,7 +4,7 @@
 |#
 
 (in-package :cl-user)
-(defpackage cl-oclapi.helpers.with
+(defpackage cl-oclapi.helpers.with-macro
   (:use :cl
         :alexandria
         :cffi
@@ -13,7 +13,7 @@
         :cl-oclapi.constants
         :cl-oclapi.functions
         :cl-oclapi.helpers.safe-call))
-(in-package :cl-oclapi.helpers.with)
+(in-package :cl-oclapi.helpers.with-macro)
 
 (annot:enable-annot-syntax)
 

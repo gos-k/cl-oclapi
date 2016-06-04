@@ -30,7 +30,7 @@
                          (:module "helpers"
                                   :components
                                   ((:file "safe-call")
-                                   (:file "with")))
+                                   (:file "with-macro")))
                          (:file "cl-oclapi"))))
   :description ""
   :long-description
