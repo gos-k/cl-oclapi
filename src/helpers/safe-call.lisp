@@ -18,9 +18,9 @@
 @export
 (defvar *oclapi-helper-error* t)
 
-(defun api-error (name code)
+(defun api-error (name value)
   (when *oclapi-helper-error*
-    (error "~s error ~s" name code)))
+    (error "~s error: ~s" name value)))
 
 (defun check-errcode-ret (result name errcode-ret)
   (let ((code (mem-aref errcode-ret 'cl-int)))
@@ -128,19 +128,42 @@
   (cl-release-program program))
 
 @export
-(defun-check-result build-program (program
-                                   num-devices
-                                   device-list
-                                   &optional
-                                   (options (null-pointer))
-                                   (cl-callback (null-pointer))
-                                   (user-data (null-pointer)))
-  (cl-build-program program
-                    num-devices
-                    device-list
-                    options
-                    cl-callback
-                    user-data))
+(defun build-program (program
+                      num-devices
+                      device-list
+                      &optional
+                        (options (null-pointer))
+                        (cl-callback (null-pointer))
+                        (user-data (null-pointer)))
+  (let ((result (cl-build-program program
+                                  num-devices
+                                  device-list
+                                  options
+                                  cl-callback
+                                  user-data)))
+    (unless-success result
+      (dotimes (n num-devices)
+        (let ((device (mem-aref device-list 'cl-device-id n)))
+          (with-foreign-object (log-size-ret 'cl-size)
+            (cl-get-program-build-info program
+                                       device
+                                       +cl-program-build-log+
+                                       0
+                                       (null-pointer)
+                                       log-size-ret)
+            (let ((log-size (mem-aref log-size-ret 'cl-size)))
+              (if (= 0 log-size)
+                  (api-error 'build-program result)
+                  (with-foreign-object (log 'cl-uchar (1+ log-size))
+                    (cl-get-program-build-info program
+                                               device
+                                               +cl-program-build-log+
+                                               (1+ log-size)
+                                               log
+                                               log-size-ret)
+                    (api-error 'build-program
+                               (foreign-string-to-lisp log))))))))))
+  +cl-success+)
 
 #| Kernel Object APIs |#
 
