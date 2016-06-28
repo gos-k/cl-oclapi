@@ -19,7 +19,8 @@
 
 (eval-when (:load-toplevel)
   (define-foreign-library libopencl
-    (t (:default "libOpenCL")))
+    (:windows (:default "OpenCL"))
+    (t        (:default "libOpenCL")))
 
   (unless (foreign-library-loaded-p 'libopencl)
     (use-foreign-library libopencl)))
