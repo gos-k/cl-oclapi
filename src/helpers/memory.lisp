@@ -59,3 +59,14 @@
                            foreign-array)
       (setf result (foreign-array-to-list foreign-array size type :step step)))
     result))
+
+@export
+(defun print-device-memory (command-queue device size type &key (step 1))
+  (with-foreign-objects ((foreign-array type size))
+    (enqueue-read-buffer command-queue
+                         device
+                         +cl-true+
+                         0
+                         (* (foreign-type-size type) size)
+                         foreign-array)
+    (print-foreign-array foreign-array size type :step step)))
