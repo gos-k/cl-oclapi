@@ -28,3 +28,8 @@
 (defun foreign-array-to-list (foreign-array size type &key (step 1))
   (loop for i from 0 below size by step
         collecting (mem-aref foreign-array type i)))
+
+@export
+(defun print-foreign-array (foreign-array size type &key (step 1))
+  (loop for i from 0 below size by step
+        do (format t "~a, ~a~%" i (mem-aref foreign-array type i))))
