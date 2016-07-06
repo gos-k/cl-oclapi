@@ -181,6 +181,12 @@
                      arg-value))
 
 @export
+(defun set-kernel-args (kernel args)
+  (loop for a in args
+        do (check-result (apply #'cl-set-kernel-arg kernel a)
+                         'set-kernel-args)))
+
+@export
 (defun-check-result release-kernel (kernel)
   (cl-release-kernel kernel))
 
