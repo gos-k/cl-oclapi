@@ -16,6 +16,7 @@
 
 (reexport-from :cl-oclapi.helpers.safe-call)
 (reexport-from :cl-oclapi.helpers.with-macro)
+(reexport-from :cl-oclapi.helpers.memory)
 
 (eval-when (:load-toplevel)
   (define-foreign-library libopencl
