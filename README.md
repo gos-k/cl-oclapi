@@ -11,12 +11,10 @@ Yet another [OpenCL](https://www.khronos.org/opencl/) API bindings for Common Li
 
 ## Installation
 
-### Ubuntu
-
-If you use Roswell then
+cl-oclapi is now available on Quicklisp.
 
 ```
-git clone https://github.com/gos-k/cl-oclapi.git ~/.roswell/local-projects
+(ql:quickload :cl-oclapi)
 ```
 
 ## Test
