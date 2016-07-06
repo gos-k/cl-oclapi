@@ -33,3 +33,16 @@
 (defun print-foreign-array (foreign-array size type &key (step 1))
   (loop for i from 0 below size by step
         do (format t "~a, ~a~%" i (mem-aref foreign-array type i))))
+
+@export
+(defun device-memory-to-simple-array (command-queue device size type &key (step 1))
+  (let (result)
+    (with-foreign-objects ((foreign-array type size))
+      (enqueue-read-buffer command-queue
+                           device
+                           +cl-true+
+                           0
+                           (* (foreign-type-size type) size)
+                           foreign-array)
+      (setf result (foreign-array-to-simple-array foreign-array size type :step step)))
+    result))
