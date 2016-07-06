@@ -23,3 +23,8 @@
           do (setf (aref array (floor (/ i step)))
                    (mem-aref foreign-array type i)))
     array))
+
+@export
+(defun foreign-array-to-list (foreign-array size type &key (step 1))
+  (loop for i from 0 below size by step
+        collecting (mem-aref foreign-array type i)))
