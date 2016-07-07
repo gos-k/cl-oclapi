@@ -11,7 +11,7 @@ Yet another [OpenCL](https://www.khronos.org/opencl/) API bindings for Common Li
 
 ## Installation
 
-cl-oclapi is now available on Quicklisp.
+cl-oclapi is now available on [Quicklisp](https://www.quicklisp.org).
 
 ```
 (ql:quickload :cl-oclapi)
