@@ -207,8 +207,8 @@
                                             kernel
                                             work-dim
                                             global-work-size
-                                            local-work-size
                                             &optional
+                                            (local-work-size (null-pointer))
                                             (num-events-in-wait-list 0)
                                             (event-wait-list (null-pointer))
                                             (event (null-pointer)))
