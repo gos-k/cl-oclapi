@@ -13,7 +13,7 @@
         :cl-oclapi.functions))
 (in-package :cl-oclapi.helpers.safe-call)
 
-(annot:enable-annot-syntax)
+(syntax:use-syntax :annot)
 
 @export
 (defvar *oclapi-helper-error* t)

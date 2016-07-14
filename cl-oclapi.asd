@@ -19,6 +19,7 @@
   :depends-on (:alexandria
                :cffi
                :cl-annot
+               :cl-syntax-annot
                :cl-reexport)
   :components ((:module "src"
                         :components

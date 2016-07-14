@@ -14,7 +14,7 @@
         :cl-oclapi.helpers.safe-call))
 (in-package :cl-oclapi.helpers.memory)
 
-(annot:enable-annot-syntax)
+(syntax:use-syntax :annot)
 
 @export
 (defun foreign-array-to-simple-array (foreign-array size type &key (step 1))

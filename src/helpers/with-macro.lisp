@@ -15,7 +15,7 @@
         :cl-oclapi.helpers.safe-call))
 (in-package :cl-oclapi.helpers.with-macro)
 
-(annot:enable-annot-syntax)
+(syntax:use-syntax :annot)
 
 #| Platform APIs |#
 
