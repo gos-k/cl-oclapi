@@ -52,6 +52,26 @@
 (defun-check-result get-platform-ids (num platforms num-platforms)
   (cl-get-platform-ids num platforms num-platforms))
 
+@export
+(defun get-platform-info (platform param-name)
+  (with-foreign-object (param-value-size-ret 'cl-size)
+    (check-result (cl-get-platform-info platform
+                                        param-name
+                                        0
+                                        (null-pointer)
+                                        param-value-size-ret)
+                  'cl-get-platform-info)
+    (let ((param-value-size (mem-aref param-value-size-ret 'cl-size)))
+      (when (< 0 param-value-size)
+        (with-foreign-object (param-value 'cl-uchar (1+ param-value-size))
+          (check-result (cl-get-platform-info platform
+                                              param-name
+                                              (1+ param-value-size)
+                                              param-value
+                                              param-value-size-ret)
+                        'cl-get-platform-info)
+          (foreign-string-to-lisp param-value))))))
+
 #| Device APIs |#
 
 @export
