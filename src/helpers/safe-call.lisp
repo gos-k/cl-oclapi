@@ -111,7 +111,8 @@
             ('cl-device-exec-capabilities (mem-aref param-value 'cl-device-exec-capabilities))
             ('cl-command-queue-properties (mem-aref param-value 'cl-command-queue-properties))
             ('cl-platform-id (mem-aref param-value 'cl-platform-id))
-            ('cl-device-id (mem-aref param-value 'cl-device-id))))))))
+            ('cl-device-id (mem-aref param-value 'cl-device-id))
+            ('cl-device-affinity-domain (mem-aref param-value cl-device-affinity-domain))))))))
 
 #| Context APIs |#
 
