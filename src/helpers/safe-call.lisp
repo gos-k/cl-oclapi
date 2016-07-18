@@ -108,7 +108,8 @@
             ('cl-device-fp-config (mem-aref param-value 'cl-device-fp-config))
             ('cl-device-mem-cache-type (mem-aref param-value 'cl-device-mem-cache-type))
             ('cl-device-local-mem-type (mem-aref param-value 'cl-device-local-mem-type))
-            ('cl-device-exec-capabilities (mem-aref param-value 'cl-device-exec-capabilities))))))))
+            ('cl-device-exec-capabilities (mem-aref param-value 'cl-device-exec-capabilities))
+            ('cl-command-queue-properties (mem-aref param-value 'cl-command-queue-properties))))))))
 
 #| Context APIs |#
 
