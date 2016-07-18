@@ -27,7 +27,8 @@
                                   :components
                                   ((:file "constants")
                                    (:file "types")
-                                   (:file "functions")))
+                                   (:file "functions")
+                                   (:file "information")))
                          (:module "helpers"
                                   :components
                                   ((:file "safe-call")
