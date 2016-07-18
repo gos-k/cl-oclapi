@@ -10,7 +10,8 @@
         :cl-annot
         :cl-oclapi.constants
         :cl-oclapi.types
-        :cl-oclapi.functions))
+        :cl-oclapi.functions
+        :cl-oclapi.information))
 (in-package :cl-oclapi.helpers.safe-call)
 
 (syntax:use-syntax :annot)
@@ -96,7 +97,9 @@
                                             param-value
                                             param-value-size-ret)
                         'cl-get-device-info)
-          (foreign-string-to-lisp param-value))))))
+          (case (cdr (assoc param-name
+                            *cl-device-info-types*))
+            ('string (foreign-string-to-lisp param-value))))))))
 
 #| Context APIs |#
 
