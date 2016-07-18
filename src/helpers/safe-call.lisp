@@ -99,6 +99,7 @@
                         'cl-get-device-info)
           (case (cdr (assoc param-name
                             *cl-device-info-types*))
+            ('cl-bool (mem-aref param-value 'cl-bool))
             ('cl-uint (mem-aref param-value 'cl-uint))
             ('cl-ulong (mem-aref param-value 'cl-ulong))
             ('cl-size-t (mem-aref param-value 'cl-size-t))
