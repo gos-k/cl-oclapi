@@ -78,6 +78,26 @@
 (defun-check-result get-device-ids (platform device-type num-entries devices num-devices)
   (cl-get-device-ids platform device-type num-entries devices num-devices))
 
+@export
+(defun get-device-info (device param-name)
+  (with-foreign-object (param-value-size-ret 'cl-size)
+    (check-result (cl-get-device-info device
+                                      param-name
+                                      0
+                                      (null-pointer)
+                                      param-value-size-ret)
+                  'cl-get-device-info)
+    (let ((param-value-size (mem-aref param-value-size-ret 'cl-size)))
+      (when (< 0 param-value-size)
+        (with-foreign-object (param-value 'cl-uchar (1+ param-value-size))
+          (check-result (cl-get-device-info device
+                                            param-name
+                                            (1+ param-value-size)
+                                            param-value
+                                            param-value-size-ret)
+                        'cl-get-device-info)
+          (foreign-string-to-lisp param-value))))))
+
 #| Context APIs |#
 
 @export
