@@ -104,7 +104,8 @@
             ('cl-ulong (mem-aref param-value 'cl-ulong))
             ('cl-size-t (mem-aref param-value 'cl-size-t))
             ('string (foreign-string-to-lisp param-value))
-            ('cl-device-type (mem-aref param-value 'cl-device-type))))))))
+            ('cl-device-type (mem-aref param-value 'cl-device-type))
+            ('cl-device-fp-config (mem-aref param-value 'cl-device-fp-config))))))))
 
 #| Context APIs |#
 
