@@ -100,6 +100,7 @@
           (case (cdr (assoc param-name
                             *cl-device-info-types*))
             ('cl-uint (mem-aref param-value 'cl-uint))
+            ('cl-size-t (mem-aref param-value 'cl-size-t))
             ('string (foreign-string-to-lisp param-value))))))))
 
 #| Context APIs |#
