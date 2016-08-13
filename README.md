@@ -19,9 +19,25 @@ cl-oclapi is now available on [Quicklisp](https://www.quicklisp.org).
 
 ## Test
 
+### REPL
+
 ```
 (ql:quickload :cl-oclapi-test)
 (prove:run :cl-oclapi-test)
+```
+
+### Command line
+
+Install prove.
+
+```
+ros install prove
+```
+
+Run test.
+
+```
+run-prove cl-oclapi-test.asd
 ```
 
 ## Specifications and platforms
