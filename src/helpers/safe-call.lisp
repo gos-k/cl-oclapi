@@ -102,7 +102,7 @@
             ('cl-bool (mem-aref param-value 'cl-bool))
             ('cl-uint (mem-aref param-value 'cl-uint))
             ('cl-ulong (mem-aref param-value 'cl-ulong))
-            ('cl-size-t (mem-aref param-value 'cl-size-t))
+            ('cl-size (mem-aref param-value 'cl-size))
             ('string (foreign-string-to-lisp param-value))
             ('cl-device-type (mem-aref param-value 'cl-device-type))
             ('cl-device-fp-config (mem-aref param-value 'cl-device-fp-config))
