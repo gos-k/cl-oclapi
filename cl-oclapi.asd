@@ -35,7 +35,7 @@
                                    (:file "with-macro")
                                    (:file "memory")))
                          (:file "cl-oclapi"))))
-  :description ""
+  :description "binding for OpenCL API"
   :long-description
   #.(with-open-file (stream (merge-pathnames
                              #p"README.markdown"
