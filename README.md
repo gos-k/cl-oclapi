@@ -5,7 +5,7 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://opensource.org/licenses/mit-license.php)
 [![Quicklisp](http://quickdocs.org/badge/cl-oclapi.svg)](http://quickdocs.org/cl-oclapi/)
 
-Yet another [OpenCL](https://www.khronos.org/opencl/) API bindings for Common Lisp.
+cl-oclapi is a Common Lisp binding for [OpenCL](https://www.khronos.org/opencl/) API.
 
 ## Usage
 
