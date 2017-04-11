@@ -1,26 +1,21 @@
 #|
   This file is a part of cl-oclapi project.
-  Copyright (c) 2015 gos-k (mag4.elan@gmail.com)
+  Copyright (c) 2015-2017 gos-k (mag4.elan@gmail.com)
 |#
 
 #|
   Author: gos-k (mag4.elan@gmail.com)
 |#
 
-(in-package :cl-user)
-(defpackage cl-oclapi-asd
-  (:use :cl :asdf))
-(in-package :cl-oclapi-asd)
-
-(defsystem cl-oclapi
+(defsystem "cl-oclapi"
   :version "0.1"
   :author "gos-k"
   :license "MIT"
-  :depends-on (:alexandria
-               :cffi
-               :cl-annot
-               :cl-syntax-annot
-               :cl-reexport)
+  :depends-on ("alexandria"
+               "cffi"
+               "cl-annot"
+               "cl-syntax-annot"
+               "cl-reexport")
   :components ((:module "src"
                         :components
                         ((:module "bindings"
@@ -36,16 +31,5 @@
                                    (:file "memory")))
                          (:file "cl-oclapi"))))
   :description "binding for OpenCL API"
-  :long-description
-  #.(with-open-file (stream (merge-pathnames
-                             #p"README.markdown"
-                             (or *load-pathname* *compile-file-pathname*))
-                            :if-does-not-exist nil
-                            :direction :input)
-      (when stream
-        (let ((seq (make-array (file-length stream)
-                               :element-type 'character
-                               :fill-pointer t)))
-          (setf (fill-pointer seq) (read-sequence seq stream))
-          seq)))
-  :in-order-to ((test-op (test-op cl-oclapi-test))))
+  ;; :long-description #.(read-file-string (subpathname *load-pathname* "README.md"))
+  :in-order-to ((test-op (test-op "cl-oclapi-test"))))
