@@ -12,7 +12,7 @@
         :cl-oclapi.types))
 (in-package :cl-oclapi.information)
 
-(syntax:use-syntax :annot)
+(annot:enable-annot-syntax)
 
 #| cl-device-info types |#
 @export

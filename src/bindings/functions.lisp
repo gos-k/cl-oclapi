@@ -11,7 +11,7 @@
         :cl-oclapi.types))
 (in-package :cl-oclapi.functions)
 
-(syntax:use-syntax :annot)
+(annot:enable-annot-syntax)
 
 #| cl.h - platform API. |#
 
