@@ -6,9 +6,9 @@
 (in-package :cl-user)
 (defpackage cl-oclapi-test
   (:use :cl
-   :cl-oclapi
+        :cl-oclapi
         :prove
-   :cffi
+        :cffi
         :cl-oclapi-test.init))
 (in-package :cl-oclapi-test)
 
@@ -26,11 +26,13 @@
       (is-success (cl-get-platform-ids 1 platforms num-platforms))
       (ok (> (mem-aref num-platforms 'cl-uint) 0)))
     (subtest "clGetPlatformInfo"
-      (is +cl-invalid-value+ (cl-get-platform-info (null-pointer)
-                                                   0
-                                                   0
-                                                   (null-pointer)
-                                                   (null-pointer)))
+      (let ((result (cl-get-platform-info (null-pointer)
+                                          0
+                                          0
+                                          (null-pointer)
+                                          (null-pointer))))
+        (ok (or (= result +cl-invalid-value+)
+                (= result +cl-invalid-platform+))))
       (cl-get-platform-ids 1 platforms num-platforms)
       (let ((platform (mem-aref platforms 'cl-platform-id)))
         (with-foreign-objects ((param-value 'cl-uchar 1024)
@@ -54,7 +56,8 @@
                                             param-value-size-ret))
           (let ((platform-name (foreign-string-to-lisp param-value)))
             (ok (or (string= "Portable Computing Language" platform-name)
-                    (string= "NVIDIA CUDA" platform-name))))
+                    (string= "NVIDIA CUDA" platform-name)
+                    (string= "Intel(R) OpenCL" platform-name))))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-vendor+
                                             1024
@@ -62,7 +65,8 @@
                                             param-value-size-ret))
           (let ((platform-vendor (foreign-string-to-lisp param-value)))
             (ok (or (string= "The pocl project" platform-vendor)
-                    (string= "NVIDIA Corporation" platform-vendor))))
+                    (string= "NVIDIA Corporation" platform-vendor)
+                    (string= "Intel(R) Corporation" platform-vendor))))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-extensions+
                                             1024
@@ -84,6 +88,7 @@
                                          (null-pointer)
                                          (null-pointer))))
           (ok (or (= result +cl-invalid-value+)
+                  (= result +cl-invalid-platform+)
                   (= result +cl-invalid-device-type+))))
         (is-success (cl-get-device-ids platform
                                        +cl-device-type-default+

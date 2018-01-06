@@ -47,6 +47,7 @@ run-prove cl-oclapi-test.asd
 * Platforms
   * pocl 0.12
   * OpenCL 1.2 CUDA 8.0.20
+  * Intel(R) OpenCL
 
 ### Support functions
 
