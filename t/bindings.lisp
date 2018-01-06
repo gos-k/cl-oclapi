@@ -54,19 +54,21 @@
                                             1024
                                             param-value
                                             param-value-size-ret))
-          (let ((platform-name (foreign-string-to-lisp param-value)))
-            (ok (or (string= "Portable Computing Language" platform-name)
-                    (string= "NVIDIA CUDA" platform-name)
-                    (string= "Intel(R) OpenCL" platform-name))))
+          (ok (member (foreign-string-to-lisp param-value)
+                      '("Portable Computing Language"
+                        "NVIDIA CUDA"
+                        "Intel(R) OpenCL")
+                      :test #'string=))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-vendor+
                                             1024
                                             param-value
                                             param-value-size-ret))
-          (let ((platform-vendor (foreign-string-to-lisp param-value)))
-            (ok (or (string= "The pocl project" platform-vendor)
-                    (string= "NVIDIA Corporation" platform-vendor)
-                    (string= "Intel(R) Corporation" platform-vendor))))
+          (ok (member (foreign-string-to-lisp param-value)
+                      '("The pocl project"
+                        "NVIDIA Corporation"
+                        "Intel(R) Corporation")
+                      :test #'string=))
           (is-success (cl-get-platform-info platform
                                             +cl-platform-extensions+
                                             1024
