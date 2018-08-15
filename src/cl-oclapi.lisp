@@ -22,6 +22,7 @@
 (eval-when (:load-toplevel)
   (define-foreign-library libopencl
     (:windows (:default "OpenCL"))
+    (:darwin (:framework "OpenCL"))
     (t        (:default "libOpenCL")))
 
   (unless (foreign-library-loaded-p 'libopencl)
